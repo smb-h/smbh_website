@@ -1,0 +1,64 @@
+/* ======================== Images =============================== */
+
+
+/* =================================== Navbar =============================== */
+
+/* Navbar Direction */
+/* nav {
+    direction: ltr !important;
+} */
+
+/* =================================== Intro =============================== */
+
+/* Contact Image */
+
+#Contact-image {
+    background-image: url("../../media/Site/Images/Georgia-Workspaces-2.jpeg");
+    /* background-image: url('{% static "../media/Site/Images/Georgia-Workspaces-2.jpeg" %}'); */
+    position: relative;
+    vertical-align: middle;
+    border-radius: 10px;
+
+    height: 100%;
+
+}
+
+
+/* =================================== body ===================================== */
+html{
+    overflow: hidden;
+}
+body {
+    background-color: #212834;
+}
+
+#Map {
+    width: 100%;
+    height: 100%;
+    height: 400px;
+    /* background-color: rgb(149, 162, 197); */
+    opacity: .8;
+}
+
+#Map-btn p{
+    color: aliceblue;
+}
+
+#contact {
+    /* position: relative; */
+    /* direction: ltr !important; */
+    /* vertical-align: middle; */
+    padding: 20px;
+    /* top: 100px; */
+}
+
+#contact-form {
+    /* position: relative; */
+    opacity: .7;
+}
+
+
+/* ========================== Footer ============================== */
+
+
+/* ========================== utilities ============================== */

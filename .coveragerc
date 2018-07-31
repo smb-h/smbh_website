@@ -1,0 +1,4 @@
+[run]
+include = smbh_website/*
+omit = *migrations*, *tests*
+

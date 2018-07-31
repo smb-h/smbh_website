@@ -1,0 +1,240 @@
+{% extends "base_smbh.html" %} {% block title %} Blog | smbh {% endblock title %} {% load static %} {% block style %}
+
+<link rel="shortcut icon" type="image/png" href="../../media/Site/Images/m_logo.png" />
+<!-- Google Material Design Icons -->
+<!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9"
+    crossorigin="anonymous">
+
+
+<!-- BootStrap -->
+<link rel="stylesheet" href="{% static 'Packages/MDB/css/bootstrap.min.css' %}" />
+<!-- MDB -->
+<link rel="stylesheet" href="{% static 'Packages/MDB/css//mdb.min.css' %}" />
+
+
+<!-- Customize -->
+<link rel="stylesheet" href="{% static 'css/base.css' %}" />
+<link rel="stylesheet" href="{% static 'css/blog.css' %}" /> {% endblock style %} {% block script %}
+<!-- JQuery -->
+<script src="{% static 'Packages/jquery-3.3.1.min.js' %}"></script>
+
+<!-- BootStrap -->
+<script src="{% static 'Packages/MDB/js/bootstrap.min.js' %}" defer></script>
+<!-- Bootstrap tooltips -->
+<script src="{% static 'Packages/MDB/js/popper.min.js' %}" defer></script>
+<!-- MDB  -->
+<script type="text/javascript" src="{% static 'Packages/MDB/js/mdb.min.js' %}" defer></script>
+
+
+
+<!-- Customize -->
+<script src="{% static 'js/base.js' %}"></script>
+<script src="{% static 'js/blog.js' %}"></script>
+{% endblock script %} {% block content %}
+
+
+<div class="gallery-parallax Image-Container" id="Blog-image">
+
+    <!-- NAVBAR -->
+    <div class="container">
+        <nav class="navbar navbar-expand-sm navbar-expand-md navbar-dark bg-dark">
+            <div class="d-flex w-100" style="float: left;">
+                <strong style="float: left;">
+                    <a class="navbar-brand mr-auto" href="#">SMB
+                        <span style="color:royalblue;">H</span>
+                    </a>
+                </strong>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar" style="float: right;">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+            </div>
+
+            <div class="navbar-collapse collapse justify-content-around" id="collapsingNavbar" style="float: right;">
+
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link rounded-circle" href="{% url 'App:contact' %}">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rounded-circle" href="#">Resume</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rounded-circle" href="#Portfilio">Portfolio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rounded-circle" href="{% url 'App:home' %}">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rounded-circle active" href="{% url 'Blog:blog' %}">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rounded-circle" href="{% url 'App:home' %}">Home</a>
+                    </li>
+
+                </ul>
+
+            </div>
+        </nav>
+    </div>
+
+
+    <!-- Body Wrapper -->
+    <div class="row">
+
+
+        <!-- Timeline -->
+        <div class="col-3 sticky" id="TimeLineWrapper">
+            <div class="timeline container">
+                <div class="TL left">
+                    <div class="content">
+                        <h2>2017</h2>
+                        <p>Lorem ipsum..</p>
+                    </div>
+                </div>
+                <div class="TL right">
+                    <div class="content">
+                        <h2>2016</h2>
+                        <p>Lorem ipsum..</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+        <!-- Blog -->
+        <div class="col-9">
+            <section class="my-5 container" id="blog">
+
+                <!-- heading -->
+                <div id="blog-head">
+                    <h2 class="h1-responsive font-weight-bold text-center my-5">Recent posts</h2>
+                    <!-- description -->
+                    <p class="text-center w-responsive mx-auto mb-5">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+                        est laborum.</p>
+                </div>
+
+
+                <!-- Posts -->
+                {% for post in Posts %}
+
+                <div class="row jumbotron">
+
+
+                    <!-- Post description -->
+                    <div class="col-lg-7">
+
+                        <!-- Category -->
+                        <a href="#!" class="green-text">
+                            <h6 class="font-weight-bold mb-3">
+                                <i class="fa fa-cutlery pr-2"></i>{{ post.tags.name }}</h6>
+                        </a>
+                        <!-- Post title -->
+                        <h3 class="font-weight-bold mb-3">
+                            <strong>{{ post.title }}</strong>
+                        </h3>
+                        <!-- Excerpt -->
+                        <p>
+                            {{ post.content | safe | truncatechars:256 }}
+                        </p>
+                        <!-- Post data -->
+                        <p>By
+                            <a>
+                                <strong> {{ post.author }} </strong>
+                            </a>, {{ post.publish }}</p>
+                        <!-- Read more button -->
+                        <a class="btn btn-indigo btn-md">Read more</a>
+
+                    </div>
+
+
+                    <!-- Post img -->
+                    <div class="col-lg-5">
+
+                        <!-- Featured image -->
+                        <div class="view overlay rounded z-depth-2 mb-lg-0 mb-4">
+                            <img class="img-fluid" src="{{ post.image.url }}" alt="{{ post.title }}" />
+                            <a>
+                                <div class="mask rgba-white-slight"></div>
+                            </a>
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
+
+
+                <hr class="my-5" style="opacity: 0;"> {% endfor %}
+
+            </section>
+        </div>
+
+
+
+    </div>
+
+
+
+
+    <!-- Footer -->
+    {% block footer %}
+
+    <!-- Pagination -->
+    <div>
+        {% if posts.has_next %}
+        <li>
+            <a href="?page={{ posts.paginator.num_pages }} " class="btn-sm btn-outline-info"> Last </a>
+        </li>
+        {% endif %} {% if posts.has_next %}
+        <li>
+            <a href="?page={{ posts.next_page_number }}" class="btn-sm btn-outline-success"> Next </a>
+        </li>
+        {% endif %}
+        <li>
+            <span class="current">
+                Page {{ posts.number }} of {{ posts.paginator.num_pages }}
+            </span>
+        </li>
+        {% if posts.has_previous %}
+        <li>
+            <a href="?page={{ posts.previous_page_number }}" class="btn-sm btn-outline-success"> Previous </a>
+        </li>
+        {% endif %} {% if posts.has_previous %}
+        <li>
+            <a href="?page=1" class="btn-sm btn-outline-info"> First &raquo;</a>
+        </li>
+        {% endif %}
+
+    </div>
+
+
+    <div class="page-footer font-small unique-color-dark pt-0" id="footer">
+        <div class="footer-copyright py-3 text-center" style="color : #969696;">
+            <span>© 2018 SMB
+                <span style="color:royalblue;">H</span>
+            </span>
+            <span> | </span>
+            <span>Powerd by
+                <a href="http://djangoproject.com">Django</a>
+            </span>
+        </div>
+    </div>
+
+    {% endblock footer %}
+
+</div>
+
+
+
+{% endblock content %}

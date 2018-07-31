@@ -1,0 +1,71 @@
+ {% extends "blog.html" %} {% load static %} {% load i18n %} {% block title %} {{ Post.title }} | smbh {% endblock title %}
+{% block PostList %}
+
+
+<!-- Post description -->
+<div class="container jumbotron" id="PostDetail" style="margin-top: 60px;">
+
+
+  <!-- image -->
+  <div class="overlay rounded z-depth-2 mb-lg-0 mb-4">
+    <img class="img-fluid" src="{{ Post.image.url }}" alt="{{ Post.title }}" />
+    <a>
+      <div class="mask rgba-white-slight"></div>
+    </a>
+  </div>
+
+
+  <br/>
+  <br/>
+  <!-- Post title -->
+  <h3 class="font-weight-bold mb-3">
+    <strong>{{ Post.title }}</strong>
+  </h3>
+  <!-- Excerpt -->
+  {% if LANGUAGE_CODE == 'en' %}
+  <div style="text-align: left;">
+    <p>
+      {{ Post.content | safe }}
+    </p>
+  </div>
+  <!-- Post footer -->
+  <hr/>
+  <p style="text-align: center;">By
+    <a>
+      <strong> {{ Post.author }} </strong>
+    </a>, {{ Post.publish }}</p>
+  {% else %}
+  <div style="text-align: right;">
+    <p>
+      {{ Post.content | safe }}
+    </p>
+  </div>
+  <!-- Post data -->
+  <hr/>
+  <p style="text-align: center;">By
+    <a>
+      <strong> {{ Post.author }} </strong>
+    </a> <br />{{ Post.publish }}</p>
+  {% endif %}
+
+  <!-- Tags -->
+  <div class="row">
+    {% for tag in Post.tags.names %}
+    <a style="color: royalblue;">
+      <h6 class="font-weight-bold mb-3">
+
+        <i class="pr-3">
+          #{{ tag }}
+        </i>
+
+      </h6>
+    </a>
+    {% endfor %}
+  </div>
+
+
+</div>
+
+
+
+{% endblock PostList %}
