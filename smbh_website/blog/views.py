@@ -27,7 +27,7 @@ class TagMixin(object):
 class BlogView(generic.ListView, TagMixin):
     
     template_name = 'blog.html'  # Default: <app_label>/<model_name>_list.html
-    context_object_name = 'Posts'   # Default: object_list
+    context_object_name = 'Post'   # Default: object_list
     paginate_by = 4
 
     # Default: Model.objects.all()

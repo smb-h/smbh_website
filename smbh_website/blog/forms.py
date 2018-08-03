@@ -8,6 +8,7 @@ from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 class PostAdminForm(forms.ModelForm):
     content = forms.CharField(widget=CKEditorUploadingWidget())
+    
     class Meta:
         model = Post
 

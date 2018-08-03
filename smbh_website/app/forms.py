@@ -8,6 +8,8 @@ class ContactForm(forms.ModelForm):
     content = forms.CharField(widget=forms.Textarea(attrs={'cols': 30, 'rows': 6}))
     # content = forms.CharField(widget=forms.Textarea(attrs={'cols': 30, 'rows': 6, 'class': 'form-control'}))
     # slug = CharField(validators=[validate_slug])
+    # my_secret = forms.CharField(widget=forms.TextInput(attrs={'autocomplete': 'off'}))
+    # my_secret = forms.CharField(widget=forms.PasswordInput())
 
     def send_email(self):
         # send email using the self.cleaned_data dictionary

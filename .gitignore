@@ -225,3 +225,6 @@ pip-selfcheck.json
 
 
 # End of https://www.gitignore.io/api/video,django,python,images,compressed,virtualenv
+
+# VSCode
+.vscode

@@ -128,7 +128,10 @@ AUTH_USER_MODEL = 'users.User'
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
 LOGIN_REDIRECT_URL = 'users:redirect'
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
-LOGIN_URL = 'account_login'
+# LOGIN_URL = 'account_login'
+
+LOGIN_URL = 'Login'
+
 
 # PASSWORDS
 # ------------------------------------------------------------------------------
@@ -302,8 +305,8 @@ CKEDITOR_RESTRICT_BY_DATE = True
 CKEDITOR_CONFIGS = {
     'smbh': {
         # 'skin': 'moono-dark',
-        'skin': 'office2013',
-        # 'skin': 'moono-lisa',
+        # 'skin': 'office2013',
+        'skin': 'moono-lisa',
         'toolbar_Basic': [
             ['Source', '-', 'Bold', 'Italic']
         ],

@@ -56,6 +56,9 @@ SECURE_BROWSER_XSS_FILTER = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#x-frame-options
 X_FRAME_OPTIONS = 'DENY'
 
+# Django middleware security
+SECURE_SSL_HOST = True 
+
 # STORAGES
 # ------------------------------------------------------------------------------
 
