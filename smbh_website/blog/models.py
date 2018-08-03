@@ -72,6 +72,7 @@ class Post(models.Model):
     class Meta:
         verbose_name = _('Post')
         verbose_name_plural = _('Posts')
+        ordering = ['-updated', '-created']
 
 
     # formatting post objects to show
