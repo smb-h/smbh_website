@@ -7,7 +7,8 @@
 
     <!-- Post title -->
     <h3 class="font-weight-bold mb-3">
-      <a href="{% url 'Blog:post' slug=post.slug %}">
+      <!-- <a href="{% url 'Blog:post' slug=post.slug %}"> -->
+      <a href="{{ post.get_absolute_url }}">
         <strong>{{ post.title }}</strong>
       </a>
     </h3>
@@ -23,7 +24,8 @@
         <strong> {{ post.author }} </strong>
       </a>, {{ post.publish }}</p>
     <!-- Read more button -->
-    <a class="btn btn-indigo btn-md" href="{% url 'Blog:post' slug=post.slug %}">Read more</a>
+    <!-- <a class="btn btn-indigo btn-md" href="{% url 'Blog:post' slug=post.slug %}">Read more</a> -->
+    <a class="btn btn-indigo btn-md" href="{{ post.get_absolute_url }}">Read more</a>
 
     <!-- Tags -->
     <div class="row">
