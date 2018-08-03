@@ -1,8 +1,12 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
 from blog.models import Post
 
 
-class PostListSerializer(ModelSerializer):
+class PostListSerializer(serializers.ModelSerializer):
+
+    tags = serializers.StringRelatedField(many=True)
+    # author = serializers.SlugRelatedField(slug_field='username', read_only=True)
+    author = serializers.ReadOnlyField(source='author.username')
 
     class Meta:
         model = Post
@@ -17,7 +21,10 @@ class PostListSerializer(ModelSerializer):
         # fields = '__all__'
 
 
-class PostDetailSerializer(ModelSerializer):
+class PostDetailSerializer(serializers.ModelSerializer):
+
+    tags = serializers.StringRelatedField(many=True)
+    author = serializers.ReadOnlyField(source='author.username')
 
     class Meta:
         model = Post
