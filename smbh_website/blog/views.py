@@ -27,22 +27,23 @@ class TagMixin(object):
 class BlogView(generic.ListView, TagMixin):
     
     template_name = 'blog.html'  # Default: <app_label>/<model_name>_list.html
-    context_object_name = 'Post'   # Default: object_list
+    context_object_name = 'Posts'   # Default: object_list
     paginate_by = 4
 
     # Default: Model.objects.all()
     def get_queryset(self):
         # __lte Less than & __gte Greater than
-        queryset = Post.objects.filter(language = self.request.LANGUAGE_CODE, publish__lte = timezone.now()).order_by('-publish')
+        # queryset = Post.objects.filter(language = self.request.LANGUAGE_CODE, publish__lte = timezone.now()).order_by('-publish')
+        queryset = Post.objects.filter(language = self.request.LANGUAGE_CODE, publish__lte = timezone.now())
         return queryset
 
     # Add Extra Context
-    def get_context_data(self, **kwargs):
+    # def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
-        context = super().get_context_data(**kwargs)
+        # context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the books
         # context['book_list'] = Book.objects.all()
-        return context
+        # return context
 
 
 

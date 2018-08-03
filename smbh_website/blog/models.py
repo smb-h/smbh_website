@@ -65,7 +65,7 @@ class Post(models.Model):
         # return reverse('people.views.details', args=[str(self.id)])
         # return reverse('Blog:Posts/{}'.format(self.slug), kwargs= {'id': self.id })
         # return reverse('Blog:Posts/{}'.format(self.slug))
-        return reverse('Blog:Posts', kwargs={"slug": self.slug})
+        return reverse('Blog:post', kwargs={"slug": self.slug})
         # return reverse("flavors:detail", kwargs={"slug": self.slug})
 
 
