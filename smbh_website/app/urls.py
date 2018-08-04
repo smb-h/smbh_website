@@ -1,6 +1,11 @@
 from django.urls import path, include
 
-from .views import HomeView, ContactView, PortfolioView, PortfolioDetailView
+from .views import (HomeView,
+    ContactView,
+    PortfolioView,
+    PortfolioDetailView,
+    LoginView
+    )
 
 
 
@@ -14,5 +19,5 @@ urlpatterns = [
     path('Contact', ContactView.as_view(), name='contact'),
     path('Portfolio', PortfolioView.as_view(), name='portfolio'),
     path('Portfolio/<slug:slug>', PortfolioDetailView.as_view(), name='gallery'),
-
+    path('Login', LoginView.as_view(), name='login')
 ]

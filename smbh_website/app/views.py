@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.views import View, generic
+from django.contrib.auth.views import LoginView as AuthView
+
 
 from blog.models import Post
 from .models import Portfolio, Contact
@@ -62,9 +64,9 @@ class ContactView(ContactMixin, generic.FormView):
 
 
 
-# Portfolio 
+# Portfolio
 class PortfolioView(generic.ListView):
-    
+
     template_name = 'portfolio.html'  # Default: <app_label>/<model_name>_list.html
     context_object_name = 'Portfolio'   # Default: object_list
     paginate_by = 12
@@ -85,3 +87,8 @@ class PortfolioDetailView(generic.DetailView):
     model = Portfolio
     template_name = 'PortfolioDetailView.html'
     context_object_name = 'Portfolio'
+
+
+class LoginView(AuthView):
+    template_name = 'registration/Login.html'
+    
