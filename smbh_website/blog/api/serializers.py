@@ -18,7 +18,7 @@ class PostListSerializer(serializers.ModelSerializer):
             'slug',
             'tags',
         )
-        # fields = '__all__'
+        
 
 
 class PostDetailSerializer(serializers.ModelSerializer):
@@ -28,7 +28,19 @@ class PostDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = '__all__'
+        # fields = '__all__'  # Security Risk
+        fields = (
+            'title',
+            'image',
+            'author',
+            'language',
+            'content',
+            'created',
+            'publish',
+            'updated',
+            'slug',
+            'tags',
+        )
 
 
 
