@@ -4,7 +4,7 @@ from time import strftime
 # Tag App
 from taggit.managers import TaggableManager
 # Ckeditor
-# from ckeditor_uploader.fields import RichTextUploadingField
+from ckeditor_uploader.fields import RichTextUploadingField
 from ckeditor.fields import RichTextField
 
 
@@ -38,7 +38,6 @@ class Service(models.Model):
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, verbose_name= _('Updated'))
 
     class Meta:
-        verbose_name = _('Service')
         verbose_name_plural = _('Services')
 
     def __str__(self):
@@ -46,22 +45,21 @@ class Service(models.Model):
 
 
 # Gallery
-class Portfolio(models.Model):
+class Profile(models.Model):
     title = models.CharField(max_length=100, verbose_name=_('Title'))
     subTitle = models.CharField(max_length=80, null=True, blank=True, verbose_name=_('SubTitle'))
-    Image = models.ImageField(upload_to='Portfolio/', verbose_name=_('Image'))
+    Image = models.ImageField(upload_to='Profile/', verbose_name=_('Image'))
     start = models.DateField(blank=True, null=True, verbose_name=_('Start'))
     end = models.DateField(null=True, blank=True, verbose_name=_('End'))
     # content = models.TextField(verbose_name=_('Content'))
-    content = RichTextField(config_name='smbh', verbose_name = _('Content'))
+    content = RichTextUploadingField(config_name='smbh', verbose_name = _('Content'))
     url = models.URLField(blank=True, null=True, verbose_name=_('Url'))
     tags = TaggableManager(verbose_name=_('Tags'))
     slug = models.SlugField(allow_unicode=True, unique=True, verbose_name=_('Slug'))
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, verbose_name= _('Updated'))
 
     class Meta:
-        verbose_name = _('Portfolio')
-        verbose_name_plural = _('Portfolio')
+        verbose_name_plural = _('Profile')
 
     def __str__(self):
         return self.title

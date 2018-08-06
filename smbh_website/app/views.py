@@ -1,10 +1,9 @@
 from django.shortcuts import render
 from django.views import View, generic
-from django.contrib.auth.views import LoginView as AuthView
 
 
 from blog.models import Post
-from .models import Portfolio, Contact
+from .models import Profile, Contact
 from django.utils import timezone
 
 # Translition
@@ -64,16 +63,16 @@ class ContactView(ContactMixin, generic.FormView):
 
 
 
-# Portfolio
-class PortfolioView(generic.ListView):
+# Profile
+class ProfileView(generic.ListView):
 
-    template_name = 'portfolio.html'  # Default: <app_label>/<model_name>_list.html
-    context_object_name = 'Portfolio'   # Default: object_list
+    template_name = 'Profile.html'  # Default: <app_label>/<model_name>_list.html
+    context_object_name = 'Profile'   # Default: object_list
     paginate_by = 12
 
     # Default: Model.objects.all()
     def get_queryset(self):
-        queryset = Portfolio.objects.all().order_by('-updated')
+        queryset = Profile.objects.all().order_by('-updated')
         return queryset
 
     # Add Extra Context
@@ -82,13 +81,8 @@ class PortfolioView(generic.ListView):
         return context
 
 
-# Portfolio Detail
-class PortfolioDetailView(generic.DetailView):
-    model = Portfolio
-    template_name = 'PortfolioDetailView.html'
-    context_object_name = 'Portfolio'
-
-
-class LoginView(AuthView):
-    template_name = 'registration/Login.html'
-    
+# Profile Detail
+class ProfileDetailView(generic.DetailView):
+    model = Profile
+    template_name = 'ProfileDetailView.html'
+    context_object_name = 'Profile'

@@ -57,7 +57,7 @@ SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
 
 # Django middleware security
-SECURE_SSL_HOST = True 
+SECURE_SSL_HOST = True
 
 # STORAGES
 # ------------------------------------------------------------------------------
@@ -86,6 +86,9 @@ EMAIL_SUBJECT_PREFIX = env('DJANGO_EMAIL_SUBJECT_PREFIX', default='[SMBH WebSite
 
 # ADMIN
 # ------------------------------------------------------------------------------
+# Django Admin URL.
+ADMIN_URL = 'poshtePardeh/'
+# https://docs.djangoproject.com/en/dev/ref/settings/#admins
 
 
 # Anymail (Mailgun)
@@ -171,4 +174,3 @@ LOGGING = {
 CLICKY_SITE_ID = '101116685'
 # CRAZY_EGG_ACCOUNT_NUMBER = 'xxxxxxxx'
 GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-121819097-1'
-

@@ -35,7 +35,7 @@ LANGUAGES = [
     ('en', _('English')),
 ]
 # Translition
-LOCALE_PATHS = [    
+LOCALE_PATHS = [
     # My Apps
     str(APPS_DIR.path('app/locale')),
     str(APPS_DIR.path('blog/locale')),
@@ -101,7 +101,7 @@ THIRD_PARTY_APPS = [
 ]
 LOCAL_APPS = [
     'smbh_website.users.apps.UsersAppConfig',
-   
+
     # My Apps
     'app',
     'blog',
@@ -215,12 +215,15 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         # https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
         'APP_DIRS': True,
-        # 'DIRS': [
-        #     str(APPS_DIR.path('templates')),
-        #     # My Apps
-        #     # str(APPS_DIR.path('app/templates')),
-        #     # str(APPS_DIR.path('blog/templates')),
-        # ],
+        'DIRS': [
+            # Root
+            str(APPS_DIR.path('templates')),
+            # My Apps
+            # str(APPS_DIR.path('app/templates')),
+
+            # Errors
+            str(APPS_DIR.path('templates/errors')),
+        ],
         'OPTIONS': {
 
             # Debugging Complex Templates
@@ -265,7 +268,7 @@ EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.s
 # ADMIN
 # ------------------------------------------------------------------------------
 # Django Admin URL.
-ADMIN_URL = 'poshtePardeh/'
+ADMIN_URL = 'admin/'
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = [
     ("""smbh""", 'xsmbhx@yahoo.com'),
@@ -289,7 +292,6 @@ ACCOUNT_ADAPTER = 'smbh_website.users.adapters.AccountAdapter'
 SOCIALACCOUNT_ADAPTER = 'smbh_website.users.adapters.SocialAccountAdapter'
 
 
-# ------------------------------------------------------------------------------
 # Django CKeditor
 # ------------------------------------------------------------------------------
 
@@ -371,4 +373,3 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
-

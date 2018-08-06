@@ -2,11 +2,10 @@ from django.urls import path, include
 
 from .views import (HomeView,
     ContactView,
-    PortfolioView,
-    PortfolioDetailView,
-    LoginView
+    ProfileView,
+    ProfileDetailView
     )
-
+from django.contrib.auth import views as auth_views
 
 
 # NameSpace
@@ -17,7 +16,10 @@ urlpatterns = [
 
     path('', HomeView.as_view(), name='home'),
     path('Contact', ContactView.as_view(), name='contact'),
-    path('Portfolio', PortfolioView.as_view(), name='portfolio'),
-    path('Portfolio/<slug:slug>', PortfolioDetailView.as_view(), name='gallery'),
-    path('Login', LoginView.as_view(), name='login')
+    path('Profile', ProfileView.as_view(), name='profile'),
+    path('Profile/<slug:slug>', ProfileDetailView.as_view(), name='gallery'),
+    # path('Login', auth_views.login, {'template_name': 'registration/Login.html'}, name='login'),
+    path('Login', auth_views.login, name='login'),
+    path('Logout', auth_views.logout, name='logout'),
+
 ]

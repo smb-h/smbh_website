@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import AboutMe, Service, Portfolio, Contact
+from .models import AboutMe, Service, Profile, Contact
 
 
 class AboutMeAdmin(admin.ModelAdmin):
@@ -32,7 +32,7 @@ class ServiceAdmin(admin.ModelAdmin):
     search_fields = ['updated', 'title', 'content', 'tags']
 
 
-class PortfolioAdmin(admin.ModelAdmin):
+class ProfileAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Information', {'fields': ['title', 'subTitle', 'Image', 'content']}),
         ('Time', {'fields': ['start', 'end']}),
@@ -66,5 +66,5 @@ class ContactMeAdmin(admin.ModelAdmin):
 
 admin.site.register(AboutMe, AboutMeAdmin)
 admin.site.register(Service, ServiceAdmin)
-admin.site.register(Portfolio, PortfolioAdmin)
+admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Contact, ContactMeAdmin)

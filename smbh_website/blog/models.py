@@ -14,10 +14,11 @@ from ckeditor_uploader.fields import RichTextUploadingField
 
 
 
+
 # initial a directory for files of each user
 def user_directory_path(self, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/year-month-day
-    return ('Uploads/{0}/{1}/{2}'.format(self.author, strftime('%Y-%m'), filename))
+    return ('Uploads/{0}/{1}/{2}'.format(strftime('%Y-%m-%d'), self.author, filename))
 
 
 # To use in simple language
