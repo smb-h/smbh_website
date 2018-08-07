@@ -13,6 +13,8 @@ from rest_framework.permissions import (
                                             IsAuthenticatedOrReadOnly,
                                         )
 from .permissions import IsOwnerOrReadOnly
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
 
 
 
@@ -21,12 +23,23 @@ class PostListAPIView(ListAPIView):
     queryset = Post.objects.all()
     serializer_class = PostListSerializer
 
+    # Filters
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ['title', 'author', 'publish',]
+    # OR
+    # filter_backends = (SearchFilter,)
+    # search_fields = ('title', 'author')
 
 # Detail
 class PostDetailAPIView(RetrieveAPIView):
-    queryset = Post.objects.filter()
     serializer_class = PostDetailSerializer
     lookup_field = 'slug'
+
+
+    def get_queryset(self, *args, **kwargs):
+        # queryset = Post.objects.filter(author=self.request.user)
+        queryset = Post.objects.all()
+        return queryset
 
 
 # Update
@@ -45,7 +58,8 @@ class PostUpdateAPIView(RetrieveUpdateDestroyAPIView):
 
 # Create
 class PostCreateAPIView(CreateAPIView):
-    queryset = Post.objects.filter()
+    # queryset = Post.objects.filter()
+    # model = Post
     serializer_class = PostDetailSerializer
     permission_classes = [IsAuthenticated, ]
     lookup_field = 'slug'

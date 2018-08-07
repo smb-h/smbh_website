@@ -86,6 +86,7 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount',
     'rest_framework',
 
+
     # Utilities
     # Django Taggit
     'taggit',
@@ -98,6 +99,8 @@ THIRD_PARTY_APPS = [
     'compressor',
     # form field rendering in templates
     'widget_tweaks',
+    # Django filters
+    'django_filters',
 ]
 LOCAL_APPS = [
     'smbh_website.users.apps.UsersAppConfig',
@@ -373,3 +376,15 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
+
+
+
+# Django Rest Framework
+# ------------------------------------------------------------------------------
+
+
+
+
+
+
+# ------------------------------------------------------------------------------
