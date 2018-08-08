@@ -21,11 +21,6 @@ def user_directory_path(self, filename):
     return ('Uploads/{0}/{1}/{2}'.format(strftime('%Y-%m-%d'), self.author, filename))
 
 
-# To use in simple language
-# Languages = (
-#     ('fa', 'Persian'),
-#     ('en-us', 'English'),
-# )
 LANGUAGES = [
     ('fa', _('Persian')),
     ('en', _('English')),
@@ -36,7 +31,6 @@ LANGUAGES = [
 class Post(models.Model):
     title = models.CharField(max_length = 80, verbose_name = _('Title'))
     image = models.ImageField(blank=True, null=True, upload_to=user_directory_path, verbose_name=_('Image'))
-    # author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name = _('Author'))
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name = _('Author'))
     language = models.CharField(max_length=50, choices=LANGUAGES, default = 'fa', verbose_name=_('Language'))
     # language = models.CharField(max_length=50, choices=settings.LANGUAGES, default = 'fa', verbose_name=_('Language'))
@@ -53,7 +47,6 @@ class Post(models.Model):
 
     def was_published_recently(self):
         now = timezone.now()
-        # return now - datetime.timedelta(days=1) <= self.publish <= now
         return self.publish <= now
 
     was_published_recently.admin_order_field = 'publish'
@@ -63,11 +56,8 @@ class Post(models.Model):
 
 
     def get_absolute_url(self):
-        # return reverse('people.views.details', args=[str(self.id)])
-        # return reverse('Blog:Posts/{}'.format(self.slug), kwargs= {'id': self.id })
-        # return reverse('Blog:Posts/{}'.format(self.slug))
         return reverse('Blog:post', kwargs={"slug": self.slug})
-        # return reverse("flavors:detail", kwargs={"slug": self.slug})
+
 
 
     class Meta:
@@ -78,7 +68,7 @@ class Post(models.Model):
 
     # formatting post objects to show
     def __str__(self):
-        # return self.title        
+        # return self.title
         return '{} - {}'.format(self.title, self.created)
 
 

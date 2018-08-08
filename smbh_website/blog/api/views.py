@@ -14,7 +14,7 @@ from rest_framework.permissions import (
                                         )
 from .permissions import IsOwnerOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.filters import SearchFilter
+from rest_framework.filters import SearchFilter, OrderingFilter
 
 
 
@@ -24,11 +24,15 @@ class PostListAPIView(ListAPIView):
     serializer_class = PostListSerializer
 
     # Filters
-    filter_backends = (DjangoFilterBackend,)
+    filter_backends = (SearchFilter, DjangoFilterBackend, OrderingFilter,)
+    # filter_backends = (DjangoFilterBackend,)
     filter_fields = ['title', 'author', 'publish',]
     # OR
     # filter_backends = (SearchFilter,)
-    # search_fields = ('title', 'author')
+    search_fields = ('title', 'author')
+    # Ordering
+    # filter_backends = (OrderingFilter,)
+    ordering_fields = ('title', 'publish')
 
 # Detail
 class PostDetailAPIView(RetrieveAPIView):
