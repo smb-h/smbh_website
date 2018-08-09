@@ -18,6 +18,7 @@ if READ_DOT_ENV_FILE:
     # OS environment variables take precedence over variables from .env
     env.read_env(str(ROOT_DIR.path('.env')))
 
+
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
@@ -36,12 +37,12 @@ LANGUAGES = [
 ]
 # Translition
 LOCALE_PATHS = [
-    # My Apps
-    str(APPS_DIR.path('app/locale')),
-    str(APPS_DIR.path('blog/locale')),
     # Root
-    str(APPS_DIR.path('locale')),
+    str(ROOT_DIR),
+    # My Apps
+    str(APPS_DIR.path('locale'))
 ]
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#site-id
 SITE_ID = 1
 # https://docs.djangoproject.com/en/dev/ref/settings/#use-i18n
@@ -50,6 +51,7 @@ USE_I18N = True
 USE_L10N = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#use-tz
 USE_TZ = True
+
 
 # DATABASES
 # ------------------------------------------------------------------------------
@@ -60,12 +62,14 @@ DATABASES = {
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
+
 # URLS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf
 ROOT_URLCONF = 'config.urls'
 # https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = 'config.wsgi.application'
+
 
 # APPS
 # ------------------------------------------------------------------------------
@@ -81,11 +85,12 @@ DJANGO_APPS = [
 ]
 THIRD_PARTY_APPS = [
     'crispy_forms',
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    # DRF
     'rest_framework',
-
 
     # Utilities
     # Django Taggit
@@ -95,10 +100,6 @@ THIRD_PARTY_APPS = [
     'ckeditor_uploader',
     # Django Analytical
     'analytical',
-    # Django Css/JS Compressor
-    'compressor',
-    # form field rendering in templates
-    'widget_tweaks',
     # Django filters
     'django_filters',
 ]
@@ -107,10 +108,12 @@ LOCAL_APPS = [
 
     # My Apps
     'app',
-    'blog',
+    'posts',
+    'comments'
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+
 
 # MIGRATIONS
 # ------------------------------------------------------------------------------
@@ -118,6 +121,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 MIGRATION_MODULES = {
     'sites': 'smbh_website.contrib.sites.migrations'
 }
+
 
 # AUTHENTICATION
 # ------------------------------------------------------------------------------
@@ -129,11 +133,11 @@ AUTHENTICATION_BACKENDS = [
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
 AUTH_USER_MODEL = 'users.User'
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
-LOGIN_REDIRECT_URL = 'users:redirect'
+LOGIN_REDIRECT_URL = 'Users:redirect'
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
-# LOGIN_URL = 'account_login'
+LOGIN_URL = 'account_login'
 
-LOGIN_URL = 'Login'
+# LOGIN_URL = 'Login'
 
 
 # PASSWORDS
@@ -162,6 +166,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
 # MIDDLEWARE
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#middleware
@@ -179,6 +184,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 # STATIC
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-root
@@ -190,7 +196,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     # My Apps
     str(APPS_DIR.path('app/static')),
-    str(APPS_DIR.path('blog/static')),
+    str(APPS_DIR.path('posts/static')),
+    str(APPS_DIR.path('comments/static')),
 
 ]
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
@@ -198,9 +205,8 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     # other finders..
-    # Compressor
-    'compressor.finders.CompressorFinder',
 ]
+
 
 # MEDIA
 # ------------------------------------------------------------------------------
@@ -208,6 +214,7 @@ STATICFILES_FINDERS = [
 MEDIA_ROOT = str(APPS_DIR('media'))
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = '/media/'
+
 
 # TEMPLATES
 # ------------------------------------------------------------------------------
@@ -221,9 +228,6 @@ TEMPLATES = [
         'DIRS': [
             # Root
             str(APPS_DIR.path('templates')),
-            # My Apps
-            # str(APPS_DIR.path('app/templates')),
-
             # Errors
             str(APPS_DIR.path('templates/errors')),
         ],
@@ -256,6 +260,7 @@ TEMPLATES = [
 # http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+
 # FIXTURES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#fixture-dirs
@@ -263,10 +268,14 @@ FIXTURE_DIRS = (
     str(APPS_DIR.path('fixtures')),
 )
 
+
 # EMAIL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
-EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+# EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+# Local Test
+EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
+
 
 # ADMIN
 # ------------------------------------------------------------------------------
@@ -379,10 +388,17 @@ CKEDITOR_CONFIGS = {
 
 
 
+# django-compressor
+# ------------------------------------------------------------------------------
+# Django Css/JS Compressor
+# https://django-compressor.readthedocs.io/en/latest/quickstart/#installation
+INSTALLED_APPS += ['compressor']
+STATICFILES_FINDERS += ['compressor.finders.CompressorFinder']
+
+
+
 # Django Rest Framework
 # ------------------------------------------------------------------------------
-
-
 
 
 
