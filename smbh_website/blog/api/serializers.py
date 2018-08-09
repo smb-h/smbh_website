@@ -1,48 +1,42 @@
-from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer, SlugRelatedField
 from blog.models import Post
 
 
-class PostListSerializer(serializers.ModelSerializer):
+class PostListSerializer(ModelSerializer):
 
-    tags = serializers.StringRelatedField(many=True)
-    # author = serializers.SlugRelatedField(slug_field='username', read_only=True)
-    author = serializers.ReadOnlyField(source='author.username')
+    tags = SlugRelatedField(many=True, read_only=True, slug_field='name')
+    author = SlugRelatedField(read_only=True, slug_field='username')
 
     class Meta:
         model = Post
         fields = (
             'title',
+            'image',
             'author',
             'publish',
-            'updated',
             'slug',
             'tags',
+            'language',
         )
-        
+        read_only_fields = ('author', 'slug')
 
 
-class PostDetailSerializer(serializers.ModelSerializer):
+class PostDetailSerializer(ModelSerializer):
 
-    tags = serializers.StringRelatedField(many=True)
-    author = serializers.ReadOnlyField(source='author.username')
+    tags = SlugRelatedField(many=True, read_only=True, slug_field='name')
+    author = SlugRelatedField(read_only=True, slug_field='username')
 
     class Meta:
         model = Post
-        # fields = '__all__'  # Security Risk
         fields = (
             'title',
             'image',
             'author',
             'language',
             'content',
-            'created',
             'publish',
-            'updated',
             'slug',
             'tags',
+            'language',
         )
-
-
-
-
-
+        read_only_fields = ('author', 'slug')
