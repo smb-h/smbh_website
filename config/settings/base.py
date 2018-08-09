@@ -108,7 +108,7 @@ LOCAL_APPS = [
 
     # My Apps
     'app',
-    'posts',
+    'blog',
     'comments'
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -196,7 +196,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     # My Apps
     str(APPS_DIR.path('app/static')),
-    str(APPS_DIR.path('posts/static')),
+    str(APPS_DIR.path('blog/static')),
     str(APPS_DIR.path('comments/static')),
 
 ]
