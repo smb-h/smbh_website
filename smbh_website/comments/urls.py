@@ -1,13 +1,12 @@
-from django.conf.urls import url
-from django.contrib import admin
+from django.urls import path, include
+from .views import (comment_thread, comment_delete)
 
-from .views import (
-    comment_thread,
-    comment_delete
 
-    )
+app_name = 'Comments'
 
 urlpatterns = [
-    url(r'^(?P<id>\d+)/$', comment_thread, name='thread'),
-    url(r'^(?P<id>\d+)/delete/$', comment_delete, name='delete'),
+
+    path('<id>', comment_thread, name='thread'),
+    path('<id>/Delete'), comment_delete, name='delete')
+
 ]

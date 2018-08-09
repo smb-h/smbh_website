@@ -61,8 +61,6 @@ class ContactView(ContactMixin, generic.FormView):
 
 
 
-
-
 # Profile
 class ProfileView(generic.ListView):
 
