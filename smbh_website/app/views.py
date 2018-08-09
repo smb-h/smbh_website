@@ -66,7 +66,7 @@ class ContactView(ContactMixin, generic.FormView):
 # Profile
 class ProfileView(generic.ListView):
 
-    template_name = 'Profile.html'  # Default: <app_label>/<model_name>_list.html
+    template_name = 'profile.html'  # Default: <app_label>/<model_name>_list.html
     context_object_name = 'Profile'   # Default: object_list
     paginate_by = 12
 
