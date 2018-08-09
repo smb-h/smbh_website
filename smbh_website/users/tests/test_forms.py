@@ -1,7 +1,7 @@
 import pytest
 
-from smbh_website.users.forms import UserCreationForm
-from smbh_website.users.tests.factories import UserFactory
+from islamic_resources.users.forms import UserCreationForm
+from islamic_resources.users.tests.factories import UserFactory
 
 pytestmark = pytest.mark.django_db
 
