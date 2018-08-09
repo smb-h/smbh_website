@@ -32,13 +32,13 @@ def unique_slug_generator(instance, new_slug=None):
         slug = slugify(instance.title, allow_unicode=True)
 
     Klass = instance.__class__
-    qs_exists = Klass.objects.filter(slug=slug).exists()
-    if qs_exists:
-        new_slug = "{slug}-{date}".format(
-                    slug=slug,
-                    date=tmp
-                )
-        return unique_slug_generator(instance, new_slug=new_slug)
+    # qs_exists = Klass.objects.filter(slug=slug).exists()
+    # if qs_exists:
+    #     new_slug = "{slug}-{date}".format(
+    #                 slug=slug,
+    #                 date=tmp
+    #             )
+    #     return unique_slug_generator(instance, new_slug=new_slug)
+    # return slug
     return slug
-
 

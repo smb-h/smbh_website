@@ -10,6 +10,7 @@ from rest_framework.generics import (
 from .serializers import (PostListSerializer, PostDetailSerializer)
 # Permissions
 from rest_framework.permissions import (
+											AllowAny,
                                             IsAuthenticated,
                                             IsAdminUser,
                                             IsAuthenticatedOrReadOnly,
@@ -25,7 +26,7 @@ from app.utils.Unique_Slug_Generator import unique_slug_generator
 # List
 class PostListAPIView(ListAPIView):
     serializer_class = PostListSerializer
-
+    permission_classes = [AllowAny]
     # Filters
     filter_backends = (SearchFilter, DjangoFilterBackend, OrderingFilter,)
     # filter_backends = (DjangoFilterBackend,)
@@ -45,16 +46,18 @@ class PostListAPIView(ListAPIView):
 # Detail
 class PostDetailAPIView(RetrieveAPIView):
     serializer_class = PostDetailSerializer
+    permission_classes = [AllowAny]
     lookup_field = 'slug'
 
     def get_queryset(self, *args, **kwargs):
         queryset = Post.objects.filter(slug = self.kwargs['slug'])
         return queryset
 
+
 # Create
 class PostCreateAPIView(CreateAPIView):
     serializer_class = PostDetailSerializer
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [IsAuthenticated]
     lookup_field = 'slug'
 
     def perform_create(self, serializer):
@@ -64,7 +67,7 @@ class PostCreateAPIView(CreateAPIView):
 # Update
 class PostUpdateAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = PostDetailSerializer
-    permission_classes = [IsOwnerOrReadOnly, IsAdminUser, ]
+    permission_classes = [IsOwnerOrReadOnly, IsAdminUser]
     lookup_field = 'slug'
 
     def perform_create(self, serializer):
