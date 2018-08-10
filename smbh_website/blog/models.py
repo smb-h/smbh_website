@@ -13,6 +13,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 # from ckeditor.fields import RichTextField
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from rest_framework.reverse import reverse as api_reverse
 
 
 
@@ -31,17 +32,17 @@ LANGUAGES = [
 
 # Post
 class Post(models.Model):
-    title = models.CharField(max_length = 80, verbose_name = _('Title'))
+    title = models.CharField(max_length = 255, verbose_name = _('Title'))
     image = models.ImageField(blank=True, null=True, upload_to=user_directory_path, verbose_name=_('Image'))
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name = _('Author'))
-    language = models.CharField(max_length=50, choices=LANGUAGES, default = 'fa', verbose_name=_('Language'))
+    language = models.CharField(max_length = 255, choices=LANGUAGES, default = 'fa', verbose_name=_('Language'))
     # language = models.CharField(max_length=50, choices=settings.LANGUAGES, default = 'fa', verbose_name=_('Language'))
     # content = models.TextField(verbose_name = _('Content'))
     content = RichTextUploadingField(config_name='ck_blog', verbose_name = _('Content'))
     # content = RichTextField(config_name='awesome_ckeditor', verbose_name = _('Content'))
     # attach = models.FileField(blank= True, null=True, upload_to=user_directory_path, verbose_name= _('Attach Files'))
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name= _('Created'))
-    publish = models.DateTimeField(verbose_name=_('Publish'))
+    publish = models.DateTimeField(blank=True, null=True, verbose_name=_('Publish'))
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, verbose_name= _('Updated'))
     slug = models.SlugField(allow_unicode=True, unique=True, verbose_name=_('Slug'))
     tags = TaggableManager(verbose_name=_('Tags'))
@@ -60,7 +61,8 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('Blog:post', kwargs={"slug": self.slug})
 
-
+    def get_api_url(self, request = None):
+        return api_reverse('Blog:post_api', kwargs={"slug": self.slug}, request = request)
 
     class Meta:
         ordering = ['-updated', '-created']

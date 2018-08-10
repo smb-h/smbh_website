@@ -3,3 +3,5 @@ Create API View
 Login & Logout View
 
 Modify Blog Comment view shift to cbv
+
+add publish logic to model managers

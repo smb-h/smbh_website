@@ -33,6 +33,52 @@ from rest_framework.mixins import DestroyModelMixin, UpdateModelMixin
 
 
 
+
+# Post Create
+class PostCreateAPIView(CreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostDetailSerializer
+    permission_classes = [IsAuthenticated]
+    lookup_field = 'slug'
+
+    def perform_create(self, serializer):
+        serializer.save(author = self.request.user, slug = unique_slug_generator(self.request.data['title']))
+
+
+# Post Detail
+class PostDetailAPIView(RetrieveAPIView):
+    serializer_class = PostDetailSerializer
+    permission_classes = [AllowAny]
+    lookup_field = 'slug'
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = Post.objects.filter(slug = self.kwargs['slug'])
+        return queryset
+
+    # Default
+    # def get_object(self, *args, **kwargs):
+    #     pk = self.kwargs.get('pk')
+    #     return Post.objects.get(pk = pk)
+
+
+# Post Update
+class PostRUDAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = PostDetailSerializer
+    permission_classes = [IsOwnerOrReadOnly, IsAdminUser]
+    lookup_field = 'slug'
+
+    def perform_create(self, serializer):
+        serializer.save(slug = unique_slug_generator(self))
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = Post.objects.filter(slug = self.kwargs['slug'])
+        return queryset
+
+    def get_serializer_context(self, *args, **kwargs):
+        context = {'request': self.request}
+        return context
+
+
 # Post List
 class PostListAPIView(ListAPIView):
     serializer_class = PostListSerializer
@@ -52,44 +98,9 @@ class PostListAPIView(ListAPIView):
         queryset = Post.objects.filter(publish__lte = timezone.now())
         return queryset
 
-
-# Post Detail
-class PostDetailAPIView(RetrieveAPIView):
-    serializer_class = PostDetailSerializer
-    permission_classes = [AllowAny]
-    lookup_field = 'slug'
-
-    def get_queryset(self, *args, **kwargs):
-        queryset = Post.objects.filter(slug = self.kwargs['slug'])
-        return queryset
-
-    # Default
-    # def get_object(self, *args, **kwargs):
-    #     pk = self.kwargs.get('pk')
-    #     return Post.objects.get(pk = pk)
-
-# Post Create
-class PostCreateAPIView(CreateAPIView):
-    serializer_class = PostDetailSerializer
-    permission_classes = [IsAuthenticated]
-    lookup_field = 'slug'
-
-    def perform_create(self, serializer):
-        serializer.save(author = self.request.user, slug = unique_slug_generator(self))
-
-
-# Post Update
-class PostRUDAPIView(RetrieveUpdateDestroyAPIView):
-    serializer_class = PostDetailSerializer
-    permission_classes = [IsOwnerOrReadOnly, IsAdminUser]
-    lookup_field = 'slug'
-
-    def perform_create(self, serializer):
-        serializer.save(slug = unique_slug_generator(self))
-
-    def get_queryset(self, *args, **kwargs):
-        queryset = Post.objects.filter(slug = self.kwargs['slug'])
-        return queryset
+    def get_serializer_context(self, *args, **kwargs):
+        context = {'request': self.request}
+        return context
 
 
 
@@ -147,3 +158,7 @@ class CommentListAPIView(ListAPIView):
                     Q(user__last_name__icontains=query)
                     ).distinct()
         return queryset_list
+
+    def get_serializer_context(self, *args, **kwargs):
+        context = {'request': self.request}
+        return context

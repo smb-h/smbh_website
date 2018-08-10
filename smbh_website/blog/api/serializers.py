@@ -18,7 +18,8 @@ class PostListSerializer(ModelSerializer):
     tags = SlugRelatedField(many=True, read_only=True, slug_field='name')
     author = SlugRelatedField(read_only=True, slug_field='username')
     # author = SerializerMethodField()
-    url = HyperlinkedIdentityField(read_only=True, view_name='Blog:post_api', lookup_field='slug')
+    # url = HyperlinkedIdentityField(read_only=True, view_name='Blog:post_api', lookup_field='slug')
+    url = SerializerMethodField(read_only=True)
 
     class Meta:
         model = Post
@@ -36,6 +37,9 @@ class PostListSerializer(ModelSerializer):
     # def get_author(self, obj):
     #     return (obj.author.username)
 
+    def get_url(self, obj):
+        request = self.context.get('request')
+        return obj.get_api_url(request = request)
 
 
 class PostDetailSerializer(ModelSerializer):
@@ -53,9 +57,10 @@ class PostDetailSerializer(ModelSerializer):
             'content',
             'publish',
             'tags',
-            'language',
+            'language'
         )
         read_only_fields = ('author',)
+
 
 
 
