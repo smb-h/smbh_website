@@ -11,6 +11,8 @@ from taggit.managers import TaggableManager
 # Ckeditor
 from ckeditor_uploader.fields import RichTextUploadingField
 # from ckeditor.fields import RichTextField
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 
 
 
@@ -27,7 +29,7 @@ LANGUAGES = [
 ]
 
 
-# Blog
+# Post
 class Post(models.Model):
     title = models.CharField(max_length = 80, verbose_name = _('Title'))
     image = models.ImageField(blank=True, null=True, upload_to=user_directory_path, verbose_name=_('Image'))
@@ -35,7 +37,7 @@ class Post(models.Model):
     language = models.CharField(max_length=50, choices=LANGUAGES, default = 'fa', verbose_name=_('Language'))
     # language = models.CharField(max_length=50, choices=settings.LANGUAGES, default = 'fa', verbose_name=_('Language'))
     # content = models.TextField(verbose_name = _('Content'))
-    content = RichTextUploadingField(config_name='smbh', verbose_name = _('Content'))
+    content = RichTextUploadingField(config_name='ck_blog', verbose_name = _('Content'))
     # content = RichTextField(config_name='awesome_ckeditor', verbose_name = _('Content'))
     # attach = models.FileField(blank= True, null=True, upload_to=user_directory_path, verbose_name= _('Attach Files'))
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name= _('Created'))
@@ -61,8 +63,6 @@ class Post(models.Model):
 
 
     class Meta:
-        verbose_name = _('Post')
-        verbose_name_plural = _('Posts')
         ordering = ['-updated', '-created']
 
 
@@ -73,6 +73,69 @@ class Post(models.Model):
 
 
 
-# Translations
-# django-admin makemessage
-# django-admin compilemessage
+
+
+
+
+# Comment Manager
+class CommentManager(models.Manager):
+    def all(self):
+        qs = super(CommentManager, self).filter(parent=None)
+        return qs
+
+    def filter_by_instance(self, instance):
+        content_type = ContentType.objects.get_for_model(instance.__class__)
+        obj_id = instance.id
+        qs = super(CommentManager, self).filter(content_type=content_type, object_id= obj_id).filter(parent=None)
+        return qs
+
+    def create_by_model_type(self, model_type, slug, content, user, parent_obj=None):
+        model_qs = ContentType.objects.filter(model=model_type)
+        if model_qs.exists():
+            SomeModel = model_qs.first().model_class()
+            obj_qs = SomeModel.objects.filter(slug=slug)
+            if obj_qs.exists() and obj_qs.count() == 1:
+                instance = self.model()
+                instance.content = content
+                instance.user = user
+                instance.content_type = model_qs.first()
+                instance.object_id = obj_qs.first().id
+                if parent_obj:
+                    instance.parent = parent_obj
+                instance.save()
+                return instance
+        return None
+
+
+# Comment
+class Comment(models.Model):
+    user        = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name = _('User'))
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, verbose_name = _('Content Type'))
+    object_id = models.PositiveIntegerField(verbose_name = _('ID'))
+    content_object = GenericForeignKey('content_type', 'object_id')
+    parent      = models.ForeignKey("self", null=True, blank=True, on_delete=models.CASCADE, verbose_name = _('Parent'))
+    content     = models.TextField(verbose_name = _('Content'))
+    timestamp   = models.DateTimeField(auto_now_add=True, verbose_name = _('Timestamp'))
+
+    objects = CommentManager()
+
+    class Meta:
+        ordering = ['-timestamp']
+
+    def __str__(self):
+        return (str(self.user.username) + content_type)
+
+    def get_absolute_url(self):
+        return reverse("Blog:thread", kwargs={"id": self.id})
+
+    def get_delete_url(self):
+        return reverse("Blog:delete", kwargs={"id": self.id})
+
+    def children(self): #replies
+        return Comment.objects.filter(parent=self)
+
+    @property
+    def is_parent(self):
+        if self.parent is not None:
+            return False
+        return True

@@ -18,7 +18,7 @@ def user_directory_path(self, filename):
 class AboutMe(models.Model):
     title = models.CharField(max_length=100, verbose_name=_('Title'))
     # content = models.TextField(verbose_name=_('Content'))
-    content = RichTextField(config_name='smbh', verbose_name = _('Content'))
+    content = RichTextField(config_name='ck_blog', verbose_name = _('Content'))
     tags = TaggableManager(verbose_name=_('Tags'))
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, verbose_name= _('Updated'))
 
@@ -33,7 +33,7 @@ class AboutMe(models.Model):
 class Service(models.Model):
     title = models.CharField(max_length=100, verbose_name=_('Title'))
     content = models.CharField(max_length=300, blank=True, null=True, verbose_name=_('Content'))
-    # content = RichTextField(config_name='smbh', verbose_name = _('Content'))
+    # content = RichTextField(config_name='ck_blog', verbose_name = _('Content'))
     tags = TaggableManager(verbose_name=_('Tags'))
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, verbose_name= _('Updated'))
 
@@ -52,7 +52,7 @@ class Profile(models.Model):
     start = models.DateField(blank=True, null=True, verbose_name=_('Start'))
     end = models.DateField(null=True, blank=True, verbose_name=_('End'))
     # content = models.TextField(verbose_name=_('Content'))
-    content = RichTextUploadingField(config_name='smbh', verbose_name = _('Content'))
+    content = RichTextUploadingField(config_name='ck_blog', verbose_name = _('Content'))
     url = models.URLField(blank=True, null=True, verbose_name=_('Url'))
     tags = TaggableManager(verbose_name=_('Tags'))
     slug = models.SlugField(allow_unicode=True, unique=True, verbose_name=_('Slug'))
@@ -72,7 +72,7 @@ class Contact (models.Model):
     phone = models.CharField(max_length=20, blank=True, null=True, verbose_name=_('Phone'))
     subject = models.CharField(max_length=100, verbose_name=_('Subject'))
     # content = models.TextField(verbose_name=_('Content'))
-    content = RichTextField(config_name='smbh', verbose_name = _('Content'))
+    content = RichTextField(config_name='ck_blog', verbose_name = _('Content'))
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, verbose_name= _('Updated'))
 
     class Meta:

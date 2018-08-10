@@ -109,7 +109,6 @@ LOCAL_APPS = [
     # My Apps
     'app',
     'blog',
-    'comments'
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -196,8 +195,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     # My Apps
     str(APPS_DIR.path('app/static')),
-    str(APPS_DIR.path('blog/static')),
-    str(APPS_DIR.path('comments/static')),
+    str(APPS_DIR.path('blog/static'))
 
 ]
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
@@ -317,7 +315,7 @@ CKEDITOR_RESTRICT_BY_DATE = True
 
 # Ckeditor Config
 CKEDITOR_CONFIGS = {
-    'smbh': {
+    'ck_blog': {
         # 'skin': 'moono-dark',
         # 'skin': 'office2013',
         'skin': 'moono-lisa',
