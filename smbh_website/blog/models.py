@@ -65,7 +65,7 @@ class Post(models.Model):
         return api_reverse('Blog:post_api', kwargs={"slug": self.slug}, request = request)
 
     class Meta:
-        ordering = ['-updated', '-title']
+        ordering = ['-publish', '-title']
 
 
     # formatting post objects to show
