@@ -197,8 +197,6 @@ STATIC_ROOT = str(CDN.path('static'))
 STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = [
-    # Root Dir (# TODO: Remove this on Production cause Nginx will serve this)
-    # str(CDN.path('static')),
     # Users
     str(APPS_DIR.path('users/static')),
     # My Apps
