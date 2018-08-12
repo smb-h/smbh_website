@@ -24,13 +24,18 @@ urlpatterns += i18n_patterns(
 
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
-    
+
+    # User management
+    path("Users/", include("smbh_website.users.urls", namespace="Users"),),
+    path("Accounts/", include("allauth.urls")),
+    # OAuth 2
+    path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 
     # My Apps
     path('', include('app.urls', namespace='App')),
     path('Blog/', include('blog.urls', namespace='Blog')),
-    
-) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
+
+) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
@@ -55,4 +60,3 @@ if settings.DEBUG:
         ),
         path("500/", default_views.server_error),
     ]
-

@@ -42,7 +42,7 @@ class Post(models.Model):
     # content = RichTextField(config_name='awesome_ckeditor', verbose_name = _('Content'))
     # attach = models.FileField(blank= True, null=True, upload_to=user_directory_path, verbose_name= _('Attach Files'))
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name= _('Created'))
-    publish = models.DateTimeField(blank=True, null=True, verbose_name=_('Publish'))
+    publish = models.DateTimeField(default=timezone.now, verbose_name=_('Publish'))
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, verbose_name= _('Updated'))
     slug = models.SlugField(allow_unicode=True, unique=True, verbose_name=_('Slug'))
     tags = TaggableManager(verbose_name=_('Tags'))

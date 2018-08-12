@@ -22,7 +22,7 @@ from rest_framework.permissions import (
                                             IsAdminUser,
                                             IsAuthenticatedOrReadOnly,
                                         )
-from .permissions import IsOwnerOrReadOnly
+from app.api.permissions import IsOwnerOrReadOnly
 # Filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter

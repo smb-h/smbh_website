@@ -1,8 +1,7 @@
-from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView
-
+from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
@@ -54,18 +53,3 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
         return reverse("Users:detail", kwargs={"username": self.request.user.username})
 
 user_redirect_view = UserRedirectView.as_view()
-
-
-
-def user_activate_view(request, code=None, *args, **kwargs):
-    if code:
-        qs = User.objects.filter(activation_key=code)
-        if qs.exists() and qs.count() == 1:
-            _user = qs.first().user
-            if not _user.is_active:
-                _user.is_active = True
-                _user.save()
-                _user.activation_key=None
-                _user.save()
-                return redirect("/login")
-    return redirect("/login")

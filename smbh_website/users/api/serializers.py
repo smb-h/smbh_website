@@ -1,78 +1,68 @@
-from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import get_user_model
-
-
-
+from django.contrib.auth.models import Group
 from rest_framework.serializers import (
-    CharField,
-    EmailField,
-    HyperlinkedIdentityField,
-    ModelSerializer,
-    SerializerMethodField,
-    ValidationError
-    )
+                                            CharField,
+                                            EmailField,
+                                            HyperlinkedIdentityField,
+                                            ModelSerializer,
+                                            SerializerMethodField,
+                                            ValidationError
+                                        )
+from django.contrib.auth.password_validation import validate_password
+from django.core import exceptions
 
 
 User = get_user_model()
 
 
-class UserDetailSerializer(ModelSerializer):
-    class Meta:
-        model = User
-        fields = [
-            'username',
-            'email',
-            'first_name',
-            'last_name',
-        ]
-
-
-
-
+# User Create
 class UserCreateSerializer(ModelSerializer):
     email = EmailField(label='Email Address')
-    email2 = EmailField(label='Confirm Email')
     class Meta:
         model = User
         fields = [
             'username',
             'email',
-            'email2',
             'password',
-            
+            'password2',
         ]
         extra_kwargs = {"password":
-                            {"write_only": True}
-                            }
+                            {"write_only": True},
+                        'password2':
+                            {'write_only': True}
+                        }
+
     def validate(self, data):
-        # email = data['email']
-        # user_qs = User.objects.filter(email=email)
-        # if user_qs.exists():
-        #     raise ValidationError("This user has already registered.")
+        username = data['username']
+        username_qs = User.objects.filter(username=username)
+        if username_qs.exists():
+            raise ValidationError('This Username has already been taken.')
+        email = data['email']
+        email_qs = User.objects.filter(email=email)
+        if email_qs.exists():
+            raise ValidationError("This Email address has already been registered.")
         return data
 
 
-    def validate_email(self, value):
+    def validate_password(self, value):
         data = self.get_initial()
-        email1 = data.get("email2")
-        email2 = value
-        if email1 != email2:
-            raise ValidationError("Emails must match.")
-        
-        user_qs = User.objects.filter(email=email2)
-        if user_qs.exists():
-            raise ValidationError("This user has already registered.")
+        password2 = data.get("email2")
+        password = value
+        if password != password2:
+            raise ValidationError("The Password does not match.")
+        try:
+            # validate the password and catch the exception
+            validate_password(password=password, user=User)
 
+        # the exception raised here is different than serializers.ValidationError
+        except exceptions.ValidationError as e:
+            errors['password'] = list(e.messages)
+
+        if errors:
+            raise serializers.ValidationError(errors)
+
+        # return super(validate_password, self).validate(data)
         return value
-
-    def validate_email2(self, value):
-        data = self.get_initial()
-        email1 = data.get("email")
-        email2 = value
-        if email1 != email2:
-            raise ValidationError("Emails must match.")
-        return value
-
 
 
     def create(self, validated_data):
@@ -89,18 +79,34 @@ class UserCreateSerializer(ModelSerializer):
 
 
 
+# User Detail
+class UserDetailSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            'username',
+            'email',
+            'phone',
+            'birth_date',
+            'first_name',
+            'last_name'
+        ]
+        read_only_fields = ['username',]
+
+
+
+# User Login
 class UserLoginSerializer(ModelSerializer):
-    token = CharField(allow_blank=True, read_only=True)
     username = CharField()
     email = EmailField(label='Email Address')
+    token = CharField(allow_blank=True, read_only=True)
     class Meta:
         model = User
         fields = [
             'username',
             'email',
             'password',
-            'token',
-            
+            'token'
         ]
         extra_kwargs = {"password":
                             {"write_only": True}
@@ -113,3 +119,9 @@ class UserLoginSerializer(ModelSerializer):
         return data
 
 
+
+# Group
+class GroupSerializer(ModelSerializer):
+    class Meta:
+        model = Group
+        fields = ("name", )
