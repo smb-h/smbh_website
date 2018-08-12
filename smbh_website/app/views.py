@@ -20,7 +20,7 @@ class HomeView(View):
 
         Template = 'home.html'
 
-        LatestPost = Post.objects.filter(language = self.request.LANGUAGE_CODE, publish__lte = timezone.now()).order_by('-publish')[:3]
+        LatestPost = Post.objects.filter(language = self.request.LANGUAGE_CODE, publish__lte = timezone.now())[:3]
 
         context = {
             'LatestPost': LatestPost
