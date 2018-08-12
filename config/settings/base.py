@@ -134,9 +134,11 @@ AUTHENTICATION_BACKENDS = [
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
 AUTH_USER_MODEL = 'users.User'
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
+# https://docs.djangoproject.com/en/dev/ref/settings/#logout-redirect-url
 LOGIN_REDIRECT_URL = 'Users:redirect'
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
 LOGIN_URL = 'account_login'
+
 
 # LOGIN_URL = 'Login'
 
@@ -230,6 +232,11 @@ TEMPLATES = [
             str(APPS_DIR.path('templates')),
             # Errors
             str(APPS_DIR.path('templates/errors')),
+            # Apps
+            str(APPS_DIR.path('app/templates')),
+            str(APPS_DIR.path('blog/templates')),
+            str(APPS_DIR.path('users/templates')),
+
         ],
         'OPTIONS': {
 
@@ -238,10 +245,6 @@ TEMPLATES = [
 
             # https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
             # https://docs.djangoproject.com/en/dev/ref/templates/api/#loader-types
-            # 'loaders': [
-            #     'django.template.loaders.filesystem.Loader',
-            #     'django.template.loaders.app_directories.Loader',
-            # ],
             # https://docs.djangoproject.com/en/dev/ref/settings/#template-context-processors
             'context_processors': [
                 'django.template.context_processors.debug',

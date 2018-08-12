@@ -39,16 +39,28 @@ class ContactMixin:
 
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
+
+        # Why use commin = false ?
+        # print (form.cleand_data.get('title'))
+        # print (form.cleand_data['title'))
+
         ins = form.save(commit = False)
+
+        # The Answer of top question
+        # print(ins.title)
+
         # Do custom logic here
         # It should return an HttpResponse
         ins.save()
+        # We can put logic in template {% if "html_safe" in messages.tags %} {{ messages | safe}} {% else %} {{ messages }} {% endif %}
+        # messages.success(self.request, "Message Sent Successfully", extra_tags='html_safe')
         messages.info(self.request, self.success_msg)
         return super(ContactMixin, self).form_valid(form)
 
-    # def form_invalid(self, form):
-    #     # Do custom logic here
-    #     return super(ContactView, self).form_invalid(form)
+    def form_invalid(self, form):
+        # Do custom logic here
+        messages.error(self.request, "Try Again!")
+        return super(ContactView, self).form_invalid(form)
 
 
 # Contact
