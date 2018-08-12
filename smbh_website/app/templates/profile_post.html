@@ -23,7 +23,7 @@
       {% comment %}
       <div style="float: right;">
         <!-- Read more button -->
-        <a class="btn btn-indigo btn-md" href="{% url 'App:gallery' slug=post.slug %}">Read more</a>
+        <a class="btn btn-indigo btn-md" href="{% post.get_absolute_url %}">Read more</a>
       </div> {% endcomment %}
     </div>
     <div class="card-footer">

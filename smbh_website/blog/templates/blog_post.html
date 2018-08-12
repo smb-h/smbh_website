@@ -15,7 +15,7 @@
     <!-- Excerpt -->
     <div style="text-align: left;">
       <p>
-        {{ post.content | safe | truncatechars:320 }}
+        {{ post.content | safe | truncatechars:255 | linebreaks }}
       </p>
     </div>
     <!-- Post data -->

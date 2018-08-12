@@ -1,6 +1,7 @@
 from django.db import models
-from django.utils.translation import ugettext_lazy as _ 
+from django.utils.translation import ugettext_lazy as _
 from time import strftime
+from django.urls import reverse
 # Tag App
 from taggit.managers import TaggableManager
 # Ckeditor
@@ -13,7 +14,7 @@ from ckeditor.fields import RichTextField
 def user_directory_path(self, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/year-month-day
     return ('Uploads/{0}/{1}/{2}'.format(self.author, strftime('%Y-%m'), filename))
-    
+
 
 class AboutMe(models.Model):
     title = models.CharField(max_length=100, verbose_name=_('Title'))
@@ -63,6 +64,9 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('App:gallery', kwargs={"slug": self.slug})
 
 
 # ContactMe
