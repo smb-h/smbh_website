@@ -83,16 +83,6 @@
             </div>
             <p class="dark-grey-text">We'll write rarely, but only the best content.</p>
 
-            <!-- Messages -->
-            {% if messages %}
-            <ul class="messages alert alert-info">
-              {% for message in messages %}
-              <li id="message_{{ forloop.counter }}" {% if message.tags %} class="{{ message.tags }}" {% endif %}>
-                {{ message }}
-              </li>
-              {% endfor %}
-            </ul>
-            {% endif %}
 
             <!-- Errors -->
             {% if form.errors %}

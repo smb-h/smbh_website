@@ -79,12 +79,23 @@
 <body>
   {% analytical_body_top %}
 
-  <!-- BTP -->
+  <!-- Messages -->
+  {% if messages %}
+  <ul class="messages alert alert-info">
+    {% for message in messages %}
+    <li id="message_{{ forloop.counter }}" {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+      {{ message }}
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  <!-- Back To Top Button -->
   <button class="btn-info btn-floating rounded-circle btn-sm" onclick="BackToTop()" id="btp-btn" title="Go To Top">
     <i class="material-icons">keyboard_arrow_up</i>
   </button>
 
-  <!-- Language Btn -->
+  <!-- Language Button -->
   {% comment %} {% if request.LANGUAGE_CODE == 'fa' %}
   <a class="btn-info btn-floating btn-sm LB btn-grad rounded-circle" id="EN" href="/en/" title="English">
     <i>En</i>
