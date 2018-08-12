@@ -39,9 +39,10 @@ class ContactMixin:
 
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
+        ins = form.save(commit = False)
         # Do custom logic here
         # It should return an HttpResponse
-        form.save()
+        ins.save()
         messages.info(self.request, self.success_msg)
         return super(ContactMixin, self).form_valid(form)
 
