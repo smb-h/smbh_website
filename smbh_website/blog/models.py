@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import User
 from time import strftime
 from django.urls import reverse
 from django.conf import settings
@@ -19,9 +18,10 @@ from rest_framework.reverse import reverse as api_reverse
 
 
 # initial a directory for files of each user
-def user_directory_path(self, filename):
-    # file will be uploaded to MEDIA_ROOT/user_<id>/year-month-day
-    return ('Uploads/{0}/{1}/{2}'.format(strftime('%Y-%m-%d'), self.author, filename))
+def upload_path(self, filename):
+    # file will be uploaded to MEDIA_ROOT/year-month-day/UserName/FileName
+    # return ('Uploads/{0}/{1}/{2}'.format(strftime('%Y-%m-%d'), self.author, filename))
+    return ('{0}/{1}'.format(self.author, filename))
 
 
 LANGUAGES = [
@@ -29,18 +29,17 @@ LANGUAGES = [
     ('en', _('English')),
 ]
 
+User = settings.AUTH_USER_MODEL
 
 # Post
 class Post(models.Model):
     title = models.CharField(max_length = 255, verbose_name = _('Title'))
-    image = models.ImageField(blank=True, null=True, upload_to=user_directory_path, verbose_name=_('Image'))
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name = _('Author'))
+    image = models.ImageField(blank=True, null=True, upload_to=upload_path, verbose_name=_('Image'))
+    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name = _('Author'))
     language = models.CharField(max_length = 255, choices=LANGUAGES, default = 'fa', verbose_name=_('Language'))
-    # language = models.CharField(max_length=50, choices=settings.LANGUAGES, default = 'fa', verbose_name=_('Language'))
     # content = models.TextField(verbose_name = _('Content'))
     content = RichTextUploadingField(config_name='ck_blog', verbose_name = _('Content'))
-    # content = RichTextField(config_name='awesome_ckeditor', verbose_name = _('Content'))
-    # attach = models.FileField(blank= True, null=True, upload_to=user_directory_path, verbose_name= _('Attach Files'))
+    attach = models.FileField(blank= True, null=True, upload_to=upload_path, verbose_name= _('Attach File'))
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name= _('Created'))
     publish = models.DateTimeField(default=timezone.now, verbose_name=_('Publish'))
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, verbose_name= _('Updated'))
@@ -70,7 +69,6 @@ class Post(models.Model):
 
     # formatting post objects to show
     def __str__(self):
-        # return self.title
         return '{} - {}'.format(self.title, self.created)
 
 
@@ -111,7 +109,7 @@ class CommentManager(models.Manager):
 
 # Comment
 class Comment(models.Model):
-    user        = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name = _('User'))
+    user        = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name = _('User'))
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, verbose_name = _('Content Type'))
     object_id = models.PositiveIntegerField(verbose_name = _('ID'))
     content_object = GenericForeignKey('content_type', 'object_id')

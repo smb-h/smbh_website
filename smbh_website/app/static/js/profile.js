@@ -20,4 +20,3 @@ function FullScreen() {
 
     // $('#divId').outerHeight($(Window).outerHeight() - $('#divId').offset().top);
 }
-

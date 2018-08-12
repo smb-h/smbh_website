@@ -191,15 +191,19 @@ MIDDLEWARE = [
 # STATIC
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-root
-# STATIC_ROOT = str(ROOT_DIR('staticfiles'))
-STATIC_ROOT = str(APPS_DIR.path('static'))
+CDN = environ.Path(ROOT_DIR) - 1
+STATIC_ROOT = str(CDN.path('static'))
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = [
+    # Root Dir (# TODO: Remove this on Production cause Nginx will serve this)
+    # str(CDN.path('static')),
+    # Users
+    str(APPS_DIR.path('users/static')),
     # My Apps
     str(APPS_DIR.path('app/static')),
-    str(APPS_DIR.path('blog/static'))
+    str(APPS_DIR.path('blog/static')),
 
 ]
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
@@ -213,7 +217,7 @@ STATICFILES_FINDERS = [
 # MEDIA
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-root
-MEDIA_ROOT = str(APPS_DIR('media'))
+MEDIA_ROOT = str(CDN.path('media'))
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = '/media/'
 

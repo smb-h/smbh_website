@@ -13,8 +13,7 @@
 /* Contact Image */
 
 #Contact-image {
-    background-image: url("../../media/Site/Images/Georgia-Workspaces-2.jpeg");
-    /* background-image: url('{% static "../media/Site/Images/Georgia-Workspaces-2.jpeg" %}'); */
+    background-image: url(../images/Georgia-Workspaces-2.jpeg);
     position: relative;
     vertical-align: middle;
     border-radius: 10px;

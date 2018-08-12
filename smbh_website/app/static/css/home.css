@@ -27,7 +27,7 @@
 /* Intro Image */
 
 #intro-image, #intro-video {
-    /* background-image: url("../../media/Site/Images/Artifical\ Galaxy.jpg"); */
+    /* background-image: url(images/Artifical\ Galaxy.jpg); */
     position: relative;
     vertical-align: middle;
     border-radius: 10px;
@@ -144,8 +144,7 @@
 /* Services Carousel */
 
 #Services {
-    background-image: url("../../media/Site/Images/Background-66.jpg");
-    /* background-image: url('{% static "../media/Site/Images/Background-66.jpg" %}'); */
+    background-image: url(../images/Background-66.jpg);
     position: relative;
     vertical-align: middle;
     border-radius: 10px;
