@@ -61,6 +61,7 @@ class Profile(models.Model):
 
     class Meta:
         verbose_name_plural = _('Profile')
+        ordering = ['-updated', 'title']
 
     def __str__(self):
         return self.title

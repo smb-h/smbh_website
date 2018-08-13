@@ -76,20 +76,12 @@ class ContactView(ContactMixin, generic.FormView):
 
 # Profile
 class ProfileView(generic.ListView):
-
+    queryset = Profile.objects.all()
     template_name = 'profile.html'  # Default: <app_label>/<model_name>_list.html
     context_object_name = 'Profile'   # Default: object_list
     paginate_by = 12
 
-    # Default: Model.objects.all()
-    def get_queryset(self):
-        queryset = Profile.objects.all().order_by('-updated')
-        return queryset
 
-    # Add Extra Context
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
 
 
 # Profile Detail

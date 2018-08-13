@@ -5,3 +5,5 @@ Modify Blog Comment view shift to cbv
 add publish logic to model managers
 
 add geo locations
+
+localize date & time
