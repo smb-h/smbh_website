@@ -191,7 +191,7 @@ MIDDLEWARE = [
 # STATIC
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-root
-CDN = environ.Path(ROOT_DIR) - 1
+CDN = (environ.Path(ROOT_DIR) - 1).path('CDN')
 STATIC_ROOT = str(CDN.path('static'))
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = '/static/'

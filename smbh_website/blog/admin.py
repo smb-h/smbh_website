@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Post, Comment
+from app.utils.Unique_Slug_Generator import unique_slug_generator
 
 
 @admin.register(Post)
@@ -13,10 +14,15 @@ class PostAdmin(admin.ModelAdmin):
         ('Date Information', {'fields': ['publish']}),
         ('View Information', {'fields': ['slug', 'tags']}),
     ]
-    readonly_fields = ('updated',)
+    readonly_fields = ('updated', 'author', 'slug')
     list_display = ('title', 'publish', 'was_published_recently', 'author', 'updated', 'language')
     list_filter = ('publish', 'author', 'language')
     search_fields = ('title', 'author', 'content', 'tags')
+
+    def save_model(self, request, obj, form, change):
+        obj.author = request.user
+        obj.slug = unique_slug_generator(obj)
+        super().save_model(request, obj, form, change)
 
 
 
