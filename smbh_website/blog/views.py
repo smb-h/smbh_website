@@ -15,6 +15,7 @@ from .forms import CommentForm
 
 
 
+
 # Tag Mixin View
 class TagMixin(object):
     def get_context_data(self, **kwargs):
@@ -39,21 +40,20 @@ class BlogView(generic.ListView, TagMixin):
         queryset = Post.objects.filter(language = self.request.LANGUAGE_CODE, publish__lte = timezone.now())
         return queryset
 
-    # Add Extra Context
-    # def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
-        # context = super().get_context_data(**kwargs)
-        # Add in a QuerySet of all the books
-        # context['book_list'] = Book.objects.all()
-        # return context
-
-
+    
 
 # Post Detail
 class PostDetailView(generic.DetailView, TagMixin):
     model = Post
     template_name = 'blog_post_detail.html'
     context_object_name = 'Post'
+
+    # Add Extra Context
+    # def get_context_data(self, **kwargs):
+    #     context = super(PostDetailView, self).get_context_data(**kwargs)
+    # U can access object from self.object
+    #     context['share'] = quote_plus(self.object.content)
+    #     return context
 
 
 
