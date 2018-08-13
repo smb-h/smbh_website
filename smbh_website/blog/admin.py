@@ -8,11 +8,10 @@ class PostAdmin(admin.ModelAdmin):
 
     fieldsets = [
         ('Post', {'fields': ['title', 'language'
-        , 'image', 'content']}),
+        , 'image', 'content', 'tags']}),
         # ('Date information', {'fields': ['publish'],
         # 'classes': ['collapse']}),
         ('Date Information', {'fields': ['publish']}),
-        ('View Information', {'fields': ['tags']}),
     ]
     readonly_fields = ('updated',)
     list_display = ('title', 'publish', 'was_published_recently', 'author', 'updated', 'language')
