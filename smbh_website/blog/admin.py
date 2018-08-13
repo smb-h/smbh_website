@@ -14,7 +14,7 @@ class PostAdmin(admin.ModelAdmin):
         ('Date Information', {'fields': ['publish']}),
         ('View Information', {'fields': ['tags']}),
     ]
-    readonly_fields = ('updated', 'author', 'slug')
+    readonly_fields = ('updated',)
     list_display = ('title', 'publish', 'was_published_recently', 'author', 'updated', 'language')
     list_filter = ('publish', 'author', 'language')
     search_fields = ('title', 'author', 'content', 'tags')
