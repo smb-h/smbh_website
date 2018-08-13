@@ -36,18 +36,10 @@ class BlogView(generic.ListView, TagMixin):
 
 
     def get_queryset(self):
-        queryset = Post.objects.active().filter(language = self.request.LANGUAGE_CODE)
-
         qs = self.request.GET.get('q')
-        if qs:
-            queryset = queryset.filter(
-            Q(title__icontains=qs) |
-            Q(content__icontains=qs) |
-            Q(author__first_name__icontains=qs) |
-            Q(author__last_name__icontains=qs) |
-            Q(tags__name__icontains=qs)
-            ).distinct()
-
+        queryset = Post.objects.active().filter(language = self.request.LANGUAGE_CODE).search(qs)
+        # if qs:
+        #     queryset = Post.objects.search(qs).filter(language = self.request.LANGUAGE_CODE)
         return queryset
 
 

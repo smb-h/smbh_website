@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.conf import settings
 import datetime
 from django.utils import timezone
+from django.db.models import Q
 # Tag App
 from taggit.managers import TaggableManager
 # Ckeditor
@@ -15,6 +16,18 @@ from django.contrib.contenttypes.models import ContentType
 from rest_framework.reverse import reverse as api_reverse
 
 
+class PostQuerySet(models.query.QuerySet):
+    def search(self, query):
+        if query:
+            qs = self.filter(
+                                Q(title__icontains=query) |
+                                Q(content__icontains=query) |
+                                Q(author__first_name__icontains=query) |
+                                Q(author__last_name__icontains=query) |
+                                Q(tags__name__icontains=query)
+                            ).distinct()
+            return qs
+        return self
 
 
 # Post Model Manager
@@ -25,11 +38,30 @@ class PostManager(models.Manager):
         # qs = super(PostManager, self).filter(draft=False, publish__lte=timezone.now())
         # return qs
 
+    def get_queryset(self):
+        return PostQuerySet(self.model, using=self._db)
+
     # Active Posts
     def active(self, *args, **kwargs):
         # __lte Less than & __gte Greater than
         qs = super(PostManager, self).filter(draft=False, publish__lte=timezone.now())
         return qs
+
+    # Search
+    def search(self, query):
+        # if query:
+        #     # qs = self.get_queryset().filter(
+        #     qs = self.active().filter(
+        #                                 Q(title__icontains=query) |
+        #                                 Q(content__icontains=query) |
+        #                                 Q(author__first_name__icontains=query) |
+        #                                 Q(author__last_name__icontains=query) |
+        #                                 Q(tags__name__icontains=query)
+        #                             ).distinct()
+        #     return qs
+        # return None
+        return self.get_queryset().search(query)
+
 
 
 
