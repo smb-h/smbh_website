@@ -17,6 +17,19 @@ from rest_framework.reverse import reverse as api_reverse
 
 
 
+# Post Model Manager
+class PostManager(models.Manager):
+    # OverRide all
+    # def all(self, *args, **kwargs):
+        # Super() is the original method and we are add filtering to it
+        # qs = super(PostManager, self).filter(draft=False, publish__lte=timezone.now())
+        # return qs
+
+    # Active Posts
+    def active(self, *args, **kwargs):
+        # __lte Less than & __gte Greater than
+        qs = super(PostManager, self).filter(draft=False, publish__lte=timezone.now())
+        return qs
 
 
 
@@ -42,22 +55,28 @@ class Post(models.Model):
     language = models.CharField(max_length = 255, choices=LANGUAGES, default = 'fa', verbose_name=_('Language'))
     # content = models.TextField(verbose_name = _('Content'))
     content = RichTextUploadingField(config_name='ck_blog', verbose_name = _('Content'))
-    attach = models.FileField(blank= True, null=True, upload_to=upload_path, verbose_name= _('Attach File'))
+    attach = models.FileField(blank=True, null=True, upload_to=upload_path, verbose_name= _('Attach File'))
+    # Date Information
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name= _('Created'))
-    publish = models.DateTimeField(default=timezone.now, verbose_name=_('Publish'))
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, verbose_name= _('Updated'))
+
+    draft = models.BooleanField(default=False, verbose_name = _('Draft'))
+    publish = models.DateTimeField(blank=True, null=True, verbose_name=_('Publish'))
+
     slug = models.SlugField(allow_unicode=True, unique=True, verbose_name=_('Slug'))
     tags = TaggableManager(verbose_name=_('Tags'))
 
+    objects = PostManager()
 
     def was_published_recently(self):
-        now = timezone.now()
-        return self.publish <= now
+        if self.publish:
+            now = timezone.now()
+            return (self.publish <= now and not self.draft)
+        return None
 
     was_published_recently.admin_order_field = 'publish'
     was_published_recently.boolean = True
     was_published_recently.short_description = 'Published'
-
 
 
     def get_absolute_url(self):
@@ -69,12 +88,9 @@ class Post(models.Model):
     class Meta:
         ordering = ['-publish', 'title']
 
-
     # formatting post objects to show
     def __str__(self):
         return '{} - {}'.format(self.title, self.created)
-
-
 
 
 

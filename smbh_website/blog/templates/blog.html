@@ -61,6 +61,11 @@
     </nav>
   </div>
 
+  <form method="GET" action="">
+    <input type="text" name="q" placeholder="Search" {% if request.GET.q %} value="{{ request.GET.q }}" {% endif %} />
+    <!-- <input type="text" name="q" placeholder="Search" value="{{ request.GET.q }}" /> -->
+    <button class="btn btn-outline-info btn-sm" type="submit" value="q">Search</button>
+  </form>
 
   {% block PostList %}
 
@@ -85,47 +90,103 @@
 
   <!-- Pagination -->
   {% if is_paginated %}
-  <!--Pagination -->
-  <nav aria-label="pagination" id="Paginator">
-    <ul class="pagination pg-teal mb-0 justify-content-center">
+    {% if request.GET.q %}
 
-      {% if page_obj.has_previous %}
-      <!--First-->
-      <li class="page-item">
-        <a class="page-link" href="?page=1">First</a>
-      </li>
-      <!--Arrow left-->
-      <li class="page-item">
-        <a class="page-link" aria-label="Previous" href="?page={{ page_obj.previous_page_number }}">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-      {% endif %} {% for count in paginator.page_range %} {% if page_obj.number == count %}
-      <li class="page-item active">
-        <a class="page-link">{{ count }}
-          <span class="sr-only">(current)</span>
-        </a>
-      </li>
-      {% else %}
-      <li class="page-item">
-        <a class="page-link" href="?page={{ count }}">{{ count }}</a>
-      </li>
-      {% endif %} {% endfor %} {% if page_obj.has_next %}
-      <!--Arrow left-->
-      <li class="page-item">
-        <a class="page-link" aria-label="Previous" href="?page={{ page_obj.next_page_number }}">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
-      <!--Last-->
-      <li class="page-item">
-        <a class="page-link" href="?page=1">Last</a>
-      </li>
-      {% endif %}
+      <nav aria-label="pagination" id="Paginator">
+        <ul class="pagination pg-teal mb-0 justify-content-center">
 
-    </ul>
-  </nav>
-  {% endif %} {% endblock PostList %}
+          {% if page_obj.has_previous %}
+            <!--First-->
+            <li class="page-item">
+              <a class="page-link" href="?page=1&q={{ request.GET.q }}">First</a>
+            </li>
+            <!--Arrow left-->
+            <li class="page-item">
+              <a class="page-link" aria-label="Previous" href="?page={{ page_obj.previous_page_number }}&q={{ request.GET.q }}">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+          {% endif %}
+          {% for count in paginator.page_range %}
+            {% if page_obj.number == count %}
+              <li class="page-item active">
+                <a class="page-link">{{ count }}
+                  <span class="sr-only">(current)</span>
+                </a>
+              </li>
+            {% else %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ count }}&q={{ request.GET.q }}">{{ count }}</a>
+              </li>
+            {% endif %}
+          {% endfor %}
+          {% if page_obj.has_next %}
+          <!--Arrow left-->
+          <li class="page-item">
+            <a class="page-link" aria-label="Previous" href="?page={{ page_obj.next_page_number }}&q={{ request.GET.q }}">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+          <!--Last-->
+          <li class="page-item">
+            <a class="page-link" href="?page={{ paginator.page_range | length }}&q={{ request.GET.q }}">Last</a>
+          </li>
+          {% endif %}
+
+        </ul>
+      </nav>
+
+    {% else %}
+
+      <nav aria-label="pagination" id="Paginator">
+        <ul class="pagination pg-teal mb-0 justify-content-center">
+
+          {% if page_obj.has_previous %}
+            <!--First-->
+            <li class="page-item">
+              <a class="page-link" href="?page=1">First</a>
+            </li>
+            <!--Arrow left-->
+            <li class="page-item">
+              <a class="page-link" aria-label="Previous" href="?page={{ page_obj.previous_page_number }}">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+          {% endif %}
+          {% for count in paginator.page_range %}
+            {% if page_obj.number == count %}
+              <li class="page-item active">
+                <a class="page-link">{{ count }}
+                  <span class="sr-only">(current)</span>
+                </a>
+              </li>
+            {% else %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ count }}">{{ count }}</a>
+              </li>
+            {% endif %}
+            {% endfor %}
+          {% if page_obj.has_next %}
+            <!--Arrow left-->
+            <li class="page-item">
+              <a class="page-link" aria-label="Previous" href="?page={{ page_obj.next_page_number }}">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+            <!--Last-->
+            <li class="page-item">
+              <a class="page-link" href="?page={{ paginator.page_range | length }}">Last</a>
+            </li>
+          {% endif %}
+
+        </ul>
+      </nav>
+
+
+    {% endif %}
+
+  {% endif %}
+  {% endblock PostList %}
 
 
 

@@ -5,6 +5,7 @@ from taggit.models import Tag
 from django.utils import timezone
 from django.views import View, generic
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 # Comment
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -31,16 +32,26 @@ class BlogView(generic.ListView, TagMixin):
 
     template_name = 'blog.html'  # Default: <app_label>/<model_name>_list.html
     context_object_name = 'Posts'   # Default: object_list
-    paginate_by = 4
+    paginate_by = 2
 
-    # Default: Model.objects.all()
+
     def get_queryset(self):
-        # __lte Less than & __gte Greater than
-        # queryset = Post.objects.filter(language = self.request.LANGUAGE_CODE, publish__lte = timezone.now()).order_by('-publish')
-        queryset = Post.objects.filter(language = self.request.LANGUAGE_CODE, publish__lte = timezone.now())
+        queryset = Post.objects.active().filter(language = self.request.LANGUAGE_CODE)
+
+        qs = self.request.GET.get('q')
+        if qs:
+            queryset = queryset.filter(
+            Q(title__icontains=qs) |
+            Q(content__icontains=qs) |
+            Q(author__first_name__icontains=qs) |
+            Q(author__last_name__icontains=qs) |
+            # Q(tags__name__in=qs) |
+            Q(tags__name__icontains=qs)
+            ).distinct()
+
         return queryset
 
-    
+
 
 # Post Detail
 class PostDetailView(generic.DetailView, TagMixin):

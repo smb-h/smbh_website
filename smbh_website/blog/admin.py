@@ -7,16 +7,16 @@ from app.utils.Unique_Slug_Generator import unique_slug_generator
 class PostAdmin(admin.ModelAdmin):
 
     fieldsets = [
-        ('Post', {'fields': ['title', 'language'
+        ('Post', {'fields': ['author', 'title', 'language'
         , 'image', 'content', 'tags', 'slug']}),
         # ('Date information', {'fields': ['publish'],
         # 'classes': ['collapse']}),
-        ('Date Information', {'fields': ['publish']}),
+        ('Date Information', {'fields': ['draft', 'publish']}),
     ]
-    readonly_fields = ('updated', 'slug')
+    readonly_fields = ('updated', 'slug', 'author')
     list_display = ('title', 'publish', 'was_published_recently', 'author', 'updated', 'language')
     list_filter = ('publish', 'author', 'language')
-    search_fields = ('title', 'author', 'content', 'tags')
+    search_fields = ('title', 'author__first_name', 'author__last_name', 'content', 'tags')
 
     def save_model(self, request, obj, form, change):
         obj.author = request.user
