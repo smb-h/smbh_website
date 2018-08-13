@@ -33,7 +33,7 @@
   <hr/>
   <p style="text-align: center;">By
     <a>
-      <strong> {{ Post.author }} </strong>
+      <strong> {{ Post.author.get_full_name }} </strong>
     </a>, {{ Post.publish | localize}}</p>
   {% else %}
   <div style="text-align: right;">
@@ -45,7 +45,7 @@
   <hr/>
   <p style="text-align: center;">By
     <a>
-      <strong> {{ Post.author }} </strong>
+      <strong> {{ Post.author.get_full_name }} </strong>
     </a> <br />{{ Post.publish | localize }}</p>
   {% endif %}
 

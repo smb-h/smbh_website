@@ -21,7 +21,7 @@
     <!-- Post data -->
     <p style="text-align: right;">By
       <a>
-        <strong> {{ post.author }} </strong>
+        <strong> {{ post.author.get_full_name }} </strong>
       </a>, {{ post.publish }}</p>
     <!-- Read more button -->
     <!-- <a class="btn btn-indigo btn-md" href="{% url 'Blog:post' slug=post.slug %}">Read more</a> -->
@@ -92,7 +92,7 @@
     <!-- Post data -->
     <p style="text-align: left;">By
       <a>
-        <strong> {{ post.author }} </strong>
+        <strong> {{ post.author.get_full_name }} </strong>
       </a>, {{ post.publish }}</p>
     <!-- Read more button -->
     <a class="btn btn-indigo btn-md" href="{% url 'Blog:post' slug=post.slug %}">Read more</a>
