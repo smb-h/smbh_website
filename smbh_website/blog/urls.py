@@ -13,7 +13,8 @@ urlpatterns = [
 
     # path('', BlogView.as_view(), name='blog'),
     path('', BlogView.as_view(), name='blog'),
-    path('<slug:slug>', PostDetailView.as_view(), name='post'),
+    # path('<slug:slug>', PostDetailView.as_view(), name='post'),
+    path('<slug>', PostDetailView.as_view(), name='post'),
     path('<slug:content_object>', comment_thread, name='thread'),
     path('<slug:content_object>/Delete', comment_delete, name='delete'),
     # DRF API

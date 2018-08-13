@@ -17,6 +17,9 @@ from rest_framework.reverse import reverse as api_reverse
 
 
 
+
+
+
 # initial a directory for files of each user
 def upload_path(self, filename):
     # file will be uploaded to MEDIA_ROOT/year-month-day/UserName/FileName
