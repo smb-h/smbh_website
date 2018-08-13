@@ -7,12 +7,12 @@ from app.utils.Unique_Slug_Generator import unique_slug_generator
 class PostAdmin(admin.ModelAdmin):
 
     fieldsets = [
-        ('Post', {'fields': ['title', 'author', 'language'
+        ('Post', {'fields': ['title', 'language'
         , 'image', 'content']}),
         # ('Date information', {'fields': ['publish'],
         # 'classes': ['collapse']}),
         ('Date Information', {'fields': ['publish']}),
-        ('View Information', {'fields': ['slug', 'tags']}),
+        ('View Information', {'fields': ['tags']}),
     ]
     readonly_fields = ('updated', 'author', 'slug')
     list_display = ('title', 'publish', 'was_published_recently', 'author', 'updated', 'language')
