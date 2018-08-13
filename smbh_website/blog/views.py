@@ -32,7 +32,7 @@ class BlogView(generic.ListView, TagMixin):
 
     template_name = 'blog.html'  # Default: <app_label>/<model_name>_list.html
     context_object_name = 'Posts'   # Default: object_list
-    paginate_by = 2
+    paginate_by = 4
 
 
     def get_queryset(self):
@@ -45,7 +45,6 @@ class BlogView(generic.ListView, TagMixin):
             Q(content__icontains=qs) |
             Q(author__first_name__icontains=qs) |
             Q(author__last_name__icontains=qs) |
-            # Q(tags__name__in=qs) |
             Q(tags__name__icontains=qs)
             ).distinct()
 
