@@ -19,6 +19,7 @@ from rest_framework.reverse import reverse as api_reverse
 class PostQuerySet(models.query.QuerySet):
     def search(self, query):
         if query:
+            query = query.strip()
             qs = self.filter(
                                 Q(title__icontains=query) |
                                 Q(content__icontains=query) |
