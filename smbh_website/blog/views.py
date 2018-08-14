@@ -86,11 +86,11 @@ class PostUpdateView(LoginRequiredMixin, generic.CreateView):
         return Post.objects.filter(author=self.request.user)
 
 
-
-    # def get_context_data(self, *args, **kwargs):
-    #     context = super(RestaurantCreateView, self).get_context_data(*args, **kwargs)
-    #     context['title'] = 'Add Restaurant'
-    #     return context
+    def get_context_data(self, *args, **kwargs):
+        context = super(PostUpdateView, self).get_context_data(*args, **kwargs)
+        # name = self.get_object().name
+        # context['comments'] = f'Update Restaurant: {name}'
+        return context
 
 
 
