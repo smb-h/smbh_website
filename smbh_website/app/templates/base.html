@@ -35,6 +35,8 @@
   <link rel="stylesheet" href="{% static 'css/base.css' %}" /> {% endcompress %} {% block style %} {% endblock style %}
 
   <!-- Script Block -->
+  <!-- Mark Down -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> -->
   {% compress js file base %}
   <!-- JQuery -->
   <script src="{% static 'Packages/jquery-3.3.1.min.js' %}"></script>
@@ -45,6 +47,9 @@
   <script src="{% static 'Packages/MDB/js/popper.min.js' %}" defer></script>
   <!-- MDB  -->
   <script type="text/javascript" src="{% static 'Packages/MDB/js/mdb.min.js' %}" defer></script>
+  <!-- CKEditor -->
+  <script type="text/javascript" src="{% static 'Packages/ckeditor/ckeditor-init.js' %}"></script>
+  <script type="text/javascript" src="{% static 'Packages/ckeditor/ckeditor.js' %}"></script>
   <!-- Customize -->
   <script src="{% static 'js/base.js' %}"></script>
   {% endcompress %} {% block script %} {% endblock script %} {% analytical_head_bottom %}

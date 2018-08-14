@@ -6,12 +6,15 @@ from django.utils import timezone
 from django.views import View, generic
 from django.http import HttpResponseRedirect
 from django.db.models import Q
+from django.contrib.auth.mixins import LoginRequiredMixin
+from app.utils.Unique_Slug_Generator import unique_slug_generator
+
 # Comment
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 from django.http import Http404, HttpResponse
-from .forms import CommentForm
+from .forms import CommentForm, PostForm
 
 
 
@@ -23,6 +26,72 @@ class TagMixin(object):
         context = super(TagMixin, self).get_context_data(**kwargs)
         context['tags'] = Tag.objects.all()
         return context
+
+
+# Create Post
+class PostCreateView(LoginRequiredMixin, generic.CreateView):
+    form_class = PostForm
+    template_name = 'blog_post_create.html'
+
+
+    def form_valid(self, form):
+        """If the form is valid, redirect to the supplied URL."""
+        ins = form.save(commit = False)
+        ins.author = self.request.user
+        ins.slug = unique_slug_generator(ins)
+        ins.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+
+    def form_invalid(self, form):
+        """If the form is invalid, render the invalid form."""
+        return self.render_to_response(self.get_context_data(form=form))
+
+    def get_success_url(self):
+        """Return the URL to redirect to after processing a valid form."""
+        if self.success_url:
+            url = self.success_url.format(**self.object.__dict__)
+        else:
+            url = self.object.get_absolute_url()
+        return url
+
+
+# Update Post
+class PostUpdateView(LoginRequiredMixin, generic.CreateView):
+    form_class = PostForm
+    template_name = 'blog_post_update.html'
+
+    def form_valid(self, form):
+        """If the form is valid, redirect to the supplied URL."""
+        ins = form.save(commit = False)
+        ins.slug = unique_slug_generator(ins)
+        ins.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+
+    def form_invalid(self, form):
+        """If the form is invalid, render the invalid form."""
+        return self.render_to_response(self.get_context_data(form=form))
+
+
+    def get_success_url(self):
+        """Return the URL to redirect to after processing a valid form."""
+        if self.success_url:
+            url = self.success_url.format(**self.object.__dict__)
+        else:
+            url = self.object.get_absolute_url()
+        return url
+
+    def get_queryset(self):
+        return Post.objects.filter(author=self.request.user)
+
+
+
+    # def get_context_data(self, *args, **kwargs):
+    #     context = super(RestaurantCreateView, self).get_context_data(*args, **kwargs)
+    #     context['title'] = 'Add Restaurant'
+    #     return context
+
 
 
 

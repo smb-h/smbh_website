@@ -33,7 +33,7 @@ def unique_slug_generator(instance, new_slug=None):
 
     Klass = instance.__class__
     qs_exists = Klass.objects.filter(slug=slug).exists()
-    if qs_exists:
+    if qs_exists and not instance.slug:
         new_slug = "{slug}-{date}".format(
                     slug=slug,
                     date=tmp

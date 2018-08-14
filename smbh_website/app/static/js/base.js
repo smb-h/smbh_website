@@ -1,19 +1,18 @@
 $(document).ready(function () {
 
-
-    // ScrollSpy
-    // $('body').scrollspy({
-    //     target: '.navbar',
-    //     offset: 50
-    // })
-
-
     $('#btp-btn').hide();
 
     // Scrolling Functions
     window.onscroll = function () {
         ScrollHandler()
     };
+
+    // Mark Down
+    // $('.content-markdown').each(function() {
+    //   var content = $(this).text();
+    //   var markedContent = marked(content);
+    //   $(this).html(markedContent);
+    // });
 
 
 });
@@ -48,7 +47,7 @@ function ScrollHandler() {
 
     } else {
         // document.getElementById('btp-btn').style.display = 'none';
-        // $('#btp-btn').animate({ opacity: '0', }, { speed: 'slow', easing: "linear" });            
+        // $('#btp-btn').animate({ opacity: '0', }, { speed: 'slow', easing: "linear" });
         $('#btp-btn').fadeOut();
     }
 
