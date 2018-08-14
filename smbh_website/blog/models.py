@@ -119,13 +119,23 @@ class Post(models.Model):
         return api_reverse('Blog:post_api', kwargs={"slug": self.slug}, request = request)
 
     class Meta:
+        verbose_name = _('Post')
+        verbose_name_plural = _('Post')
         ordering = ['-publish', 'title']
 
     # formatting post objects to show
     def __str__(self):
         return '{} - {}'.format(self.title, self.created)
 
+    @property
+    def comments(self):
+        qs = Comment.objects.filter_by_instance(self)
+        return qs
 
+    @property
+    def get_content_type(self):
+        content_type = ContentType.objects.get_for_model(self.__class__)
+        return content_type
 
 
 
@@ -159,23 +169,32 @@ class CommentManager(models.Manager):
         return None
 
 
+content_types = [
+    ('post', _('Post')),
+    ('comment', _('Comment')),
+]
+
 # Comment
 class Comment(models.Model):
-    user        = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name = _('User'))
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name = _('User'))
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, verbose_name = _('Content Type'))
+    # content_type = models.CharField(max_length = 255, choices=content_types, default = 'post', verbose_name=_('Content Type'))
     object_id = models.PositiveIntegerField(verbose_name = _('ID'))
     content_object = GenericForeignKey('content_type', 'object_id')
-    parent      = models.ForeignKey("self", null=True, blank=True, on_delete=models.CASCADE, verbose_name = _('Parent'))
-    content     = models.TextField(verbose_name = _('Content'))
-    timestamp   = models.DateTimeField(auto_now_add=True, verbose_name = _('Timestamp'))
+    parent = models.ForeignKey("self", null=True, blank=True, on_delete=models.CASCADE, verbose_name = _('Parent'))
+    # content = models.TextField(verbose_name = _('Content'))
+    content = RichTextUploadingField(config_name='ck_comment', verbose_name = _('Content'))
+    timestamp = models.DateTimeField(auto_now_add=True, verbose_name = _('Timestamp'))
 
     objects = CommentManager()
 
     class Meta:
+        verbose_name = _('Comment')
+        verbose_name_plural = _('Comments')
         ordering = ['-timestamp']
 
     def __str__(self):
-        return (str(self.user.username) + content_type)
+        return ('{} - {}'.format(str(self.user.username), self.content_type))
 
     def get_absolute_url(self):
         return reverse("Blog:thread", kwargs={"id": self.id})

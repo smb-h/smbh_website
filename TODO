@@ -5,3 +5,5 @@ Modify Blog Comment view shift to cbv
 add geo locations
 
 localize date & time
+
+move urlify template tag to view

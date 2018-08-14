@@ -33,13 +33,15 @@ class CommentAdmin(admin.ModelAdmin):
         ('Time', {'fields': ['timestamp',]}),
         ('Utility', {'fields': ['content_type', 'object_id']}),
     ]
-    readonly_fields = ('timestamp', 'user', 'object_id')
+    # readonly_fields = ('timestamp', 'user', 'object_id')
+    readonly_fields = ('timestamp',)
 
     # Display
-    list_display = ('user', 'timestamp', 'content_type')
+    # list_display = ('__str__', 'user', 'timestamp', 'content_type')
+    list_display = ('content_type', 'user', 'timestamp')
 
     # Filter
     list_filter = ['user', 'timestamp', 'content_type']
 
     # Search
-    search_fields = ['timestamp', 'user', 'content']
+    search_fields = ['timestamp', 'user', 'content', 'content_type']

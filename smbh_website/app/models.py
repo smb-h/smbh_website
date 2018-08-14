@@ -39,6 +39,7 @@ class Service(models.Model):
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, verbose_name= _('Updated'))
 
     class Meta:
+        verbose_name = _('Service')
         verbose_name_plural = _('Services')
 
     def __str__(self):
@@ -60,6 +61,7 @@ class Profile(models.Model):
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, verbose_name= _('Updated'))
 
     class Meta:
+        verbose_name = _('Profile')
         verbose_name_plural = _('Profile')
         ordering = ['-updated', 'title']
 

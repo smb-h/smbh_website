@@ -16,3 +16,8 @@ class User(AbstractUser):
 
     def get_absolute_url(self):
         return reverse("Users:detail", kwargs={"username": self.username})
+
+    class Meta:
+        verbose_name = _('User')
+        verbose_name_plural = _('Users')
+        ordering = ['-date_joined']

@@ -1,5 +1,5 @@
  {% extends "blog.html" %} {% load static %} {% load i18n %} {% block title %} {{ Post.title }} | SMBH {% endblock title %}
- {% load l10n %} {% load urlify %}
+ {% load l10n %} {% load urlify %} {% load crispy_forms_tags %}
 {% block PostList %}
 
 
@@ -86,7 +86,35 @@
   <a href="http://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ Post.content | safe | truncatechars_html:80 | urlify }}">Reddit</a>
 
 
+  <hr />
 
+  
+  <!-- Comments -->
+  <h1>Comments</h1>
+  <br />
+  <div class="lead">
+    <form method="POST" action="."> {% csrf_token %}
+        {{ comment_form | crispy }}
+        <button type="submit" class="btn btn-default">Send</button>
+    </form>
+
+    <!-- Use Property -->
+    {% comment %} {% for comment in Post.comments %} {% endcomment %}
+    <!-- Use Context -->
+    {% for comment in comments %}
+      <blockquote class="blockquote text-left">
+          <p class="mb-0">{{ comment.content }}</p>
+          <footer class="blockquote-footer text-center">{{ comment.user }} | <cite title="Source Title">{{ comment.timestamp }}</cite></footer>
+      </blockquote>
+      <!-- Access Post From Comment -->
+      {% comment %} {{ comment.content_object }} {% endcomment %}
+
+      <hr />
+    {% endfor %}
+
+  </div>
+
+  
 </div>
 
 

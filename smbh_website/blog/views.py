@@ -8,7 +8,6 @@ from django.http import HttpResponseRedirect
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
 from app.utils.Unique_Slug_Generator import unique_slug_generator
-
 # Comment
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -40,6 +39,7 @@ class PostCreateView(LoginRequiredMixin, generic.CreateView):
         ins.author = self.request.user
         ins.slug = unique_slug_generator(ins)
         ins.save()
+        ins.save_m2m()
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -66,6 +66,7 @@ class PostUpdateView(LoginRequiredMixin, generic.CreateView):
         ins = form.save(commit = False)
         ins.slug = unique_slug_generator(ins)
         ins.save()
+        ins.save_m2m()
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -114,17 +115,70 @@ class BlogView(generic.ListView, TagMixin):
 
 
 # Post Detail
-class PostDetailView(generic.DetailView, TagMixin):
-    model = Post
-    template_name = 'blog_post_detail.html'
-    context_object_name = 'Post'
+class PostDetailView(generic.View, TagMixin):
 
-    # Add Extra Context
-    # def get_context_data(self, **kwargs):
-    #     context = super(PostDetailView, self).get_context_data(**kwargs)
-    # U can access object from self.object
-    #     context['share'] = quote_plus(self.object.content)
-    #     return context
+    # GET
+    def get(self, *args, **kwargs):
+        # print(self._allowed_methods())
+        # print(self.http_method_not_allowed(self.request))
+        # print(self.request)
+        Template = 'blog_post_detail.html'
+        ins = get_object_or_404(Post, slug=kwargs['slug'])
+
+        comments = ins.comments
+
+        # Comment Form
+        initial_data={
+            'content_type' : ins.get_content_type,
+            'object_id' : ins.id
+        }
+
+        form = CommentForm(initial=initial_data)
+
+        context = {
+            'Post': ins,
+            'comments': comments,
+            'comment_form': form,
+        }
+
+        return render(self.request, Template, context)
+
+    # POST
+    def post(self, *args, **kwargs):
+        Template = 'blog_post_detail.html'
+        ins = get_object_or_404(Post, slug=kwargs['slug'])
+
+        comments = ins.comments
+
+        # Comment Form
+        initial_data={
+            'content_type' : ins.get_content_type,
+            'object_id' : ins.id
+        }
+
+        form = CommentForm(self.request.POST or None, initial=initial_data)
+        if form.is_valid():
+            print(form.cleaned_data)
+            # c_type = form.cleaned_data.get('content_type')
+            # content_type = ContentType.objects.get(model = c_type)
+            # obj_id = form.cleaned_data.get('object_id')
+            # content_data = forms.cleaned_data.get('content')
+            # new_comment, created = Comment.objects.get_or_create(
+            #                                                         user = self.request.user,
+            #                                                         content_type = content_type,
+            #                                                         object_id = obj_id,
+            #                                                         content = content_data
+            #                                                     )
+
+
+        context = {
+            'Post': ins,
+            'comments': comments,
+            'comment_form': form,
+        }
+
+        return render(self.request, Template, context)
+
 
 
 

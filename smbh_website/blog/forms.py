@@ -40,8 +40,23 @@ class PostForm(forms.ModelForm):
 
 
 
-class CommentForm(forms.Form):
+# Comment Form
+# class CommentForm(forms.Form):
+#     content_type = forms.CharField(widget=forms.HiddenInput)
+#     object_id = forms.IntegerField(widget=forms.HiddenInput)
+    #parent_id = forms.IntegerField(widget=forms.HiddenInput, required=False)
+    # content = forms.CharField(label='', widget=forms.Textarea)
+
+class CommentForm(forms.ModelForm):
+
     content_type = forms.CharField(widget=forms.HiddenInput)
     object_id = forms.IntegerField(widget=forms.HiddenInput)
-    #parent_id = forms.IntegerField(widget=forms.HiddenInput, required=False)
-    content = forms.CharField(label='', widget=forms.Textarea)
+    # parent = forms.IntegerField(widget=forms.HiddenInput, requierd=False)
+    content = content = forms.CharField(label = '', widget=CKEditorUploadingWidget(config_name='ck_comment'))
+
+    class Meta:
+        model = Comment
+        fields = ['content_type', 'object_id', 'content']
+
+
+
