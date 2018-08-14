@@ -8,11 +8,17 @@ from ckeditor_uploader.widgets import CKEditorUploadingWidget
 class PostForm(forms.ModelForm):
     # content = forms.CharField(widget=CKEditorUploadingWidget(config_name='ck_blog'))
     # content = forms.CharField(widget=forms.Textarea(attrs={'cols': 30, 'rows': 6, 'class': 'form-control'}))
-    # author = forms.CharField(widget=forms.HiddenInput)
-    author = forms.CharField(widget=forms.CharField(attrs={'readonly': 'readonly',}))
+    # name = forms.TextInput(attrs={'required': True})
+    author = forms.CharField(widget=forms.HiddenInput)
+    # publish = forms.DateField(widget = forms.SelectDateWidget)
+    publish = forms.SplitDateTimeField(widget=forms.SplitDateTimeWidget)
     class Meta:
         model = Post
         fields = ['title', 'image', 'author', 'language', 'content', 'tags', 'attach', 'draft', 'publish']
+        # Custmize Widgets
+        # name.widget.attrs.update({'class': 'special'})
+        # comment.widget.attrs.update(size='40')
+
         # widgets = {
         #     'content': CKEditorUploadingWidget(config_name='ck_blog'),
         #     'author': forms.HiddenInput,

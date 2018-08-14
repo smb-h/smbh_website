@@ -23,7 +23,7 @@ class ContactForm(forms.ModelForm):
     #     if phone ....
     #     subject = cleaned_data.get('subject')
     #     content = cleaned_data.get('content')
-    # 
+    #
 
 
     class Meta:
@@ -47,4 +47,3 @@ class ContactForm(forms.ModelForm):
         #         'max_length': _("This writer's name is too long."),
         #     },
         # }
-

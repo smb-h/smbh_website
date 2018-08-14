@@ -73,17 +73,17 @@
   Facebook
   </a>
 
-  <a href="https://twitter.com/home?status=I'{{ Post.content | safe | truncatechars:80 | urlify }}%20{{ request.build_absolute_uri }}">
+  <a href="https://twitter.com/home?status=I'{{ Post.content | safe | truncatechars_html:80 | urlify }}%20{{ request.build_absolute_uri }}">
   Twitter
   </a>
 
   <a href='https://plus.google.com/share?url={{ request.build_absolute_uri }}'>Google+</a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ Post.title }}&summary={{ Post.content | safe | truncatechars:80 | urlify }}&source={{ request.build_absolute_uri }}">
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ Post.title }}&summary={{ Post.content | safe | truncatechars_html:80 | urlify }}&source={{ request.build_absolute_uri }}">
   Linkedin
   </a>
 
-  <a href="http://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ Post.content | safe | truncatechars:80 | urlify }}">Reddit</a>
+  <a href="http://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ Post.content | safe | truncatechars_html:80 | urlify }}">Reddit</a>
 
 
 
