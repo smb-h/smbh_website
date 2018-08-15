@@ -37,8 +37,7 @@ class CommentAdmin(admin.ModelAdmin):
     readonly_fields = ('timestamp',)
 
     # Display
-    # list_display = ('__str__', 'user', 'timestamp', 'content_type')
-    list_display = ('content_type', 'user', 'timestamp')
+    list_display = ('__str__', 'user', 'content_type', 'timestamp', 'id')
 
     # Filter
     list_filter = ['user', 'timestamp', 'content_type']

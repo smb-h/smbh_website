@@ -14,6 +14,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from rest_framework.reverse import reverse as api_reverse
+from django.utils.safestring import mark_safe
 
 
 class PostQuerySet(models.query.QuerySet):
@@ -194,15 +195,17 @@ class Comment(models.Model):
         ordering = ['-timestamp']
 
     def __str__(self):
-        return ('{} - {}'.format(str(self.user.username), self.content_type))
+        # return ('{} - {}'.format(str(self.user.username), self.content_type))
+        return (mark_safe(self.content))
 
-    def get_absolute_url(self):
-        return reverse("Blog:thread", kwargs={"id": self.id})
+    # def get_absolute_url(self):
+    #     return reverse("Blog:thread", kwargs={"id": self.id})
 
-    def get_delete_url(self):
-        return reverse("Blog:delete", kwargs={"id": self.id})
+    # def get_delete_url(self):
+    #     return reverse("Blog:delete", kwargs={"id": self.id})
 
-    def children(self): #replies
+    # Replies
+    def children(self): 
         return Comment.objects.filter(parent=self)
 
     @property

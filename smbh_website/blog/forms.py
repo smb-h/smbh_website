@@ -2,7 +2,7 @@ from django import forms
 from .models import Post, Comment
 # Ckeditor
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
-
+from ckeditor.widgets import CKEditorWidget
 
 
 class PostForm(forms.ModelForm):
@@ -14,11 +14,13 @@ class PostForm(forms.ModelForm):
     publish = forms.SplitDateTimeField(widget=forms.SplitDateTimeWidget)
     class Meta:
         model = Post
+        localized_fields = ('publish',)
         fields = ['title', 'image', 'author', 'language', 'content', 'tags', 'attach', 'draft', 'publish']
         # Custmize Widgets
         # name.widget.attrs.update({'class': 'special'})
         # comment.widget.attrs.update(size='40')
 
+        # https://docs.djangoproject.com/en/dev/topics/forms/modelforms/#overriding-the-default-fields
         # widgets = {
         #     'content': CKEditorUploadingWidget(config_name='ck_blog'),
         #     'author': forms.HiddenInput,
@@ -49,14 +51,17 @@ class PostForm(forms.ModelForm):
 
 class CommentForm(forms.ModelForm):
 
-    content_type = forms.CharField(widget=forms.HiddenInput)
-    object_id = forms.IntegerField(widget=forms.HiddenInput)
+    # content_type = forms.CharField(widget=forms.HiddenInput)
+    # object_id = forms.IntegerField(widget=forms.HiddenInput)
     # parent = forms.IntegerField(widget=forms.HiddenInput, requierd=False)
-    content = content = forms.CharField(label = '', widget=CKEditorUploadingWidget(config_name='ck_comment'))
+    content = forms.CharField(label = '', widget=CKEditorWidget(config_name='ck_comment'))
 
     class Meta:
         model = Comment
         fields = ['content_type', 'object_id', 'content']
 
-
+        widgets = {
+            'content_type': forms.HiddenInput,
+            'object_id': forms.HiddenInput,
+        }
 

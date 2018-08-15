@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
 from app.utils.Unique_Slug_Generator import unique_slug_generator
+from urllib.parse import quote_plus
 # Comment
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -57,7 +58,7 @@ class PostCreateView(LoginRequiredMixin, generic.CreateView):
 
 
 # Update Post
-class PostUpdateView(LoginRequiredMixin, generic.CreateView):
+class PostUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = PostForm
     template_name = 'blog_post_update.html'
 
@@ -115,70 +116,71 @@ class BlogView(generic.ListView, TagMixin):
 
 
 # Post Detail
-class PostDetailView(generic.View, TagMixin):
+def post_detail(request, slug=None):
+    # instance = get_object_or_404(Post, slug=slug)
+    instance = Post.objects.active().get(slug=slug)
+    if not instance:
+        raise Http404
 
-    # GET
-    def get(self, *args, **kwargs):
-        # print(self._allowed_methods())
-        # print(self.http_method_not_allowed(self.request))
-        # print(self.request)
-        Template = 'blog_post_detail.html'
-        ins = get_object_or_404(Post, slug=kwargs['slug'])
-
-        comments = ins.comments
-
-        # Comment Form
-        initial_data={
-            'content_type' : ins.get_content_type,
-            'object_id' : ins.id
-        }
-
-        form = CommentForm(initial=initial_data)
-
-        context = {
-            'Post': ins,
-            'comments': comments,
-            'comment_form': form,
-        }
-
-        return render(self.request, Template, context)
-
-    # POST
-    def post(self, *args, **kwargs):
-        Template = 'blog_post_detail.html'
-        ins = get_object_or_404(Post, slug=kwargs['slug'])
-
-        comments = ins.comments
-
-        # Comment Form
-        initial_data={
-            'content_type' : ins.get_content_type,
-            'object_id' : ins.id
-        }
-
-        form = CommentForm(self.request.POST or None, initial=initial_data)
-        if form.is_valid():
-            print(form.cleaned_data)
-            # c_type = form.cleaned_data.get('content_type')
-            # content_type = ContentType.objects.get(model = c_type)
-            # obj_id = form.cleaned_data.get('object_id')
-            # content_data = forms.cleaned_data.get('content')
-            # new_comment, created = Comment.objects.get_or_create(
-            #                                                         user = self.request.user,
-            #                                                         content_type = content_type,
-            #                                                         object_id = obj_id,
-            #                                                         content = content_data
-            #                                                     )
+    share_content = quote_plus(instance.content)
 
 
-        context = {
-            'Post': ins,
-            'comments': comments,
-            'comment_form': form,
-        }
+    initial_data = {
+        "content_type": instance.get_content_type,
+        # "content_type": ContentType.objects.get_for_model(instance).id,
+        "object_id": instance.id
+    }
 
-        return render(self.request, Template, context)
+    form = CommentForm(request.POST or None, initial=initial_data)
 
+
+    
+    if form.is_valid() and request.user.is_authenticated :
+        # ins = form.save(commit=False)
+        c_type = form.cleaned_data.get("content_type")
+        # content_type = ContentType.objects.get(model=c_type)
+        obj_id = form.cleaned_data.get('object_id')
+        content_data = form.cleaned_data.get("content")
+
+
+        parent_obj = None
+        try:
+        	parent_id = int(request.POST.get("parent_id"))
+        except:
+        	parent_id = None
+
+        if parent_id:
+        	parent_qs = Comment.objects.filter(id=parent_id)
+        	if parent_qs.exists() and parent_qs.count() == 1:
+        		parent_obj = parent_qs.first()
+
+
+
+        new_comment, created = Comment.objects.get_or_create(
+                                                                user = request.user,
+                                                                content_type= c_type,
+                                                                object_id = obj_id,
+                                                                content = content_data,
+                                                                parent = parent_obj
+                                                            )
+
+
+        # ins.save()
+        messages.success(request, "Message Sent Successfully!")
+        return HttpResponseRedirect(new_comment.content_object.get_absolute_url())
+
+
+    # print('===========================================')
+    # print('Nah')
+
+    comments = instance.comments
+    context = {
+        "post": instance,
+        "share_content": share_content,
+        "comments": comments,
+        "form":form,
+    }
+    return render(request, "blog_post_detail.html", context)
 
 
 
