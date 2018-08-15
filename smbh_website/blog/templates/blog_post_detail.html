@@ -113,15 +113,23 @@
     {% for comment in comments %}
       <blockquote class="blockquote text-left">
           <p class="mb-0">{{ comment.content | safe }}</p>
-          <footer class="blockquote-footer text-center">{{ comment.user }} | <cite title="Source Title">{{ comment.timestamp }}</cite></footer>
+          <footer class="blockquote-footer text-center">{{ comment.user }} | <cite title="Source Title">{{ comment.timestamp }}</cite>
+            {% if comment.children.count > 0 %}
+              | {{ comment.children.count }} Comment
+            {% endif %}
+            <a href="#" class="comment-reply-btn btn btn-outline-amber btn-sm">Reply</a>
+          </footer>
 
+        
         <!-- Reply -->  
-        {% for child_comment in comment.children %}
-          <blockquote class="blockquote text-left">
-              <p class="mb-0">{{ child_comment.content | safe }}</p>
-              <footer class="blockquote-footer text-center">{{ child_comment.user }} | <cite title="Source Title">{{ child_comment.timestamp }}</cite></footer>
-          </blockquote>
-        {% endfor %}
+        <div class="comment-reply">
+
+          {% for child_comment in comment.children %}
+            <blockquote class="blockquote text-left">
+                <p class="mb-0">{{ child_comment.content | safe }}</p>
+                <footer class="blockquote-footer text-center">{{ child_comment.user }} | <cite title="Source Title">{{ child_comment.timestamp }}</cite></footer>
+            </blockquote>
+          {% endfor %}
 
 
           <form method="POST"> {% csrf_token %}
@@ -130,7 +138,8 @@
             <input type="hidden" name="parent_id" value="{{ comment.id }}" />
             <button type="submit" class="btn btn-default">Reply</button>
           </form>
-        
+
+        </div>
 
       </blockquote>
       <!-- Access Post From Comment -->
