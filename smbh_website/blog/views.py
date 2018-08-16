@@ -184,7 +184,7 @@ def post_detail(request, slug=None):
 
 
 # Comment
-@login_required #(login_url='/login/') #LOGIN_URL = '/login/'
+@login_required 
 def comment_delete(request, id):
     # obj = get_object_or_404(Comment, id=id)
     try:
