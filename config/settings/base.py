@@ -327,6 +327,7 @@ CKEDITOR_CONFIGS = {
         # 'skin': 'flat',
         # 'skin': 'office2013',
         'skin': 'moono-lisa',
+        'height': 700,
         'toolbar_Basic': [
             ['Source', '-', 'Bold', 'Italic']
         ],
