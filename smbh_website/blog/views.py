@@ -20,6 +20,7 @@ from .forms import CommentForm, PostForm
 
 
 
+
 # Tag Mixin View
 class TagMixin(object):
     def get_context_data(self, **kwargs):
@@ -182,8 +183,59 @@ def post_detail(request, slug=None):
 
 
 
+# class CommentDeleteView(generic.DeleteView, LoginRequiredMixin):
+#     model = Comment
+#     pk_url_kwarg = 'id'
+#     template_name = 'confirm_delete.html'
+#     context_object_name = 'object'
+#     url = ''
+#     # success_url = '/Blog'
+
+#     def __init__(self, *args, **kwargs):
+#         obj = self.get_object()
+#         if obj.parent == None:
+#             # print('Object IS PARENT')
+#             parent_obj_url = obj.content_object.get_absolute_url()
+#         else :
+#             # print('Object IS CHILD')
+#             parent_obj_url = obj.parent.get_absolute_url()
+
+#         self.url = parent_obj_url
+#         print('======================================')
+#         print(self.url)
+
+
+#     def get_object(self):
+#         try:
+#             obj = Comment.objects.get(id=self.kwargs['id'])
+#         except :
+#             raise Http404
+#         if not obj.is_parent:
+#             obj = obj.parent
+
+#         if obj.user != self.request.user:
+#             reponse = HttpResponse("You Do Not Have Permission To Do This.")
+#             reponse.status_code = 403
+#             return reponse
+#             #return render(request, "confirm_delete.html", context, status_code=403)
+        
+#         return obj
+    
+#     def get_queryset(self, *args, **kwargs):
+#         obj = self.get_obj()
+#         # qs = Comment.objects.filter_by_instance(obj.content_object)
+#         qs = Comment.objects.filter(content_type = obj.content_type)
+#         return qs
+
+#     def get_success_url(self):
+#         url = self.url
+#         messages.success(self.request, "The Comment Has Been Deleted.")
+#         return HttpResponseRedirect(url)
+
+
 
 # Comment
+
 @login_required 
 def comment_delete(request, id):
     # obj = get_object_or_404(Comment, id=id)
@@ -191,9 +243,6 @@ def comment_delete(request, id):
         obj = Comment.objects.get(id=id)
     except :
         raise Http404
-    # if not obj.is_parent:
-    #     obj = obj.parent
-
 
     if obj.user != request.user:
         reponse = HttpResponse("You do not have permission to do this.")
@@ -217,57 +266,78 @@ def comment_delete(request, id):
     return render(request, "confirm_delete.html", context)
 
 
-def comment_thread(request, id):
-    # obj = get_object_or_404(Comment, id=id)
-    try:
-        obj = Comment.objects.get(id=id)
-    except :
-        raise Http404
-    if not obj.is_parent:
-        obj = obj.parent
 
-    # Post that the comment is on
-    content_object = obj.content_object 
-    content_id = obj.content_object.id
+class CommentThreadView(generic.ListView, generic.CreateView):
+    model = Comment
+    template_name = 'comment_thread.html'
 
-    initial_data = {
-            "content_type": obj.content_type,
-            "object_id": obj.object_id
-    }
 
-    form = CommentForm(request.POST or None, initial=initial_data)
-
-    if form.is_valid() and request.user.is_authenticated:
-        c_type = form.cleaned_data.get("content_type")
-        # content_type = ContentType.objects.get(model=c_type)
-        obj_id = form.cleaned_data.get('object_id')
-        content_data = form.cleaned_data.get("content")
-        parent_obj = None
+    def get_obj(self):
         try:
-            parent_id = int(request.POST.get("parent_id"))
-        except:
-            parent_id = None
-
-        if parent_id:
-            parent_qs = Comment.objects.filter(id=parent_id)
-            if parent_qs.exists() and parent_qs.count() == 1:
-                parent_obj = parent_qs.first()
-
-
-        new_comment, created = Comment.objects.get_or_create(
-                                                                user = request.user,
-                                                                content_type= c_type,
-                                                                object_id = obj_id,
-                                                                content = content_data,
-                                                                parent = parent_obj,
-                                                            )
-        if new_comment.parent != None:
-            return HttpResponseRedirect(new_comment.parent.get_absolute_url())                                                        
-        return HttpResponseRedirect(new_comment.content_object.get_absolute_url())
+            obj = Comment.objects.get(id=self.kwargs['id'])
+        except :
+            raise Http404
+        if not obj.is_parent:
+            obj = obj.parent
+        return obj
+    
+    def get_queryset(self, *args, **kwargs):
+        qs = Comment.objects.filter_by_instance(self.get_obj())
+        return qs
 
 
-    context = {
-        "comment": obj,
-        "form": form,
-    }
-    return render(request, "comment_thread.html", context)
+    def get_initial(self):
+        initial_data = {
+            "content_type": self.get_obj().content_type,
+            "object_id": self.get_obj().object_id
+        }
+        return initial_data.copy()
+
+    def get_form(self):
+        form = CommentForm(self.request.POST or None, initial=self.get_initial())
+        return form
+
+    def get_context_data(self, **kwargs):
+        # context = super(CommentThreadView, self).get_context_data(**kwargs)
+        context = {}
+        context['form'] = self.get_form()
+        context['comment'] = self.get_obj()
+
+        return context
+
+    def form_valid(self, form):
+        if self.request.user.is_authenticated:
+            c_type = form.cleaned_data.get("content_type")
+            # content_type = ContentType.objects.get(model=c_type)
+            obj_id = form.cleaned_data.get('object_id')
+            content_data = form.cleaned_data.get("content")
+            parent_obj = None
+            try:
+                parent_id = int(self.request.POST.get("parent_id"))
+            except:
+                parent_id = None
+
+            if parent_id != None:
+                parent_qs = Comment.objects.filter(id=parent_id)
+                if parent_qs.exists() and parent_qs.count() == 1:
+                    parent_obj = parent_qs.first()
+
+
+            new_comment, created = Comment.objects.get_or_create(
+                                                                    user = self.request.user,
+                                                                    content_type= c_type,
+                                                                    object_id = obj_id,
+                                                                    content = content_data,
+                                                                    parent = parent_obj,
+                                                                )
+            if new_comment.parent != None:
+                return HttpResponseRedirect(new_comment.parent.get_absolute_url())                                                        
+            return HttpResponseRedirect(new_comment.content_object.get_absolute_url())
+
+        else :
+            reponse = HttpResponse("You Must Login First.")
+            reponse.status_code = 403
+            return reponse
+
+
+ 
