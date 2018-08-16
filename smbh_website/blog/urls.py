@@ -13,7 +13,6 @@ urlpatterns = [
 
     path('', BlogView.as_view(), name='blog'),
     # Comment
-    # path('<int:id>/Delete', comment_delete, name='delete'),
     path('<int:id>/Delete', comment_delete, name='delete'),
     path('<int:id>', CommentThreadView.as_view(), name='thread'),
     # Post

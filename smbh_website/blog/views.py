@@ -116,6 +116,81 @@ class BlogView(generic.ListView, TagMixin):
 
 
 
+# class PostDetailView(generic.DetailView, generic.CreateView):
+#     template_name = 'blog_post_detail.html'
+
+
+#     def get_queryset(self):
+#         qs = Post.objects.active()
+#         return qs
+
+#     def get_context_data(self, **kwargs):
+#         context = super(PostDetailView, self).get_context_data(**kwargs)
+#         # form = CommentForm(self.request.POST or None, initial=self.get_initial())
+#         # context['form'] = form
+#         context['share_content'] = quote_plus(self.object.content)
+#         context['comments'] = self.object.comments
+#         context['post'] = self.object
+        
+#         return context
+
+#     def get_initial(self):
+
+#         print('==================================')
+#         print(self.object)
+#         print(self.object.get_content_type)
+
+#         initial_data = {
+#             "content_type": self.object.get_content_type,
+#             "object_id": self.object.id
+#         }
+#         return initial_data
+
+#     def get_form_class(self, form_class=None):
+#         form = CommentForm(self.request.POST or None, initial=self.get_initial())
+#         return form
+
+
+#     def form_valid(self, form):
+#         if request.user.is_authenticated :
+#             # ins = form.save(commit=False)
+#             # c_type = form.cleaned_data.get("content_type")
+#             c_type = self.object.get_content_type
+#             # content_type = ContentType.objects.get(model=c_type)
+#             obj_id = form.cleaned_data.get('object_id')
+#             content_data = form.cleaned_data.get("content")
+
+
+#             parent_obj = None
+#             try:
+#                 parent_id = int(self.request.POST.get("parent_id"))
+#             except:
+#                 parent_id = None
+
+#             if parent_id:
+#                 parent_qs = Comment.objects.filter(id=parent_id)
+#                 if parent_qs.exists() and parent_qs.count() == 1:
+#                     parent_obj = parent_qs.first()
+
+
+
+#             new_comment, created = Comment.objects.get_or_create(
+#                                                                     user = request.user,
+#                                                                     content_type= c_type,
+#                                                                     object_id = obj_id,
+#                                                                     content = content_data,
+#                                                                     parent = parent_obj
+#                                                                 )
+
+
+#             # ins.save()
+#             messages.success(request, "Message Sent Successfully!")
+#             return HttpResponseRedirect(new_comment.content_object.get_absolute_url())
+
+        
+
+
+
 # Post Detail
 def post_detail(request, slug=None):
     # instance = get_object_or_404(Post, slug=slug)
@@ -180,6 +255,7 @@ def post_detail(request, slug=None):
         "form":form,
     }
     return render(request, "blog_post_detail.html", context)
+
 
 
 
