@@ -170,8 +170,6 @@ def post_detail(request, slug=None):
         return HttpResponseRedirect(new_comment.content_object.get_absolute_url())
 
 
-    # print('===========================================')
-    # print('Nah')
 
     comments = instance.comments
     context = {

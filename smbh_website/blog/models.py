@@ -6,6 +6,8 @@ from django.conf import settings
 import datetime
 from django.utils import timezone
 from django.db.models import Q
+from app.utils.Unique_Slug_Generator import unique_slug_generator
+from .utils.Timetable import get_read_time
 # Tag App
 from taggit.managers import TaggableManager
 # Ckeditor
@@ -90,9 +92,10 @@ class Post(models.Model):
     # content = models.TextField(verbose_name = _('Content'))
     content = RichTextUploadingField(config_name='ck_blog', verbose_name = _('Content'))
     attach = models.FileField(blank=True, null=True, upload_to=upload_path, verbose_name= _('Attach File'))
-    # Date Information
+    # Date Time Information
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name= _('Created'))
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, verbose_name= _('Updated'))
+    read_time = models.CharField(max_length = 255, blank=True, null=True, verbose_name = _('Read Time'))
 
     draft = models.BooleanField(default=False, verbose_name = _('Draft'))
     publish = models.DateTimeField(blank=True, null=True, verbose_name=_('Publish'))
@@ -137,6 +140,16 @@ class Post(models.Model):
     def get_content_type(self):
         content_type = ContentType.objects.get_for_model(self.__class__)
         return content_type
+
+    # OverRiding Save Method
+    # https://docs.djangoproject.com/en/2.1/topics/db/models/#overriding-predefined-model-methods
+    def save(self, *args, **kwargs):
+        self.slug = unique_slug_generator(self)
+        self.read_time = get_read_time(self.content)
+
+        # Call the "real" save() method.
+        super().save(*args, **kwargs)
+        # do_something_else()
 
 
 
@@ -201,8 +214,8 @@ class Comment(models.Model):
     def get_absolute_url(self):
         return reverse("Blog:thread", kwargs={"id": self.id})
 
-    # def get_delete_url(self):
-    #     return reverse("Blog:delete", kwargs={"id": self.id})
+    def get_delete_url(self):
+        return reverse("Blog:delete", kwargs={"id": self.id})
 
     # Replies
     def children(self): 
@@ -213,3 +226,5 @@ class Comment(models.Model):
         if self.parent is not None:
             return False
         return True
+
+

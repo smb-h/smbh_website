@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Post, Comment
-from app.utils.Unique_Slug_Generator import unique_slug_generator
+
 
 
 @admin.register(Post)
@@ -20,7 +20,6 @@ class PostAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         obj.author = request.user
-        obj.slug = unique_slug_generator(obj)
         super().save_model(request, obj, form, change)
 
 

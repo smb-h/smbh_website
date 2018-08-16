@@ -22,6 +22,12 @@
   <h3 class="font-weight-bold mb-3">
     <strong>{{ post.title }}</strong>
   </h3>
+  <small style="float: right">
+    Read Time 
+
+    {{ post.read_time }}
+    
+  </small>
   <!-- Excerpt -->
   {% if LANGUAGE_CODE == 'en' %}
   <div style="text-align: left;">
