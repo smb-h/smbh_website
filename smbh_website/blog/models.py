@@ -198,8 +198,8 @@ class Comment(models.Model):
         # return ('{} - {}'.format(str(self.user.username), self.content_type))
         return (mark_safe(self.content))
 
-    # def get_absolute_url(self):
-    #     return reverse("Blog:thread", kwargs={"id": self.id})
+    def get_absolute_url(self):
+        return reverse("Blog:thread", kwargs={"id": self.id})
 
     # def get_delete_url(self):
     #     return reverse("Blog:delete", kwargs={"id": self.id})

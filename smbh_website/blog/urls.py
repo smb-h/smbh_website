@@ -12,13 +12,14 @@ app_name = 'Blog'
 urlpatterns = [
 
     path('', BlogView.as_view(), name='blog'),
-
+    # Comment
+    path('<int:id>', comment_thread, name='thread'),
+    path('<int:id>/Delete', comment_delete, name='delete'),
+    # Post
     path('<slug>', post_detail, name='post'),
     path('Create', PostCreateView.as_view(), name='post_create'),
     path('<slug>/Update', PostUpdateView.as_view(), name='post_update'),
 
-    path('<slug:content_object>', comment_thread, name='thread'),
-    path('<slug:content_object>/Delete', comment_delete, name='delete'),
 
     # DRF API
     path('API/', include('blog.api.urls')),
