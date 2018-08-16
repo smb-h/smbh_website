@@ -186,23 +186,28 @@ def post_detail(request, slug=None):
 # Comment
 @login_required #(login_url='/login/') #LOGIN_URL = '/login/'
 def comment_delete(request, id):
-    #obj = get_object_or_404(Comment, id=id)
-    # obj = CommentFormmment.objects.get(id=id)
+    # obj = get_object_or_404(Comment, id=id)
     try:
         obj = Comment.objects.get(id=id)
-    except:
+    except :
         raise Http404
+    # if not obj.is_parent:
+    #     obj = obj.parent
+
 
     if obj.user != request.user:
-        #messages.success(request, "You do not have permission to view this.")
-        #raise Http404
         reponse = HttpResponse("You do not have permission to do this.")
         reponse.status_code = 403
         return reponse
         #return render(request, "confirm_delete.html", context, status_code=403)
 
     if request.method == "POST":
-        parent_obj_url = obj.content_object.get_absolute_url()
+        if obj.parent == None:
+            # print('Object IS PARENT')
+            parent_obj_url = obj.content_object.get_absolute_url()
+        else :
+            # print('Object IS CHILD')
+            parent_obj_url = obj.parent.get_absolute_url()
         obj.delete()
         messages.success(request, "This has been deleted.")
         return HttpResponseRedirect(parent_obj_url)
@@ -213,8 +218,11 @@ def comment_delete(request, id):
 
 
 def comment_thread(request, id):
-    obj = get_object_or_404(Comment, id=id)
-
+    # obj = get_object_or_404(Comment, id=id)
+    try:
+        obj = Comment.objects.get(id=id)
+    except :
+        raise Http404
     if not obj.is_parent:
         obj = obj.parent
 
@@ -253,6 +261,8 @@ def comment_thread(request, id):
                                                                 content = content_data,
                                                                 parent = parent_obj,
                                                             )
+        if new_comment.parent != None:
+            return HttpResponseRedirect(new_comment.parent.get_absolute_url())                                                        
         return HttpResponseRedirect(new_comment.content_object.get_absolute_url())
 
 
