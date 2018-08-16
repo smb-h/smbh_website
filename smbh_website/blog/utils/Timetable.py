@@ -32,7 +32,7 @@ def get_read_time(html_string):
     j = ['Hour', 'Minute', 'Sec']
     for i in tmp:
         if int(i) != 0:
-            Rs += str(int(i)) + ' ' + j[tmp.index(i)] + ('s' if int(i) > 0 else '') + ' '
+            Rs += str(int(i)) + ' ' + j[tmp.index(i)] + ('s' if int(i) > 1 else '') + ' '
 
     return Rs
 
@@ -41,15 +41,15 @@ def get_read_time(html_string):
 
 
 
-html = '''
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod<br />
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,<br />
-officia deserunt mollit anim id est laborum.</p>
-<p>Lorem ipsum dolor s
+# html = '''
+# <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod<br />
+# tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,<br />
+# officia deserunt mollit anim id est laborum.</p>
+# <p>Lorem ipsum dolor s
 
-'''
+# '''
 
-tmp = get_read_time(html)
+# tmp = get_read_time(html)
 
-print(tmp)
+# print(tmp)
 
