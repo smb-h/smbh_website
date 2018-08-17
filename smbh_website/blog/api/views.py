@@ -11,9 +11,10 @@ from .serializers import (
                             PostListSerializer,
                             PostDetailSerializer,
                             # Comments
-                            CommentListSerializer,
+                            # CommentListSerializer,
                             CommentDetailSerializer,
-                            create_comment_serializer
+                            # create_comment_serializer,
+                            CommentSerializer,
                         )
 # Permissions
 from rest_framework.permissions import (
@@ -30,7 +31,7 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from app.utils.Unique_Slug_Generator import unique_slug_generator
 # Comments
 from rest_framework.mixins import DestroyModelMixin, UpdateModelMixin
-
+from django.db.models import Q
 
 
 
@@ -42,7 +43,8 @@ class PostCreateAPIView(CreateAPIView):
     lookup_field = 'slug'
 
     def perform_create(self, serializer):
-        serializer.save(author = self.request.user, slug = unique_slug_generator(self.request.data['title']))
+        # serializer.save(author = self.request.user, slug = unique_slug_generator(self.request.data['title']))
+        serializer.save(author = self.request.user)
 
 
 # Post Detail
@@ -95,7 +97,8 @@ class PostListAPIView(ListAPIView):
     ordering_fields = ('title', 'publish')
 
     def get_queryset(self, *args, **kwargs):
-        queryset = Post.objects.filter(publish__lte = timezone.now())
+        query = self.request.GET.get('q')
+        queryset = Post.objects.active().filter(language = self.request.LANGUAGE_CODE).search(query)
         return queryset
 
     def get_serializer_context(self, *args, **kwargs):
@@ -106,21 +109,21 @@ class PostListAPIView(ListAPIView):
 
 
 # Comment Create
-class CommentCreateAPIView(CreateAPIView):
-    queryset = Comment.objects.all()
-    #serializer_class = PostCreateUpdateSerializer
-    # permission_classes = [IsAuthenticated]
+# class CommentCreateAPIView(CreateAPIView):
+#     queryset = Comment.objects.all()
+#     #serializer_class = PostCreateUpdateSerializer
+#     # permission_classes = [IsAuthenticated]
 
-    def get_serializer_class(self):
-        model_type = self.request.GET.get("type")
-        slug = self.request.GET.get("slug")
-        parent_id = self.request.GET.get("parent_id", None)
-        return create_comment_serializer(
-                model_type=model_type,
-                slug=slug,
-                parent_id=parent_id,
-                user=self.request.user
-                )
+#     def get_serializer_class(self):
+#         model_type = self.request.GET.get("type")
+#         slug = self.request.GET.get("slug")
+#         parent_id = self.request.GET.get("parent_id", None)
+#         return create_comment_serializer(
+#                 model_type=model_type,
+#                 slug=slug,
+#                 parent_id=parent_id,
+#                 user=self.request.user
+#                 )
 
     # def perform_create(self, serializer):
     #     serializer.save(user=self.request.user)
@@ -142,10 +145,11 @@ class CommentDetailAPIView(DestroyModelMixin, UpdateModelMixin, RetrieveAPIView)
 
 # Comment List
 class CommentListAPIView(ListAPIView):
-    serializer_class = CommentListSerializer
+    # serializer_class = CommentListSerializer
+    serializer_class = CommentSerializer
     permission_classes = [AllowAny]
     filter_backends= [SearchFilter, OrderingFilter]
-    search_fields = ['content', 'user__first_name']
+    search_fields = ['content', 'user']
 
     def get_queryset(self, *args, **kwargs):
         #queryset_list = super(PostListAPIView, self).get_queryset(*args, **kwargs)
@@ -153,9 +157,11 @@ class CommentListAPIView(ListAPIView):
         query = self.request.GET.get("q")
         if query:
             queryset_list = queryset_list.filter(
-                    Q(content__icontains=query)|
+                    Q(content__icontains=query) |
                     Q(user__first_name__icontains=query) |
-                    Q(user__last_name__icontains=query)
+                    Q(user__last_name__icontains=query) |
+                    Q(content_type__icontains=query) |
+                    Q(content__icontains=query)
                     ).distinct()
         return queryset_list
 

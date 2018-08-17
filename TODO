@@ -5,3 +5,5 @@ add geo locations
 localize date & time
 
 
+move comment search to model manager
+

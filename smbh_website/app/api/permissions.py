@@ -12,5 +12,11 @@ class IsOwnerOrReadOnly(BasePermission):
         if request.method in SAFE_METHODS:
             return True
 
-        # Instance must have an attribute named `author`.
-        return obj.author == request.user
+        # Instance must have an attribute named 'author' or 'user'.
+        try:
+            return obj.author == request.user
+        except :
+            return obj.user == request.user
+
+        # return obj.author == request.user
+

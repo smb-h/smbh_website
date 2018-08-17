@@ -1,15 +1,4 @@
 from django.urls import path, include
-from blog.api.views import (
-                                # Post
-                                PostCreateAPIView,
-                                PostDetailAPIView,
-                                PostListAPIView,
-                                PostRUDAPIView,
-                                # Comment
-                                CommentCreateAPIView,
-                                CommentDetailAPIView,
-                                CommentListAPIView
-                            )
 from users.api.views import (
                                 UserCreateAPIView,
                                 UserDetailAPIView,
