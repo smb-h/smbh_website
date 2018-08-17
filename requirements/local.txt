@@ -12,7 +12,7 @@ pytest  # https://github.com/pytest-dev/pytest
 # Code quality
 # ------------------------------------------------------------------------------
 coverage  # https://github.com/nedbat/coveragepy
-# flake8  # https://github.com/PyCQA/flake8     noqa thing :|
+flake8  # https://github.com/PyCQA/flake8     noqa thing :|
 
 
 
