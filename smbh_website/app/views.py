@@ -13,6 +13,7 @@ from django.utils.translation import ugettext as _
 from .forms import ContactForm
 from django.contrib import messages
 
+
 # Home
 class HomeView(View):
     # GET
@@ -25,6 +26,7 @@ class HomeView(View):
         context = {
             'LatestPost': LatestPost
         }
+
 
         return render(reQ, Template, context)
 
