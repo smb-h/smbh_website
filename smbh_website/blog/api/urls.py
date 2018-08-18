@@ -6,7 +6,7 @@ from blog.api.views import (
                                 PostListAPIView,
                                 PostRUDAPIView,
                                 # Comment
-                                # CommentCreateAPIView,
+                                CommentCreateAPIView,
                                 CommentDetailAPIView,
                                 CommentListAPIView
                             )
@@ -22,10 +22,10 @@ urlpatterns = [
     
     # Comment
     path('Comments', CommentListAPIView.as_view(), name='comment_list_api'),
-    # path('Comment/Create', CommentCreateAPIView.as_view(), name='comment_create_api'),
-    path('Comment/<pk>', CommentDetailAPIView.as_view(), name='thread_api'),
+    path('Comment/Create', CommentCreateAPIView.as_view(), name='comment_create_api'),
+    path('Comment/<id>', CommentDetailAPIView.as_view(), name='thread_api'),
 
     # Post
-    path('<slug:slug>/Update', PostRUDAPIView.as_view(), name='post_update_api'),
-    path('<slug:slug>', PostDetailAPIView.as_view(), name='post_api'),
+    path('<slug>/Update', PostRUDAPIView.as_view(), name='post_update_api'),
+    path('<slug>', PostDetailAPIView.as_view(), name='post_api'),
 ]

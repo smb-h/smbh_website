@@ -7,8 +7,9 @@ from rest_framework.serializers import (
                                         )
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 # Users
-from users.api.serializers import UserDetailSerializer
+# from users.api.serializers import UserDetailSerializer
 
 
 
@@ -43,11 +44,13 @@ class PostListSerializer(ModelSerializer):
         return obj.get_api_url(request = request)
 
 
+
 class PostDetailSerializer(ModelSerializer):
 
     tags = SlugRelatedField(many=True, read_only=True, slug_field='name')
     # author = SlugRelatedField(read_only=True, slug_field='username')
     author = SerializerMethodField()
+    comments = SerializerMethodField()
 
     class Meta:
         model = Post
@@ -59,19 +62,25 @@ class PostDetailSerializer(ModelSerializer):
             'content',
             'publish',
             'tags',
-            'language'
+            'language',
+            'comments',
         )
         read_only_fields = ('author',)
 
     def get_author(self, obj):
         return (obj.author.get_full_name())
 
+    def get_comments(self, obj):
+        qs = Comment.objects.filter_by_instance(obj)
+        comments = CommentListSerializer(qs, many = True).data
+        return comments
+
 
 
 # Comments
 User = get_user_model()
 
-def create_comment_serializer(model_type='post', slug=None, parent_id=None, user=None):
+def create_comment_serializer(model_type='Post', slug=None, parent_id=None, user=None):
     class CommentCreateSerializer(ModelSerializer):
         class Meta:
             model = Comment
@@ -84,9 +93,12 @@ def create_comment_serializer(model_type='post', slug=None, parent_id=None, user
             self.model_type = model_type
             self.slug = slug
             self.parent_obj = None
+
+            self.user = user
+            
             if parent_id:
                 parent_qs = Comment.objects.filter(id=parent_id)
-                if parent_qs.exists() and parent_qs.count() ==1:
+                if parent_qs.exists() and parent_qs.count() == 1 :
                     self.parent_obj = parent_qs.first()
             return super(CommentCreateSerializer, self).__init__(*args, **kwargs)
 
@@ -106,12 +118,18 @@ def create_comment_serializer(model_type='post', slug=None, parent_id=None, user
             if user:
                 main_user = user
             else:
-                main_user = User.objects.all().first()
+                request = self.context.get('request')
+                main_user = request.user
+            
+        
             model_type = self.model_type
             slug = self.slug
             parent_obj = self.parent_obj
             comment = Comment.objects.create_by_model_type(
-                    model_type, slug, content, main_user,
+                    model_type = model_type, 
+                    slug = slug, 
+                    content = content, 
+                    user = main_user,
                     parent_obj=parent_obj,
                     )
             return comment
@@ -120,22 +138,24 @@ def create_comment_serializer(model_type='post', slug=None, parent_id=None, user
 
 
 
-class CommentSerializer(ModelSerializer):
+class CommentListSerializer(ModelSerializer):
     reply_count = SerializerMethodField()
-    content_type = SerializerMethodField()
+    # content_type = SerializerMethodField()
     comment_owner = SerializerMethodField()
+    url = SerializerMethodField()
 
     class Meta:
         model = Comment
         fields = [
-            'id',
-            'content_type',
-            'object_id',
+            # 'id',
+            # 'content_type',
+            # 'object_id',
             'comment_owner',
             'parent',
-            'content',
+            # 'content',
             'reply_count',
             'timestamp',
+            'url',
         ]
 
     def get_reply_count(self, obj):
@@ -143,15 +163,20 @@ class CommentSerializer(ModelSerializer):
             return obj.children().count()
         return 0
 
-    # Retunr Object Content Type name instead of id
-    def get_content_type(self, obj):
-        return str(obj.content_type)
+    # Return Object Content Type name instead of id
+    # def get_content_type(self, obj):
+    #     return str(obj.content_type)
 
     def get_comment_owner(self, obj):
         my_obj = obj.content_type.model_class()
         tgt = my_obj.objects.get(id=obj.object_id)
-        # TODO Return Url
-        return str(tgt)
+        request = self.context.get('request')
+        url = tgt.get_api_url(request)
+        return (url)
+
+    def get_url(self, obj):
+        request = self.context.get('request')
+        return obj.get_api_url(request = request)
 
 
 
@@ -179,35 +204,48 @@ class CommentSerializer(ModelSerializer):
 
 
 class CommentChildSerializer(ModelSerializer):
-    user = UserDetailSerializer(read_only=True)
+    # user = UserDetailSerializer(read_only=True)
+    user = SerializerMethodField(read_only=True)
+    reply_count = SerializerMethodField()
     class Meta:
         model = Comment
         fields = [
-            'id',
+            # 'id',
             'user',
             'content',
+            'reply_count',
             'timestamp',
         ]
+
+    def get_user(self, obj):
+        return obj.user.get_full_name()
+
+    def get_reply_count(self, obj):
+        if obj.is_parent:
+            return obj.children().count()
+        return 0
 
 
 
 class CommentDetailSerializer(ModelSerializer):
-    user = UserDetailSerializer(read_only=True)
+    # user = UserDetailSerializer(read_only=True)
+    user = SerializerMethodField(read_only=True)
     reply_count = SerializerMethodField()
-    content_object_url = SerializerMethodField()
+    # content_type = SerializerMethodField()
+    comment_owner = SerializerMethodField()
     replies =   SerializerMethodField()
     class Meta:
         model = Comment
         fields = [
-            'id',
+            # 'id',
             'user',
-            'content_type',
-            'object_id',
+            # 'content_type',
+            # 'object_id',
             'content',
+            'timestamp',
+            'comment_owner',
             'reply_count',
             'replies',
-            'timestamp',
-            'content_object_url',
         ]
         read_only_fields = [
             #'content_type',
@@ -216,11 +254,22 @@ class CommentDetailSerializer(ModelSerializer):
             'replies',
         ]
 
-    def get_content_object_url(self, obj):
-        try:
-            return obj.content_object.get_api_url()
-        except:
-            return None
+    def get_user(self, obj):
+        return obj.user.get_full_name()
+        
+    # def get_content_object_url(self, obj):
+    #     try:
+    #         return obj.content_object.get_api_url()
+    #     except:
+    #         return None
+
+    def get_comment_owner(self, obj):
+        my_obj = obj.content_type.model_class()
+        tgt = my_obj.objects.get(id=obj.object_id)
+        request = self.context.get('request')
+        url = tgt.get_api_url(request)
+        return (url)
+
 
     def get_replies(self, obj):
         if obj.is_parent:
@@ -231,3 +280,8 @@ class CommentDetailSerializer(ModelSerializer):
         if obj.is_parent:
             return obj.children().count()
         return 0
+
+    # Return Object Content Type name instead of id
+    # def get_content_type(self, obj):
+    #     return str(obj.content_type)
+

@@ -11,10 +11,9 @@ from .serializers import (
                             PostListSerializer,
                             PostDetailSerializer,
                             # Comments
-                            # CommentListSerializer,
                             CommentDetailSerializer,
-                            # create_comment_serializer,
-                            CommentSerializer,
+                            create_comment_serializer,
+                            CommentListSerializer,
                         )
 # Permissions
 from rest_framework.permissions import (
@@ -109,21 +108,27 @@ class PostListAPIView(ListAPIView):
 
 
 # Comment Create
-# class CommentCreateAPIView(CreateAPIView):
-#     queryset = Comment.objects.all()
-#     #serializer_class = PostCreateUpdateSerializer
-#     # permission_classes = [IsAuthenticated]
+class CommentCreateAPIView(CreateAPIView):
+    queryset = Comment.objects.all()
+    #serializer_class = PostCreateUpdateSerializer
+    permission_classes = [IsAuthenticated]
 
-#     def get_serializer_class(self):
-#         model_type = self.request.GET.get("type")
-#         slug = self.request.GET.get("slug")
-#         parent_id = self.request.GET.get("parent_id", None)
-#         return create_comment_serializer(
-#                 model_type=model_type,
-#                 slug=slug,
-#                 parent_id=parent_id,
-#                 user=self.request.user
-#                 )
+
+    # Request Sample
+    # http://127.0.0.1:8000/en/Blog/API/Comment/Create?type=post&slug=welcome-to-deployment&parent_id=21
+    def get_serializer_class(self):
+        
+        # Getting stuff not setting them
+        model_type = self.request.GET.get("type")
+        slug = self.request.GET.get("slug")
+        parent_id = self.request.GET.get("parent_id", None)
+
+        return create_comment_serializer(
+                model_type=model_type,
+                slug=slug,
+                parent_id=parent_id,
+                user=self.request.user
+                )
 
     # def perform_create(self, serializer):
     #     serializer.save(user=self.request.user)
@@ -133,6 +138,7 @@ class PostListAPIView(ListAPIView):
 class CommentDetailAPIView(DestroyModelMixin, UpdateModelMixin, RetrieveAPIView):
     queryset = Comment.objects.filter(id__gte=0)
     serializer_class = CommentDetailSerializer
+    lookup_field = 'id'
     permission_classes = [IsOwnerOrReadOnly]
 
     def put(self, request, *args, **kwargs):
@@ -145,8 +151,7 @@ class CommentDetailAPIView(DestroyModelMixin, UpdateModelMixin, RetrieveAPIView)
 
 # Comment List
 class CommentListAPIView(ListAPIView):
-    # serializer_class = CommentListSerializer
-    serializer_class = CommentSerializer
+    serializer_class = CommentListSerializer
     permission_classes = [AllowAny]
     filter_backends= [SearchFilter, OrderingFilter]
     search_fields = ['content', 'user']

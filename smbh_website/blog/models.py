@@ -122,6 +122,7 @@ class Post(models.Model):
     def get_api_url(self, request = None):
         return api_reverse('Blog:post_api', kwargs={"slug": self.slug}, request = request)
 
+
     class Meta:
         verbose_name = _('Post')
         verbose_name_plural = _('Post')
@@ -212,10 +213,14 @@ class Comment(models.Model):
         return (mark_safe(self.content))
 
     def get_absolute_url(self):
-        return reverse("Blog:thread", kwargs={"id": self.id})
+        return reverse("Blog:thread_api", kwargs={"id": self.id})
 
     def get_delete_url(self):
         return reverse("Blog:delete", kwargs={"id": self.id})
+
+    def get_api_url(self, request = None):
+        return api_reverse('Blog:thread_api', kwargs={"id": self.id}, request = request)
+
 
     # Replies
     def children(self): 
