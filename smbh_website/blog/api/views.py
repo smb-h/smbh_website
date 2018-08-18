@@ -46,26 +46,11 @@ class PostCreateAPIView(CreateAPIView):
         serializer.save(author = self.request.user)
 
 
-# Post Detail
-class PostDetailAPIView(RetrieveAPIView):
-    serializer_class = PostDetailSerializer
-    permission_classes = [AllowAny]
-    lookup_field = 'slug'
-
-    def get_queryset(self, *args, **kwargs):
-        queryset = Post.objects.filter(slug = self.kwargs['slug'])
-        return queryset
-
-    # Default
-    # def get_object(self, *args, **kwargs):
-    #     pk = self.kwargs.get('pk')
-    #     return Post.objects.get(pk = pk)
-
 
 # Post Update
 class PostRUDAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = PostDetailSerializer
-    permission_classes = [IsOwnerOrReadOnly, IsAdminUser]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly, IsAdminUser]
     lookup_field = 'slug'
 
     def perform_create(self, serializer):
@@ -79,15 +64,21 @@ class PostRUDAPIView(RetrieveUpdateDestroyAPIView):
         context = {'request': self.request}
         return context
 
+    # Default
+    # def get_object(self, *args, **kwargs):
+    #     pk = self.kwargs.get('pk')
+    #     return Post.objects.get(pk = pk)
+
+
 
 # Post List
 class PostListAPIView(ListAPIView):
     serializer_class = PostListSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     # Filters
-    filter_backends = (SearchFilter, DjangoFilterBackend, OrderingFilter,)
+    filter_backends = (SearchFilter, OrderingFilter,)
     # filter_backends = (DjangoFilterBackend,)
-    filter_fields = ['title', 'author', 'publish', 'language']
+    # filter_fields = ['title', 'publish',]
     # OR
     # filter_backends = (SearchFilter,)
     search_fields = ('title', 'author', 'content', 'publish', 'tags')
@@ -134,30 +125,56 @@ class CommentCreateAPIView(CreateAPIView):
     #     serializer.save(user=self.request.user)
 
 
-# Comment Detail
+
+# Comment Update Mixin Version
 class CommentDetailAPIView(DestroyModelMixin, UpdateModelMixin, RetrieveAPIView):
     queryset = Comment.objects.filter(id__gte=0)
     serializer_class = CommentDetailSerializer
     lookup_field = 'id'
     permission_classes = [IsOwnerOrReadOnly]
 
+    # PUT comes from RetrieveAPIView
     def put(self, request, *args, **kwargs):
+        # self.update comes from UpdateModelMixin
         return self.update(request, *args, **kwargs)
 
+    # Delete comes from RetrieveAPIView
     def delete(self, request, *args, **kwargs):
+        # self.destroy comes from DestroyModelMixin
         return self.destroy(request, *args, **kwargs)
+
+
+
+# Comment Update
+class CommentRUDAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = CommentDetailSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly, IsAdminUser]
+    lookup_field = 'id'
+
+    # def perform_create(self, serializer):
+    #     serializer.save(slug = unique_slug_generator(self))
+
+    def get_queryset(self, *args, **kwargs):
+        # queryset = Comment.objects.filter(id = self.kwargs['id'])
+        queryset = Comment.objects.filter(id__gte = 0)
+        return queryset
+
+    def get_serializer_context(self, *args, **kwargs):
+        context = {'request': self.request}
+        return context
 
 
 
 # Comment List
 class CommentListAPIView(ListAPIView):
     serializer_class = CommentListSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends= [SearchFilter, OrderingFilter]
-    search_fields = ['content', 'user']
+    search_fields = ('content', 'user', 'content', 'timestamp')
+    ordering_fields = ('timestamp',)
+
 
     def get_queryset(self, *args, **kwargs):
-        #queryset_list = super(PostListAPIView, self).get_queryset(*args, **kwargs)
         queryset_list = Comment.objects.filter(id__gte=0) #filter(user=self.request.user)
         query = self.request.GET.get("q")
         if query:
@@ -173,3 +190,8 @@ class CommentListAPIView(ListAPIView):
     def get_serializer_context(self, *args, **kwargs):
         context = {'request': self.request}
         return context
+
+
+
+
+

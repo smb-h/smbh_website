@@ -2,13 +2,12 @@ from django.urls import path, include
 from blog.api.views import (
                                 # Post
                                 PostCreateAPIView,
-                                PostDetailAPIView,
-                                PostListAPIView,
                                 PostRUDAPIView,
+                                PostListAPIView,
                                 # Comment
                                 CommentCreateAPIView,
-                                CommentDetailAPIView,
-                                CommentListAPIView
+                                CommentRUDAPIView,
+                                CommentListAPIView,
                             )
 
 
@@ -23,9 +22,8 @@ urlpatterns = [
     # Comment
     path('Comments', CommentListAPIView.as_view(), name='comment_list_api'),
     path('Comment/Create', CommentCreateAPIView.as_view(), name='comment_create_api'),
-    path('Comment/<id>', CommentDetailAPIView.as_view(), name='thread_api'),
+    path('Comment/<id>', CommentRUDAPIView.as_view(), name='thread_api'),
 
     # Post
-    path('<slug>/Update', PostRUDAPIView.as_view(), name='post_update_api'),
-    path('<slug>', PostDetailAPIView.as_view(), name='post_api'),
+    path('<slug>', PostRUDAPIView.as_view(), name='post_api'),
 ]
