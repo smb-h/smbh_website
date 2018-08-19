@@ -26,8 +26,6 @@ from app.api.permissions import IsOwnerOrReadOnly
 # Filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
-# Utils
-from app.utils.Unique_Slug_Generator import unique_slug_generator
 # Comments
 from rest_framework.mixins import DestroyModelMixin, UpdateModelMixin
 from django.db.models import Q
@@ -42,19 +40,21 @@ class PostCreateAPIView(CreateAPIView):
     lookup_field = 'slug'
 
     def perform_create(self, serializer):
-        # serializer.save(author = self.request.user, slug = unique_slug_generator(self.request.data['title']))
-        serializer.save(author = self.request.user)
+        serializer.save(
+            author = self.request.user,
+            language = self.request.LANGUAGE_CODE
+            )
 
 
 
 # Post Update
 class PostRUDAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = PostDetailSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly, IsAdminUser]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     lookup_field = 'slug'
 
-    def perform_create(self, serializer):
-        serializer.save(slug = unique_slug_generator(self))
+    # def perform_create(self, serializer):
+    #     serializer.save(slug = unique_slug_generator(self))
 
     def get_queryset(self, *args, **kwargs):
         queryset = Post.objects.filter(slug = self.kwargs['slug'])
@@ -131,7 +131,7 @@ class CommentDetailAPIView(DestroyModelMixin, UpdateModelMixin, RetrieveAPIView)
     queryset = Comment.objects.filter(id__gte=0)
     serializer_class = CommentDetailSerializer
     lookup_field = 'id'
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
     # PUT comes from RetrieveAPIView
     def put(self, request, *args, **kwargs):
@@ -148,11 +148,8 @@ class CommentDetailAPIView(DestroyModelMixin, UpdateModelMixin, RetrieveAPIView)
 # Comment Update
 class CommentRUDAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = CommentDetailSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly, IsAdminUser]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     lookup_field = 'id'
-
-    # def perform_create(self, serializer):
-    #     serializer.save(slug = unique_slug_generator(self))
 
     def get_queryset(self, *args, **kwargs):
         # queryset = Comment.objects.filter(id = self.kwargs['id'])
@@ -175,17 +172,9 @@ class CommentListAPIView(ListAPIView):
 
 
     def get_queryset(self, *args, **kwargs):
-        queryset_list = Comment.objects.filter(id__gte=0) #filter(user=self.request.user)
         query = self.request.GET.get("q")
-        if query:
-            queryset_list = queryset_list.filter(
-                    Q(content__icontains=query) |
-                    Q(user__first_name__icontains=query) |
-                    Q(user__last_name__icontains=query) |
-                    Q(content_type__icontains=query) |
-                    Q(content__icontains=query)
-                    ).distinct()
-        return queryset_list
+        queryset = Comment.objects.filter(id__gte=0).search(query)
+        return queryset
 
     def get_serializer_context(self, *args, **kwargs):
         context = {'request': self.request}

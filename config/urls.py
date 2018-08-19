@@ -28,8 +28,7 @@ urlpatterns += i18n_patterns(
     # User management
     path("Users/", include("smbh_website.users.urls", namespace="Users"),),
     path("Accounts/", include("allauth.urls")),
-    # OAuth 2
-    path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+
 
     # My Apps
     path('', include('app.urls', namespace='App')),

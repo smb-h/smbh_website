@@ -91,8 +91,7 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount',
     # DRF
     'rest_framework',
-    # OAuth 2
-    'oauth2_provider',
+
 
     # Utilities
     # Django Taggit
@@ -441,7 +440,10 @@ STATICFILES_FINDERS += ['compressor.finders.CompressorFinder']
 REST_FRAMEWORK = {
     # Authentication
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+        # JWT
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        # Session
+        'rest_framework.authentication.SessionAuthentication',
     ),
     # Permissions
     'DEFAULT_PERMISSION_CLASSES': (
@@ -449,13 +451,8 @@ REST_FRAMEWORK = {
     )
 }
 
-# OAuth 2
-OAUTH2_PROVIDER = {
-    # this is the list of available scopes
-    'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
-}
-
-
 
 
 # ------------------------------------------------------------------------------
+
+

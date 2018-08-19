@@ -16,6 +16,7 @@ django-redis  # https://github.com/niwinz/django-redis
 # Django REST Framework
 djangorestframework  # https://github.com/encode/django-rest-framework
 django-filter # https://github.com/carltongibson/django-filter
+# djangorestframework-jwt  # https://getblimp.github.io/django-rest-framework-jwt/
 
 # 3rd Party Packages
 # ------------------------------------------------------------------------------

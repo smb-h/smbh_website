@@ -1,8 +1,10 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
-from rest_framework.views import APIView
 
+from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView, RetrieveAPIView, ListAPIView
+from rest_framework.response import Response
+from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 
 from rest_framework.permissions import (
                                             AllowAny,
@@ -17,9 +19,6 @@ from .serializers import (
                             UserLoginSerializer,
                             GroupSerializer
                         )
-# OAuth 2
-from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope, TokenHasScope
-
 
 
 User = get_user_model()
@@ -27,27 +26,39 @@ User = get_user_model()
 
 # User Create
 class UserCreateAPIView(CreateAPIView):
-    # queryset = User.objects.all()
     serializer_class = UserCreateSerializer
+    queryset = User.objects.all()
     permission_classes = [AllowAny]
 
 
 # User Detail
 class UserDetailAPIView(RetrieveAPIView):
     serializer_class = UserDetailSerializer
-    permission_classes = [IsAuthenticated, TokenHasReadWriteScope]
+    permission_classes = [IsAuthenticated]
     lookup_field = 'slug'
 
 
 # User Login
 class UserLoginAPIView(APIView):
-    serializer_class = UserLoginSerializer
     permission_classes = [AllowAny]
+    serializer_class = UserLoginSerializer
+
+    def post(self, request, *args, **kwargs):
+        data = request.data
+        serializer = UserLoginSerializer(data = data)
+        if serializer.is_valid(raise_exception = True):
+            new_data = serializer.data
+            return Response(new_data, status = HTTP_200_OK)
+
+        return Response(serializer.errors, status = HTTP_400_BAD_REQUEST)
+
 
 
 # Group List
 class GroupListAPIView(ListAPIView):
-    permission_classes = [IsAuthenticated, TokenHasScope]
+    permission_classes = [IsAuthenticated]
     required_scopes = ['groups']
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+
+

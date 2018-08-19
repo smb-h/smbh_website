@@ -101,7 +101,7 @@ class Post(models.Model):
     publish = models.DateTimeField(blank=True, null=True, verbose_name=_('Publish'))
 
     slug = models.SlugField(allow_unicode=True, unique=True, verbose_name=_('Slug'))
-    tags = TaggableManager(verbose_name=_('Tags'))
+    tags = TaggableManager(blank=True, verbose_name=_('Tags'))
 
     objects = PostManager()
 
@@ -155,7 +155,27 @@ class Post(models.Model):
 
 
 # Comment Manager
+
+class CommentQuerySet(models.query.QuerySet):
+    def search(self, query):
+        if query:
+            query = query.strip()
+            qs = self.filter(
+                                Q(content__icontains=query) |
+                                Q(user__first_name__icontains=query) |
+                                Q(user__last_name__icontains=query) |
+                                Q(content_type__icontains=query)
+                            ).distinct()
+            return qs
+        return self
+
+
 class CommentManager(models.Manager):
+
+    def get_queryset(self):
+        return CommentQuerySet(self.model, using=self._db)
+
+
     def all(self):
         qs = super(CommentManager, self).filter(parent=None)
         return qs
@@ -182,6 +202,10 @@ class CommentManager(models.Manager):
                 instance.save()
                 return instance
         return None
+
+    # Search
+    def search(self, query):
+        return self.get_queryset().search(query)
 
 
 content_types = [
@@ -213,7 +237,7 @@ class Comment(models.Model):
         return (mark_safe(self.content))
 
     def get_absolute_url(self):
-        return reverse("Blog:thread_api", kwargs={"id": self.id})
+        return reverse("Blog:thread", kwargs={"id": self.id})
 
     def get_delete_url(self):
         return reverse("Blog:delete", kwargs={"id": self.id})
@@ -232,4 +256,12 @@ class Comment(models.Model):
             return False
         return True
 
+    # OverRiding Save Method
+    # https://docs.djangoproject.com/en/2.1/topics/db/models/#overriding-predefined-model-methods
+    def save(self, *args, **kwargs):
 
+        # Call the "real" save() method.
+        super().save(*args, **kwargs)
+        # Save many to many relations
+        super().save_m2m(*args, **kwargs)
+        # do_something_else()
