@@ -7,7 +7,7 @@ from users.api.views import (
                             )
 # JWT
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
-# OAuth 2
+
 
 
 urlpatterns = [
@@ -21,8 +21,6 @@ urlpatterns = [
     path('Token/', obtain_jwt_token),
     path('Token/Refresh', refresh_jwt_token),
     path('Token/Verify', verify_jwt_token),
-    # OAuth 2
-    path('OAuth/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 
     # User
     path('<username>', UserDetailAPIView.as_view(), name='detail_api'),
