@@ -91,6 +91,8 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount',
     # DRF
     'rest_framework',
+    # OAuth 2
+    'oauth2_provider',
 
 
     # Utilities
@@ -442,6 +444,8 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         # JWT
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        # OAuth 2
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
         # Session
         'rest_framework.authentication.SessionAuthentication',
     ),
@@ -452,6 +456,18 @@ REST_FRAMEWORK = {
 }
 
 
+# JWT 
+JWT_AUTH = {
+    # JWT enable Non Expired tokens (refresh a token)
+    'JWT_ALLOW_REFRESH': True,
+
+}
+
+# OAuth 2
+OAUTH2_PROVIDER = {
+    # this is the list of available scopes
+    'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
+}
 
 # ------------------------------------------------------------------------------
 

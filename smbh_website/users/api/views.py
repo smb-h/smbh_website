@@ -13,6 +13,8 @@ from rest_framework.permissions import (
                                             IsAuthenticatedOrReadOnly
                                         )
 from app.api.permissions import IsOwnerOrReadOnly
+# OAuth 2
+from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope, TokenHasScope
 from .serializers import (
                             UserCreateSerializer,
                             UserDetailSerializer,
@@ -33,9 +35,10 @@ class UserCreateAPIView(CreateAPIView):
 
 # User Detail
 class UserDetailAPIView(RetrieveAPIView):
+    queryset = User.objects.all()
     serializer_class = UserDetailSerializer
-    permission_classes = [IsAuthenticated]
-    lookup_field = 'slug'
+    permission_classes = [IsAuthenticated, TokenHasReadWriteScope]
+    lookup_field = 'username'
 
 
 # User Login
@@ -56,7 +59,7 @@ class UserLoginAPIView(APIView):
 
 # Group List
 class GroupListAPIView(ListAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, TokenHasScope]
     required_scopes = ['groups']
     queryset = Group.objects.all()
     serializer_class = GroupSerializer

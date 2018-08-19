@@ -20,7 +20,6 @@ from .forms import CommentForm, PostForm
 
 
 
-
 # Tag Mixin View
 class TagMixin(object):
     def get_context_data(self, **kwargs):

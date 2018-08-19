@@ -23,6 +23,8 @@ from rest_framework.permissions import (
                                             IsAuthenticatedOrReadOnly,
                                         )
 from app.api.permissions import IsOwnerOrReadOnly
+# OAuth 2
+from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope, TokenHasScope
 # Filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
@@ -36,7 +38,7 @@ from django.db.models import Q
 class PostCreateAPIView(CreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostDetailSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, TokenHasReadWriteScope]
     lookup_field = 'slug'
 
     def perform_create(self, serializer):
@@ -50,7 +52,7 @@ class PostCreateAPIView(CreateAPIView):
 # Post Update
 class PostRUDAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = PostDetailSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly, TokenHasReadWriteScope]
     lookup_field = 'slug'
 
     # def perform_create(self, serializer):
@@ -102,7 +104,7 @@ class PostListAPIView(ListAPIView):
 class CommentCreateAPIView(CreateAPIView):
     queryset = Comment.objects.all()
     #serializer_class = PostCreateUpdateSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, TokenHasReadWriteScope]
 
 
     # Request Sample
@@ -148,7 +150,7 @@ class CommentDetailAPIView(DestroyModelMixin, UpdateModelMixin, RetrieveAPIView)
 # Comment Update
 class CommentRUDAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = CommentDetailSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly, TokenHasReadWriteScope]
     lookup_field = 'id'
 
     def get_queryset(self, *args, **kwargs):
