@@ -10,9 +10,6 @@ from app.utils.Unique_Slug_Generator import unique_slug_generator
 from .utils.Timetable import get_read_time
 # Tag App
 from taggit.managers import TaggableManager
-# Ckeditor
-from ckeditor_uploader.fields import RichTextUploadingField
-# from ckeditor.fields import RichTextField
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from rest_framework.reverse import reverse as api_reverse
@@ -86,22 +83,21 @@ User = settings.AUTH_USER_MODEL
 # Post
 class Post(models.Model):
     title = models.CharField(max_length = 255, verbose_name = _('Title'))
-    image = models.ImageField(blank=True, null=True, upload_to=upload_path, verbose_name=_('Image'))
-    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name = _('Author'))
-    language = models.CharField(max_length = 255, choices=LANGUAGES, default = 'fa', verbose_name=_('Language'))
-    # content = models.TextField(verbose_name = _('Content'))
-    content = RichTextUploadingField(config_name='ck_blog', verbose_name = _('Content'))
-    attach = models.FileField(blank=True, null=True, upload_to=upload_path, verbose_name= _('Attach File'))
+    image = models.ImageField(blank = True, null = True, upload_to = upload_path, verbose_name = _('Image'))
+    author = models.ForeignKey(User, on_delete = models.CASCADE, verbose_name = _('Author'))
+    language = models.CharField(max_length = 255, choices = LANGUAGES, default = 'fa', verbose_name = _('Language'))
+    content = models.TextField(verbose_name = _('Content'))
+    summary = models.CharField(max_length = 511, blank = True, null = True, verbose_name = _('Summary'))
+    attach = models.FileField(blank = True, null = True, upload_to = upload_path, verbose_name = _('Attach File'))
     # Date Time Information
-    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name= _('Created'))
-    updated = models.DateTimeField(auto_now_add=False, auto_now=True, verbose_name= _('Updated'))
-    read_time = models.CharField(max_length = 255, blank=True, null=True, verbose_name = _('Read Time'))
-
-    draft = models.BooleanField(default=False, verbose_name = _('Draft'))
-    publish = models.DateTimeField(blank=True, null=True, verbose_name=_('Publish'))
-
-    slug = models.SlugField(allow_unicode=True, unique=True, verbose_name=_('Slug'))
-    tags = TaggableManager(blank=True, verbose_name=_('Tags'))
+    created = models.DateTimeField(auto_now_add = True, auto_now = False, verbose_name = _('Created'))
+    updated = models.DateTimeField(auto_now_add = False, auto_now = True, verbose_name = _('Updated'))
+    read_time = models.CharField(max_length = 255, blank = True, null = True, verbose_name = _('Read Time'))
+    draft = models.BooleanField(default = False, verbose_name = _('Draft'))
+    publish = models.DateTimeField(blank = True, null = True, verbose_name = _('Publish'))
+    # Utils
+    slug = models.SlugField(allow_unicode = True, unique = True, verbose_name = _('Slug'))
+    tags = TaggableManager(blank = True, verbose_name = _('Tags'))
 
     objects = PostManager()
 
@@ -221,8 +217,7 @@ class Comment(models.Model):
     object_id = models.PositiveIntegerField(verbose_name = _('ID'))
     content_object = GenericForeignKey('content_type', 'object_id')
     parent = models.ForeignKey("self", null=True, blank=True, on_delete=models.CASCADE, verbose_name = _('Parent'))
-    # content = models.TextField(verbose_name = _('Content'))
-    content = RichTextUploadingField(config_name='ck_comment', verbose_name = _('Content'))
+    content = models.TextField(verbose_name = _('Content'))
     timestamp = models.DateTimeField(auto_now_add=True, verbose_name = _('Timestamp'))
 
     objects = CommentManager()
