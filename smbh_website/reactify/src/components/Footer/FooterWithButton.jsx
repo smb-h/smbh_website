@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 
 // @material-ui/icons
 
-import styles from './FooterStyle.jsx';
+import styles from './FooterStyle';
 
 
 

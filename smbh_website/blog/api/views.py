@@ -38,7 +38,7 @@ from django.db.models import Q
 class PostCreateAPIView(CreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostDetailSerializer
-    permission_classes = [IsAuthenticated, TokenHasReadWriteScope]
+    permission_classes = [IsAuthenticated]
     lookup_field = 'slug'
 
     def perform_create(self, serializer):
@@ -52,7 +52,7 @@ class PostCreateAPIView(CreateAPIView):
 # Post Update
 class PostRUDAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = PostDetailSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly, TokenHasReadWriteScope]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     lookup_field = 'slug'
 
     # def perform_create(self, serializer):

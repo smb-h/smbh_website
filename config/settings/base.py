@@ -136,7 +136,7 @@ AUTHENTICATION_BACKENDS = [
 AUTH_USER_MODEL = 'users.User'
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
 # https://docs.djangoproject.com/en/dev/ref/settings/#logout-redirect-url
-LOGIN_REDIRECT_URL = 'Users:redirect'
+# LOGIN_REDIRECT_URL = 'Users:redirect'
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
 LOGIN_URL = 'account_login'
 

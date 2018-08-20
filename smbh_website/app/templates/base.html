@@ -11,14 +11,15 @@
     {% load static %}
 
     {% block css %}
-
+    <!-- FavIcon -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'media/favicons/logo.png' %}"/>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <!-- React Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <!-- React Css -->
-    <link rel='stylesheet' href="{% static 'css/reactify-django.ui.css' %}" />
+    <link rel='stylesheet' href="{% static 'css/reactify.css' %}" />
     {% endblock css %}
 
     {% block js %}
@@ -30,14 +31,14 @@
     <!-- Bootstrap js -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous" defer></script>
     <!-- React js -->
-    <script src="{% static 'js/reactify-django.ui.js' %}" defer></script>
+    <script src="{% static 'js/reactify.js' %}" defer></script>
 
     {% endblock js %}
 
   </head>
   <body>
     
-    <div class='container-fluid'>
+    <div>
 
         {% block content %}
             

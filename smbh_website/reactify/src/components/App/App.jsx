@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-import Parallax from '../Parallax/Parallax.jsx';
+import Parallax from '../Parallax/Parallax';
 import classNames from "classnames";
 
-import NavBar from '../NavBar/NavBar.jsx';
-import FloatButton from '../FloatButton/FloatButton.jsx';
-import Footer from '../Footer/FooterWithButton.jsx';
-import RecentPosts from '../RecentPosts/RecentPosts.jsx';
+import NavBar from '../NavBar/NavBar';
+import FloatButton from '../FloatButton/FloatButton';
+import Footer from '../Footer/FooterWithButton';
+import RecentPosts from '../RecentPosts/RecentPosts';
 
 import '../../assets/scss/App.css';
 

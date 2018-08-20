@@ -24,7 +24,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 
 // Style
-import styles from './RecentPostStyle.jsx';
+import styles from './RecentPostStyle';
 
 
 

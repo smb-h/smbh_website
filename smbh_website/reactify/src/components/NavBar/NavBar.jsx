@@ -17,8 +17,8 @@ import SpeakerNotes from '@material-ui/icons/SpeakerNotesRounded';
 
 
 // core components
-import Header from "../Header/Header.jsx";
-import navbarsStyle from "./navbarsStyle.jsx";
+import Header from "../Header/Header";
+import navbarsStyle from "./navbarsStyle";
 
 
 

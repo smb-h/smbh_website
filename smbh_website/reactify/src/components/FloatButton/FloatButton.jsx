@@ -6,7 +6,7 @@ import UpIcon from '@material-ui/icons/KeyboardArrowUpRounded';
 
 
 // Style
-import styles from './FloatButtonStyle.jsx';
+import styles from './FloatButtonStyle';
 
 
 
