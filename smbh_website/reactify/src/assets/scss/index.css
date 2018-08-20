@@ -1,0 +1,14 @@
+body, html {
+  background-color: #364f6b;
+  margin: 0px;
+}
+
+a {
+  -webkit-transition: 0.6s;
+  -moz-transition: 0.6s;
+  -ms-transition: 0.6s;
+  -o-transition: 0.6s;
+  transition: 0.6s;
+}
+
+/*# sourceMappingURL=index.css.map */

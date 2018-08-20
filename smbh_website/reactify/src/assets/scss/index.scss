@@ -1,0 +1,27 @@
+$BaseColor: #364f6b;
+
+$Main: 'royalblue';
+$Soft: '#ffd460';
+$Gentle: #FF9A47;
+$Bright: #fae3d9;
+$Error: #ff165d;
+
+
+body, html{
+    background-color: $BaseColor;
+    margin: 0px;
+}
+
+
+
+// Utility
+
+a {
+    -webkit-transition: 0.6s;
+    -moz-transition: 0.6s;
+    -ms-transition: 0.6s;
+    -o-transition: 0.6s;
+    transition: 0.6s;
+}
+
+

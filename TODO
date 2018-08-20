@@ -1,7 +1,3 @@
-Django Restframework login
-
-API Athentication
-
 
 Fix Tags in create/update post
 Fix Uploading image field
@@ -11,6 +7,6 @@ localize date & time
 
 
 
-Test API`s
+Test API`s (Rest API's Basic's cfe)
 
 Clean Code

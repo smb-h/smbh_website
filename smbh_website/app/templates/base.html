@@ -1,151 +1,52 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-{% load static %} {% load analytical %} {% comment %} Translition {% endcomment %} {% load i18n %} {% load compress %}
+    <title>SMBH</title>
+    
+    {% load static %}
 
+    {% block css %}
 
-<head>
-  {% analytical_head_top %}
-  <!-- Meta Block -->
-  {% block meta %}
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1"> {% endblock meta %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- React Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- React Css -->
+    <link rel='stylesheet' href="{% static 'css/reactify-django.ui.css' %}" />
+    {% endblock css %}
 
-  <!-- Title Block -->
-  <title>
-    {% block title %} SMBH {% endblock title %}
-  </title>
+    {% block js %}
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous" defer></script>
+    <!-- Popper.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous" defer></script>
+    <!-- Bootstrap js -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous" defer></script>
+    <!-- React js -->
+    <script src="{% static 'js/reactify-django.ui.js' %}" defer></script>
 
-  <!-- Style Block -->
-  <link rel="shortcut icon" type="image/png" href="{% static 'images/favicons/favicon.png' %}" />
+    {% endblock js %}
 
-  <!-- Google Material Design Icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  </head>
+  <body>
+    
+    <div class='container-fluid'>
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9"
-    crossorigin="anonymous"> {% compress css file base %}
-  <!-- BootStrap -->
-  <link rel="stylesheet" href="{% static 'Packages/MDB/css/bootstrap.min.css' %}" />
-  <!-- MDB -->
-  <link rel="stylesheet" href="{% static 'Packages/MDB/css//mdb.min.css' %}" />
+        {% block content %}
+            
+        {% endblock content %}
 
-  <!-- Customize -->
-  <link rel="stylesheet" href="{% static 'css/base.css' %}" /> {% endcompress %} {% block style %} {% endblock style %}
+    </div>  
 
-  <!-- Script Block -->
-  <!-- Mark Down -->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> -->
-  {% compress js file base %}
-  <!-- JQuery -->
-  <script src="{% static 'Packages/jquery-3.3.1.min.js' %}"></script>
-
-  <!-- BootStrap -->
-  <script src="{% static 'Packages/MDB/js/bootstrap.min.js' %}" defer></script>
-  <!-- Bootstrap tooltips -->
-  <script src="{% static 'Packages/MDB/js/popper.min.js' %}" defer></script>
-  <!-- MDB  -->
-  <script type="text/javascript" src="{% static 'Packages/MDB/js/mdb.min.js' %}" defer></script>
-  <!-- CKEditor -->
-  <script type="text/javascript" src="{% static 'Packages/ckeditor/ckeditor-init.js' %}"></script>
-  <script type="text/javascript" src="{% static 'Packages/ckeditor/ckeditor.js' %}"></script>
-  <!-- Customize -->
-  <script src="{% static 'js/base.js' %}"></script>
-  {% endcompress %} {% block script %} {% endblock script %} {% analytical_head_bottom %}
-</head>
-
-{% if LANGUAGE_CODE == 'en' %}
-<script>
-  $("body").css({
-    "direction": "ltr",
-    "text-align": "left",
-  });
-  $("html").css({
-    "direction": "ltr",
-    "text-align": "left",
-  });
-
-</script>
-{% else %}
-<script>
-  $("body").css({
-    "direction": "rtl",
-    "text-align": "right",
-  });
-  $("html").css({
-    "direction": "rtl",
-    "text-align": "right",
-  });
-
-</script>
-{% endif %}
-
-<body>
-  {% analytical_body_top %}
-
-  <!-- Messages -->
-  {% if messages %}
-  <ul class="messages alert alert-info">
-    {% for message in messages %}
-    <li id="message_{{ forloop.counter }}" {% if message.tags %} class="{{ message.tags }}" {% endif %}>
-      {{ message }}
-    </li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-
-  <!-- Back To Top Button -->
-  <button class="btn-info btn-floating rounded-circle btn-sm" onclick="BackToTop()" id="btp-btn" title="Go To Top">
-    <i class="material-icons">keyboard_arrow_up</i>
-  </button>
-
-  <!-- Language Button -->
-  {% comment %} {% if request.LANGUAGE_CODE == 'fa' %}
-  <a class="btn-info btn-floating btn-sm LB btn-grad rounded-circle" id="EN" href="/en/" title="English">
-    <i>En</i>
-  </a>
-  {% else %}
-  <a class="btn-info btn-floating btn-sm LB btn-grad rounded-circle" id="FA" href="/fa/" title="Persian">
-    <i>Fa</i>
-  </a>
-  {% endif %} {% endcomment %}
-
-
-  <!-- Header -->
-  <header>
-    {% block header %} {% endblock header %}
-  </header>
-
-
-  <!-- Content -->
-  <section id="content">
-    {% block content %}
-
-
-
-    <!-- Footer -->
-    <footer>
-      {% block footer %}
-      <div class="page-footer font-small unique-color-dark pt-0" id="footer">
-        <div class="footer-copyright py-3 text-center" style="color : #969696;">
-          <span>© SMB
-            <span style="color:royalblue;">H</span>
-            All rights reserved.
-          </span>
-          <span> | </span>
-          <span>Powerd by
-            <a href="http://djangoproject.com" target="_blank">Django</a>
-          </span>
-        </div>
-      </div>
-      {% endblock footer %}
-    </footer>
-    {% endblock content %}
-  </section>
-
-
-  {% analytical_body_bottom %}
-</body>
-
+  </body>
 </html>
+
+
+
