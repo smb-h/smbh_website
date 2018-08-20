@@ -16,7 +16,7 @@ class PostForm(forms.ModelForm):
         # https://docs.djangoproject.com/en/dev/topics/forms/modelforms/#overriding-the-default-fields
         widgets = {
             'content': CKEditorUploadingWidget(config_name='ck_blog'),
-            'summary': CKEditorUploadingWidget(config_name='ck_comment'),
+            'summary': CKEditorWidget(config_name='ck_comment'),
         }
 
 
@@ -72,7 +72,7 @@ class CommentForm(forms.ModelForm):
 
         # https://docs.djangoproject.com/en/dev/topics/forms/modelforms/#overriding-the-default-fields
         widgets = {
-            'content': CKEditorUploadingWidget(config_name='ck_comment'),
+            'content': CKEditorWidget(config_name='ck_comment'),
         }
 
 
