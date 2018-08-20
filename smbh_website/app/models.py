@@ -13,15 +13,15 @@ def user_directory_path(self, filename):
     return ('{0}/{1}'.format(self.author, filename))
 
 
-class AboutMe(models.Model):
+class About(models.Model):
     title = models.CharField(max_length=100, verbose_name=_('Title'))
     content = models.TextField(verbose_name=_('Content'))
     tags = TaggableManager(verbose_name=_('Tags'))
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, verbose_name= _('Updated'))
 
     class Meta:
-        verbose_name = _('About Me')
-        verbose_name_plural = _('About Me')
+        verbose_name = _('About')
+        verbose_name_plural = _('About')
 
     def __str__(self):
         return self.title
@@ -76,8 +76,8 @@ class Contact (models.Model):
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, verbose_name= _('Updated'))
 
     class Meta:
-        verbose_name = _('Contact Me')
-        verbose_name_plural = _('Contact Me')
+        verbose_name = _('Contact')
+        verbose_name_plural = _('Contact')
 
     def __str__(self):
         return self.subject

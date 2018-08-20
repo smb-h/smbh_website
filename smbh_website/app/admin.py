@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import AboutMe, Service, Profile, Contact
+from .models import About, Service, Profile, Contact
 from django import forms
 # Ckeditor
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
@@ -7,9 +7,9 @@ from ckeditor.widgets import CKEditorWidget
 
 
 
-class AboutMeForm(forms.ModelForm):
+class AboutForm(forms.ModelForm):
     class Meta:
-        model = AboutMe
+        model = About
         localized_fields = ('updated',)
         fields = "__all__"
 
@@ -19,9 +19,9 @@ class AboutMeForm(forms.ModelForm):
         }
 
 
-@admin.register(AboutMe)
-class AboutMeAdmin(admin.ModelAdmin):
-    form = AboutMeForm
+@admin.register(About)
+class AboutAdmin(admin.ModelAdmin):
+    form = AboutForm
     fieldsets = [
         ('Info', {'fields': ['title', 'content', 'tags']}),
     ]
@@ -36,8 +36,21 @@ class AboutMeAdmin(admin.ModelAdmin):
     search_fields = ['updated', 'title', 'content', 'tags']
 
 
+
+class ServiceForm(forms.ModelForm):
+    class Meta:
+        model = Service
+        localized_fields = ('updated',)
+        fields = "__all__"
+
+        # https://docs.djangoproject.com/en/dev/topics/forms/modelforms/#overriding-the-default-fields
+        widgets = {
+            'content': CKEditorWidget(config_name='ck_comment'),
+        }
+
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
+    form = ServiceForm
     fieldsets = [
         ('Info', {'fields': ['title', 'content', 'tags']}),
     ]
@@ -85,7 +98,7 @@ class ProfileAdmin(admin.ModelAdmin):
 
 
 
-class ProfileForm(forms.ModelForm):
+class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
         localized_fields = ('updated',)
@@ -97,7 +110,8 @@ class ProfileForm(forms.ModelForm):
         }
 
 @admin.register(Contact)
-class ContactMeAdmin(admin.ModelAdmin):
+class ContactAdmin(admin.ModelAdmin):
+    form = ContactForm
     fieldsets = [
         ('Information', {'fields': ['subject', 'name', 'email', 'phone', 'content']}),
     ]
@@ -110,3 +124,4 @@ class ContactMeAdmin(admin.ModelAdmin):
 
     # Search
     search_fields = ['subject', 'name', 'email', 'phone', 'content', 'updated']
+

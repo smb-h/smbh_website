@@ -469,6 +469,13 @@ OAUTH2_PROVIDER = {
     'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
 }
 
+
+# Django Taggit
+# ------------------------------------------------------------------------------
+TAGGIT_CASE_INSENSITIVE = True
+
+
+
 # ------------------------------------------------------------------------------
 
 

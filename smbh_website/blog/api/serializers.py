@@ -4,7 +4,7 @@ from rest_framework.serializers import (
                                             SlugRelatedField,
                                             HyperlinkedIdentityField,
                                             SerializerMethodField,
-                                            ImageField
+                                            CharField
                                         )
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
@@ -28,6 +28,7 @@ class PostListSerializer(ModelSerializer):
             'title',
             'image',
             'author',
+            'summary',
             'publish',
             'tags',
             'url',
@@ -48,11 +49,11 @@ class PostDetailSerializer(ModelSerializer):
 
     # tags = SlugRelatedField(many=True, read_only=True, slug_field='name')
     tags = SerializerMethodField()
+    tag_list = CharField(required = False)
     # author = SlugRelatedField(read_only=True, slug_field='username')
     author = SerializerMethodField()
     comments = SerializerMethodField()
     content_type = SerializerMethodField()
-    # image = ImageField()
 
     class Meta:
         model = Post
@@ -60,15 +61,19 @@ class PostDetailSerializer(ModelSerializer):
             'title',
             'image',
             'author',
+            'language',
+            'summary',
             'content',
             'draft',
             'publish',
             'tags',
+            'tag_list',
             'id',
             'content_type',
             'comments',
         )
         read_only_fields = ('author', 'id', 'content_type', 'comments')
+
 
     def get_author(self, obj):
         return (obj.author.get_full_name())
@@ -84,17 +89,67 @@ class PostDetailSerializer(ModelSerializer):
 
     def get_tags(self, obj):
         tags = obj.tags.names()
+        # tags = ', '.join(tags)
         return  (tags)
         
         
 
-    # def create(self, validated_data):
-    #     # print(validated_data)
-    #     # Save many to many relations
-    #     self.save_m2m()
-    #     # return comment
-    #     return super(PostDetailSerializer, self).create(*args, **kwargs)
+    def create(self, validated_data):
 
+        title = validated_data.get("title")
+        image = validated_data.get("image")
+        request = self.context.get('request')
+        author = request.user
+        content = validated_data.get("content")
+        summary = validated_data.get("summary")
+        draft = validated_data.get("draft")
+        pub = validated_data.get("publish")
+        # Auto
+        # language = request.LANGUAGE_CODE
+        lang = validated_data.get("language")
+
+        post = Post.objects.create(
+            title = title,
+            image = image,
+            author = author,
+            summary = summary,
+            content = content,
+            draft = draft,
+            publish = pub,
+            language = lang
+            )
+
+        tags = validated_data.get("tag_list")
+        # Tag Seprator - Assum they are seprated by ','
+        if tags != None :
+            tag_list = []
+            tmp = tags.split(',')
+            for item in tmp :
+                tag_list.append(item.strip())
+            for tag in tag_list :
+                post.tags.add(tag)
+
+        return post
+        # return super(PostDetailSerializer, self).create(*args, **kwargs)
+
+
+    def update(self, instance, validated_data):
+        tags = validated_data.get("tag_list")
+        # Tag Seprator - Assum they are seprated by ,
+        instance.tags.clear()
+        if tags != None :
+            tag_list = []
+            tmp = tags.split(',')
+            for item in tmp :
+                tag_list.append(item.strip())
+            
+            for tag in tag_list :
+                instance.tags.add(tag)
+
+
+        instance.save()
+
+        return instance
 
 
 

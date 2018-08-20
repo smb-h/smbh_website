@@ -1,7 +1,5 @@
 
-Fix Tags in create/update post
 Fix Uploading image field
-create new serializer for create post
 
 localize date & time
 

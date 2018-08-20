@@ -41,11 +41,11 @@ class PostCreateAPIView(CreateAPIView):
     permission_classes = [IsAuthenticated]
     lookup_field = 'slug'
 
-    def perform_create(self, serializer):
-        serializer.save(
-            author = self.request.user,
-            language = self.request.LANGUAGE_CODE
-            )
+    # def perform_create(self, serializer):
+    #     serializer.save(
+    #         author = self.request.user,
+    #         language = self.request.LANGUAGE_CODE
+    #         )
 
 
 
