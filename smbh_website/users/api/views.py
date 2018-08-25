@@ -21,6 +21,8 @@ from .serializers import (
                             UserLoginSerializer,
                             GroupSerializer
                         )
+from django.contrib.auth import authenticate, login, logout
+
 
 
 User = get_user_model()
@@ -51,9 +53,27 @@ class UserLoginAPIView(APIView):
         serializer = UserLoginSerializer(data = data)
         if serializer.is_valid(raise_exception = True):
             new_data = serializer.data
+
+            # https://docs.djangoproject.com/en/dev/topics/auth/default/#how-to-log-a-user-in
+            user_auth = authenticate(username = data.get('ID'), password = data.get('password'))
+            if user_auth is not None:
+                login(request, user_auth)
+
             return Response(new_data, status = HTTP_200_OK)
 
         return Response(serializer.errors, status = HTTP_400_BAD_REQUEST)
+
+
+# User Logout
+class UserLogoutAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserLoginSerializer
+
+    def get(self, request, *args, **kwargs):
+        # https://docs.djangoproject.com/en/dev/topics/auth/default/#how-to-log-a-user-out
+        logout(request)
+        # Redirect to a success page.
+        return Response(status = HTTP_200_OK)
 
 
 

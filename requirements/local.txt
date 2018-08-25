@@ -1,7 +1,7 @@
 -r ./base.txt
 
 Werkzeug  # https://github.com/pallets/werkzeug
-# Sphinx  # https://github.com/sphinx-doc/sphinx
+Sphinx  # https://github.com/sphinx-doc/sphinx
 psycopg2-binary  # https://github.com/psycopg/psycopg2
 
 # Testing

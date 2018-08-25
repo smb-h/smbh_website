@@ -3,6 +3,7 @@ from users.api.views import (
                                 UserCreateAPIView,
                                 UserDetailAPIView,
                                 UserLoginAPIView,
+                                UserLogoutAPIView,
                                 GroupListAPIView
                             )
 # JWT
@@ -14,6 +15,7 @@ urlpatterns = [
 
     # User
     path('Login', UserLoginAPIView.as_view(), name='login_api'),
+    path('Logout', UserLogoutAPIView.as_view(), name='logout_api'),
     path('Register', UserCreateAPIView.as_view(), name='register_api'),
     # Group
     path('Groups/', GroupListAPIView.as_view(), name='group_list_api'),

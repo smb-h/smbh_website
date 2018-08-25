@@ -25,7 +25,7 @@ urlpatterns += i18n_patterns(
     path(settings.ADMIN_URL, admin.site.urls),
 
     # User management
-    path("Users/", include("smbh_website.users.urls", namespace="Users"),),
+    path("Accounts/", include("smbh_website.users.urls", namespace="Users"),),
     path("Accounts/", include("allauth.urls")),
     # OAuth 2
     path('Users/API/OAuth/', include('oauth2_provider.urls', namespace='oauth2_provider')),

@@ -12,8 +12,8 @@ import styles from './FloatButtonStyle';
 
 class FloatButton extends React.Component {
   constructor(props){
-    super(props);
-    // this.state = {renderBtn: true};
+    super(props)
+    this.state = {renderBtn: true}
     // this.dissBtn = this.dissBtn.bind(this);
   }
 
