@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
-import Home from '../Home/Home'
-// import Blog from '../Blog/Blog'
+
+// import AuthTabs from '../Authentication/AuthTabs'
+// import Home from '../Home/Home'
+import Blog from '../Blog/Blog'
+// import Contact from '../Contact/Contact'
 
 import '../../assets/scss/App.css'
 
@@ -12,8 +15,11 @@ class App extends Component {
   render() {
     return (
 
-      <Home />
-      // <Blog />
+      // <AuthTabs />
+      // <Home />
+      <Blog />
+      // <Contact />
+
 
     );
   }
