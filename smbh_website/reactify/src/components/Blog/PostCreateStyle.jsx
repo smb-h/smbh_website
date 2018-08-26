@@ -12,6 +12,9 @@ const styles = theme => ({
     },
     centerPos: {
       textAlign: 'center',
+      padding: 'auto',
+      margin: 'auto',
+      overflow: 'auto',
     },
 
     checkBoxRoot: {
@@ -25,6 +28,14 @@ const styles = theme => ({
         width: 40,
         height: 40,
     },
+
+    imagePad: {
+      padding: 20,
+    },
+    OF: {
+      overflow: 'hidden',
+    },
+
 
 });
 

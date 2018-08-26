@@ -5,9 +5,12 @@
   "dependencies": {
     "@material-ui/core": "^1.5.1",
     "@material-ui/icons": "^2.0.3",
+    "moment": "^2.22.2",
     "react": "^16.4.0",
     "react-cookies": "^0.1.0",
     "react-dom": "^16.4.0",
+    "react-dropzone": "^5.0.1",
+    "react-image-crop": "^4.0.3",
     "react-swipeable-views": "^0.12.16",
     "whatwg-fetch": "^2.0.4"
   },
