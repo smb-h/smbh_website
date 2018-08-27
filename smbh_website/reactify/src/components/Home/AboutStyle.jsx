@@ -26,6 +26,10 @@ const styles = theme => ({
       fontWeight: 500,
     },
 
+    dividerStyle: {
+      marginTop: '2%',
+      marginBottom: '2%',
+    },
 
   });
 

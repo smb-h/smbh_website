@@ -1,5 +1,5 @@
-from django.urls import path, include
-
+from django.urls import path, include, re_path
+from django.views.generic import TemplateView
 from .views import (BlogView, post_detail, PostCreateView, PostUpdateView, CommentThreadView, comment_delete)
 
 
@@ -11,7 +11,8 @@ app_name = 'Blog'
 
 urlpatterns = [
 
-    path('', BlogView.as_view(), name='blog'),
+    # path('', BlogView.as_view(), name='blog'),
+    re_path(r'^', TemplateView.as_view(template_name='react.html')),
 
     # DRF API
     path('API/', include('blog.api.urls')),
@@ -23,5 +24,5 @@ urlpatterns = [
     path('Create', PostCreateView.as_view(), name='post_create'),
     path('<slug>/Update', PostUpdateView.as_view(), name='post_update'),
     path('<slug>', post_detail, name='post'),
-    
+
 ]

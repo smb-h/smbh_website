@@ -6,7 +6,7 @@ import Home from '../Home/Home'
 import Blog from '../Blog/Blog'
 import Contact from '../Contact/Contact'
 // Router
-import { BrowserRouter, Route, Link } from 'react-router-dom'
+import { BrowserRouter, Route, Link, Redirect, Switch } from 'react-router-dom'
 
 import NavBar from '../NavBar/NavBar'
 import FloatButton from '../FloatButton/FloatButton'
@@ -27,12 +27,16 @@ class Base extends Component {
 
         <NavBar />
 
-
-        {/* <AuthTabs /> */}
-        {/* <Home /> */}
-        {/* <Blog /> */}
-        {/* <Contact /> */}
-
+        <BrowserRouter>
+          <Switch>
+            <Route exact path='Accounts/Authentication' component={AuthTabs} />
+            <Route exact path='' component={Home} />
+            <Route exact path='Blog/' component={Blog} />
+            <Route exact path='Contact/' component={Contact} />
+            {/* Make a Not Found and Error Pages */}
+            {/* <Route component={Contact} /> */}
+          </Switch>
+        </BrowserRouter>
 
         <Footer />
 

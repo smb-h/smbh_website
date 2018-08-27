@@ -286,7 +286,7 @@ class PostCreate extends Component {
                                   </FormControl>
                                   */}
 
-                                  <FormGroup className={classes.OF + classes.centerPos}>
+                                  <FormGroup className={classes.OF, classes.centerPos}>
                                   <Grid container spacing={16}>
                                       <Grid item xs>
 
