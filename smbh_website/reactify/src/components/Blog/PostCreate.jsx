@@ -4,13 +4,17 @@ import Dropzone from 'react-dropzone'
 // https://github.com/DominicTobias/react-image-crop
 import ReactCrop from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
-import { image64toCanvasRef, extractImageFileExtensionFromBase64, base64StringtoFile, downloadBase64File } from './ImageBase64'
+import { image64toCanvasRef,
+          extractImageFileExtensionFromBase64,
+          // base64StringtoFile,
+          downloadBase64File
+      } from './ImageBase64'
 import moment from 'moment'
 import 'whatwg-fetch'
 import cookie from 'react-cookies'
 
 import Card from '@material-ui/core/Card'
-import CardActions from '@material-ui/core/CardActions'
+// import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
@@ -21,14 +25,14 @@ import FormControl from '@material-ui/core/FormControl'
 // https://material-ui.com/api/form-group/#formgroup
 import FormGroup from '@material-ui/core/FormGroup'
 import FormHelperText from '@material-ui/core/FormHelperText'
-import FormLabel from '@material-ui/core/FormLabel'
+// import FormLabel from '@material-ui/core/FormLabel'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid'
 import Checkbox from '@material-ui/core/Checkbox'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
-import Input from '@material-ui/core/Input';
+// import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 
 import PropTypes from 'prop-types'
@@ -108,13 +112,15 @@ class PostCreate extends Component {
         const thisComp = this
         const endpoint = 'Blog/API/Post/Create'
         const csrfToken = cookie.load('csrftoken')
+        // TODO: Move token stuff to cookie
+        const Token = ('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InNtYmgiLCJleHAiOjE1MzUyNTI4NDAsImVtYWlsIjoic21iX2hAeWFob28uY29tIiwib3JpZ19pYXQiOjE1MzUyNTI1NDB9._H6oDPdGienzFtf4-V0KqoCOQ5vsC5LJKnONAxP6r1U')
 
         if (csrfToken !== undefined) {
 
             let lookupOptions = {
                 method: 'POST',
                 headers: {
-                    'Authorization': 'JWT ' + ('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InNtYmgiLCJleHAiOjE1MzUyNTI4NDAsImVtYWlsIjoic21iX2hAeWFob28uY29tIiwib3JpZ19pYXQiOjE1MzUyNTI1NDB9._H6oDPdGienzFtf4-V0KqoCOQ5vsC5LJKnONAxP6r1U'),
+                    'Authorization': 'JWT ' +  Token,
                     'Content-type': 'application/json',
                     'X-CSRFToken': csrfToken
                 },
@@ -233,7 +239,7 @@ class PostCreate extends Component {
       const fileName = 'ImagePreview.' + fileExtension
 
       // File To Upload
-      const croppedImage = base64StringtoFile(this.state.image, fileName)
+      // const croppedImage = base64StringtoFile(this.state.image, fileName)
       // Download File
       downloadBase64File(imageData64, fileName)
     }

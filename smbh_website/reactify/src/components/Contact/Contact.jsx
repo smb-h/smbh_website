@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
-
 import Parallax from '../Parallax/Parallax'
-
 import 'whatwg-fetch'
-import cookie from 'react-cookies'
 
 // Style
 import { theme } from '../Base/Base'

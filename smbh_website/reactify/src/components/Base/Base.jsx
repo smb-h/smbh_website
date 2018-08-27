@@ -8,19 +8,18 @@ import Contact from '../Contact/Contact'
 // Router
 import { BrowserRouter, Route, Link } from 'react-router-dom'
 
-import classNames from "classnames"
 import NavBar from '../NavBar/NavBar'
 import FloatButton from '../FloatButton/FloatButton'
 import Footer from '../Footer/FooterWithButton'
 
 import 'whatwg-fetch'
-import cookie from 'react-cookies'
+// import cookie from 'react-cookies'
 
 
 
 class Base extends Component {
   render() {
-    const { classes } = this.props;
+    // const { classes } = this.props;
     return (
       <MuiThemeProvider theme={theme}>
 

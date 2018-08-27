@@ -33,7 +33,7 @@ class About extends Component {
                         <Card className={classes.cardContainer}>
                           <Grid container spacing={8} className={classes.GridContainer}>
 
-                              <Grid item xl={4} lg={4} md={4} sm={12} xs={12} className={classes.GridItem + ' ' + 'animated fadeInUpBig delay-1s'}>
+                              <Grid item xl={4} lg={4} md={4} sm={12} xs={12} className={classes.GridItem + 'animated fadeInUpBig delay-1s'}>
                                   <div>
                                       <i class="material-icons" ><BugReport style={{color: 'red', fontSize: 80}} /></i>
                                   </div>
@@ -43,7 +43,7 @@ class About extends Component {
                                   <br />Rest Api, JS, JQuery
                                   <br />GUI, UI/UX, SQL</Typography>
                               </Grid>
-                              <Grid item xl={4} lg={4} md={4} sm={12} xs={12} className={classes.GridItem + ' ' + 'animated fadeInUpBig delay-2s'}>
+                              <Grid item xl={4} lg={4} md={4} sm={12} xs={12} className={classes.GridItem + 'animated fadeInUpBig delay-2s'}>
                                   <div>
                                       <i class="material-icons"><Info style={{color: 'royalblue', fontSize: 80}} /></i>
                                   </div>
@@ -55,7 +55,7 @@ class About extends Component {
                                   <br />Design, Material</Typography>
                               </Grid>
 
-                              <Grid item xl={4} lg={4} md={4} sm={12} xs={12} className={classes.GridItem + ' ' + 'animated fadeInUpBig delay-3s'}>
+                              <Grid item xl={4} lg={4} md={4} sm={12} xs={12} className={classes.GridItem + 'animated fadeInUpBig delay-3s'}>
                                   <div>
                                       <i class="material-icons"><Coffee style={{color: 'rgb(75, 15, 15)', fontSize: 80}} /></i>
                                   </div>

@@ -126,7 +126,7 @@ class RecentPosts extends React.Component {
                                 </Avatar>
                                 }
                                 action={
-                                
+
                                 <IconButton>
                                     <IconButton
                                     aria-label="More"
@@ -153,13 +153,13 @@ class RecentPosts extends React.Component {
                                         <MenuItem className={classes.menuItem} onClick={this.handleClose}>2</MenuItem>
                                         <MenuItem className={classes.menuItem} onClick={this.handleClose}>3</MenuItem>
                                     </Menu>
-        
+
                                 </IconButton>
                                 }
                                 title={postItem.title}
                                 subheader={this.dateTimeConvertor(postItem.publish)}
                             />
-        
+
                             <CardMedia
                                 className={classes.media}
                                 image={postItem.image}
@@ -174,34 +174,34 @@ class RecentPosts extends React.Component {
                                     </Typography>
                                 </Typography>
                             </CardContent>
-        
+
                             <CardActions className={classes.actions} disableActionSpacing>
                                 <IconButton aria-label="Add to favorites">
                                     <FavoriteIcon />
                                 </IconButton>
-        
-                                <IconButton 
-                                className={classnames(classes.Anime, 
+
+                                <IconButton
+                                className={classnames(classes.Anime,
                                 {[classes.AnimeOn]: this.state.Animated,}
-                                )} 
+                                )}
                                 onClick={this.handleShareClick}
                                 aria-label="Share">
                                     <ShareIcon />
                                 </IconButton>
-                                
+
                                 <Button className={classes.Right} variant='contained' color='secondary' href={postItem.url}>
                                     More
                                 </Button>
-        
-                                
+
+
                             </CardActions>
-        
+
                             </Card>
                         </Grid>
-                        
+
                         )
                     }) : ''}
-                    
+
 
                 </Grid>
             </Grid>
@@ -214,4 +214,3 @@ RecentPosts.propTypes = {
 };
 
 export default withStyles(styles)(RecentPosts);
-
