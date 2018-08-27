@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 
 import NavBar from '../Header/NavBar'
-import FloatButton from '../FloatButton/FloatButton'
-import Footer from '../Footer/FooterWithButton'
+import ScrollButton from '../ScrollButton/ScrollButton'
+import Footer from '../Footer/Footer'
 
 import 'whatwg-fetch'
 // import cookie from 'react-cookies'
@@ -16,7 +16,7 @@ class Base extends Component {
     return (
       <MuiThemeProvider theme={theme}>
 
-        <FloatButton id='ToTop' />
+        <ScrollButton scrollStepInPx="50" delayInMs="16.4"/>
 
         <NavBar />
 

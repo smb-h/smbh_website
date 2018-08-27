@@ -26,9 +26,9 @@ const conatinerFluid = {
 
 
 const styles = theme => ({
-    block: {
-      color: "inherit",
-      // color: '#A7A7A7',
+    typoStyle: {
+      // color: "inherit",
+      color: 'white',
       // padding: "0.9375rem",
       fontWeight: "500",
       // fontSize: "12px",
@@ -40,7 +40,7 @@ const styles = theme => ({
 
       textDecoration: "none",
       position: "relative",
-      display: "block",
+      // display: "block",
 
       transition: '0.4s',
 
@@ -75,9 +75,17 @@ const styles = theme => ({
       color: '#A7A7A7',
     },
     a: {
-      // color: primaryColor,
+      color: '#FF9A47',
       textDecoration: "none",
-      backgroundColor: "transparent"
+      backgroundColor: "transparent",
+      "&:hover,&:focus": {
+        // color: "inherit",
+        // color: "#FF9A47",
+        color: "#ffd460",
+        // background: "rgba(200, 200, 200, 0.2)",
+        background: "inherit",
+
+      },
     },
     container,
     list: {
@@ -92,6 +100,10 @@ const styles = theme => ({
     },
     SmbhLogo: {
       color: 'royalblue!important',
+    },
+
+    static: {
+      color: 'white',
     },
 
   });
