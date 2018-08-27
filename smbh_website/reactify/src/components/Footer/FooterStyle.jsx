@@ -23,7 +23,7 @@ const conatinerFluid = {
     }
   };
 
-  
+
 
 const styles = theme => ({
     block: {
@@ -32,12 +32,12 @@ const styles = theme => ({
       // padding: "0.9375rem",
       fontWeight: "500",
       // fontSize: "12px",
-      
+
       // textTransform: "uppercase",
       // textTransform: "lowercase",
       textTransform: "none",
       borderRadius: "3px",
-  
+
       textDecoration: "none",
       position: "relative",
       display: "block",
@@ -50,7 +50,7 @@ const styles = theme => ({
         color: "#ffd460",
         // background: "rgba(200, 200, 200, 0.2)",
         background: "inherit",
-  
+
       },
 
 
@@ -68,7 +68,7 @@ const styles = theme => ({
       padding: "0.9375rem 0",
       textAlign: "center",
       display: "flex",
-      zIndex: "2",
+      zIndex: 101,
       position: "relative",
       // backgroundColor: '#212834',
       backgroundColor: '#201E1E',
@@ -92,7 +92,8 @@ const styles = theme => ({
     },
     SmbhLogo: {
       color: 'royalblue!important',
-    }
+    },
+
   });
 
   export default styles;

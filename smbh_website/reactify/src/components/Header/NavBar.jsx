@@ -43,7 +43,7 @@ class NavBar extends React.Component {
     const { classes } = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
-    const SmbhLogo = (<p>SMB <span className={classes.HColor}>H</span></p>);
+    const SmbhLogo = (<p>SMB<span>&nbsp;</span><span className={classes.HColor}>H</span></p>);
 
     return (
 

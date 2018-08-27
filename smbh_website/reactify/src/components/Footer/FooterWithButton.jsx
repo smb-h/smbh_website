@@ -21,7 +21,7 @@ function Footer({ ...props }) {
     [classes.a]: true,
   });
   return (
-    <footer className={footerClasses}>
+    <footer className={footerClasses + ' ' + classes.footerRoot}>
       <div className={classes.container}>
         <div className={classes.left}>
           <List className={classes.list}>
@@ -49,7 +49,7 @@ function Footer({ ...props }) {
         </div>
         <div className={classes.right}>
           <p>
-            &copy; {1900 + new Date().getYear()}{" "} 
+            &copy; {1900 + new Date().getYear()}{" "}
             SMB <span className={classes.SmbhLogo}>H</span> | Powerd By{" "}
             <a
               href="https://www.djangoproject.com/"

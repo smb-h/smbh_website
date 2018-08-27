@@ -31,9 +31,10 @@ class PostListSerializer(ModelSerializer):
             'summary',
             'publish',
             'tags',
+            'slug',
             'url',
         )
-        read_only_fields = ('author',)
+        read_only_fields = ('author', 'slug')
 
     def get_author(self, obj):
         # return (obj.author.username)
@@ -66,13 +67,14 @@ class PostDetailSerializer(ModelSerializer):
             'content',
             'draft',
             'publish',
+            'slug',
             'tags',
             'tag_list',
             'id',
             'content_type',
             'comments',
         )
-        read_only_fields = ('author', 'id', 'content_type', 'comments')
+        read_only_fields = ('author', 'id', 'content_type', 'comments', 'slug')
 
 
     def get_author(self, obj):
@@ -91,8 +93,8 @@ class PostDetailSerializer(ModelSerializer):
         tags = obj.tags.names()
         # tags = ', '.join(tags)
         return  (tags)
-        
-        
+
+
 
     def create(self, validated_data):
 
@@ -142,7 +144,7 @@ class PostDetailSerializer(ModelSerializer):
             tmp = tags.split(',')
             for item in tmp :
                 tag_list.append(item.strip())
-            
+
             for tag in tag_list :
                 instance.tags.add(tag)
 
@@ -171,14 +173,14 @@ def create_comment_serializer(model_type='Post', slug=None, parent_id=None, user
         def get_user(self, obj):
             return obj.user.get_full_name()
 
-            
+
         def __init__(self, *args, **kwargs):
             self.model_type = model_type
             self.slug = slug
             self.parent_obj = None
 
             self.user = user
-            
+
             if parent_id:
                 parent_qs = Comment.objects.filter(id=parent_id)
                 if parent_qs.exists() and parent_qs.count() == 1 :
@@ -203,15 +205,15 @@ def create_comment_serializer(model_type='Post', slug=None, parent_id=None, user
             else:
                 request = self.context.get('request')
                 main_user = request.user
-            
-        
+
+
             model_type = self.model_type
             slug = self.slug
             parent_obj = self.parent_obj
             comment = Comment.objects.create_by_model_type(
-                    model_type = model_type, 
-                    slug = slug, 
-                    content = content, 
+                    model_type = model_type,
+                    slug = slug,
+                    content = content,
                     user = main_user,
                     parent_obj=parent_obj,
                     )
@@ -327,7 +329,7 @@ class CommentDetailSerializer(ModelSerializer):
 
     def get_user(self, obj):
         return obj.user.get_full_name()
-        
+
     # def get_content_object_url(self, obj):
     #     try:
     #         return obj.content_object.get_api_url()
@@ -356,4 +358,3 @@ class CommentDetailSerializer(ModelSerializer):
     # def get_content_type(self, obj):
     #     ct = obj.content_type
     #     return ct
-

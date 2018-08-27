@@ -12,7 +12,7 @@ import {
   drawerWidth
 } from "../../assets/jss/material-kit-react";
 
-const headerStyle = {
+const headerStyle = theme => ({
   appBar: {
     display: "flex",
     border: "0",
@@ -50,33 +50,45 @@ const headerStyle = {
   flex: {
     // flex: 1
   },
-  title: {
-    ...defaultFont,
-    // lineHeight: "30px",
-    fontSize: "18px",
-    borderRadius: "3px",
-    textTransform: "none",
+
+  navLink: {
     color: "inherit",
+    position: "relative",
+    // padding: "0.9375rem",
+    padding: "0.4rem",
+    fontWeight: "500",
+    // fontSize: "12px",
+    // textTransform: "uppercase",
+
+    textTransform: "none",
+
+    borderRadius: "3px",
+    lineHeight: "20px",
+    textDecoration: "none",
+
+    margin: "0px",
+    // margin: "1px",
+
+    transition: '0.4s',
+
+    display: "inline-flex",
     "&:hover,&:focus": {
-      color: "inherit",
-      background: "transparent"
+      color: "#ffd460",
+      // background: "rgba(200, 200, 200, 0.2)",
+      background: "inherit",
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: "calc(100% - 30px)",
+      marginLeft: "15px",
+      marginBottom: "8px",
+      marginTop: "8px",
+      textAlign: "left",
+      "& > span:first-child": {
+        justifyContent: "flex-start"
+      }
     }
   },
 
-  Logo: {
-    transition: '0.4s',
-    textDecoration: "none",
-    fontWeight: 900,
-    // padding: "0.9375rem",
-    // padding: '20px',
-
-    "&:hover,&:focus": {
-      color: "#ffd460",
-      background: "inherit",
-
-      },
-
-    },
 
 
   appResponsive: {
@@ -162,6 +174,6 @@ const headerStyle = {
     paddingLeft: "0",
     ...transition
   }
-};
+});
 
 export default headerStyle;

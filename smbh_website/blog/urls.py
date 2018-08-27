@@ -12,17 +12,19 @@ app_name = 'Blog'
 urlpatterns = [
 
     # path('', BlogView.as_view(), name='blog'),
-    re_path(r'^', TemplateView.as_view(template_name='react.html')),
+    # re_path(r'^', TemplateView.as_view(template_name='react.html')),
+    path('', TemplateView.as_view(template_name='react.html')),
+    path('<slug>', TemplateView.as_view(template_name='react.html')),
 
     # DRF API
     path('API/', include('blog.api.urls')),
 
     # Comment
-    path('<int:id>/Delete', comment_delete, name='delete'),
-    path('<int:id>', CommentThreadView.as_view(), name='thread'),
+    # path('<int:id>/Delete', comment_delete, name='delete'),
+    # path('<int:id>', CommentThreadView.as_view(), name='thread'),
     # Post
-    path('Create', PostCreateView.as_view(), name='post_create'),
-    path('<slug>/Update', PostUpdateView.as_view(), name='post_update'),
-    path('<slug>', post_detail, name='post'),
+    # path('Create', PostCreateView.as_view(), name='post_create'),
+    # path('<slug>/Update', PostUpdateView.as_view(), name='post_update'),
+    # path('<slug>', post_detail, name='post'),
 
 ]

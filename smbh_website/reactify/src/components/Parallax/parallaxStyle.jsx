@@ -3,7 +3,7 @@ const parallaxStyle = {
     // height: "90vh",
 
     minHeight: '50vh',
-    
+
     // maxHeight: "1000px",
     overflow: "hidden",
     position: "relative",
@@ -12,7 +12,7 @@ const parallaxStyle = {
 
     backgroundAttachment: 'fixed',
     backgroundRepeat: 'no-repeat',
-    
+
     margin: "0",
     padding: "0",
     border: "0",
@@ -25,7 +25,7 @@ const parallaxStyle = {
     },
     "&:after,&:before": {
       position: "absolute",
-      zIndex: "1",
+      zIndex: 1,
       width: "100%",
       height: "100%",
       display: "block",
@@ -36,7 +36,8 @@ const parallaxStyle = {
   },
   small: {
     height: "380px"
-  }
+  },
+
 };
 
 export default parallaxStyle;

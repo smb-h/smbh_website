@@ -34,7 +34,7 @@ const styles = theme => ({
     padding: "0.9375rem 0",
     textAlign: "center",
     display: "flex",
-    zIndex: "2",
+    zIndex: 1,
     position: "relative",
     // backgroundColor: '#212834',
     backgroundColor: '#201E1E',
@@ -145,7 +145,7 @@ function Footer({ ...props }) {
         </div>
         <div className={classes.right}>
           <p>
-            &copy; {1900 + new Date().getYear()}{" "} 
+            &copy; {1900 + new Date().getYear()}{" "}
             SMB <span className={classes.SmbhLogo}>H</span> | Powerd By{" "}
             <a
               href="https://www.djangoproject.com/"
