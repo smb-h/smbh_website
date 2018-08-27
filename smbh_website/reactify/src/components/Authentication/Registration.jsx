@@ -62,7 +62,7 @@ class Registration extends React.Component {
     //     super(props);
 
     // }
-  
+
   state = {
       name: '',
       password: '',
@@ -159,7 +159,7 @@ class Registration extends React.Component {
                     </div>
 
                     {/* Password */}
-                    {/* <FormControl className={classNames(classes.margin, classes.textField)}> */}
+                    {/* <FormControl className={classNames(classes.margin + ' ' + classes.textField)}> */}
 
                     <div className={classes.margin}>
                         <Grid container spacing={8} alignItems="flex-end">
@@ -180,7 +180,7 @@ class Registration extends React.Component {
                                     onChange={this.handleChange('password')}
 
                                 />
-                                        
+
                                 <IconButton
                                 aria-label="Toggle password visibility"
                                 onClick={this.handleClickShowPassword}
@@ -222,14 +222,14 @@ class Registration extends React.Component {
                         </Grid>
                     </Grid>
 
-                        
+
                 </form>
             </CardContent>
             {/* <CardActions>
               <Button size="small">Learn More</Button>
             </CardActions> */}
           </Card>
-        
+
         </div>
       );
   }

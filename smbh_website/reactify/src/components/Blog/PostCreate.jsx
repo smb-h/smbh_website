@@ -110,7 +110,7 @@ class PostCreate extends Component {
     // Create Post
     createPost = (data) => {
         const thisComp = this
-        const endpoint = 'Blog/API/Post/Create'
+        const endpoint = 'API/Post/Create'
         const csrfToken = cookie.load('csrftoken')
         // TODO: Move token stuff to cookie
         const Token = ('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InNtYmgiLCJleHAiOjE1MzUyNTI4NDAsImVtYWlsIjoic21iX2hAeWFob28uY29tIiwib3JpZ19pYXQiOjE1MzUyNTI1NDB9._H6oDPdGienzFtf4-V0KqoCOQ5vsC5LJKnONAxP6r1U')
@@ -286,7 +286,7 @@ class PostCreate extends Component {
                                   </FormControl>
                                   */}
 
-                                  <FormGroup className={classes.OF, classes.centerPos}>
+                                  <FormGroup className={classes.OF + ' ' + classes.centerPos}>
                                   <Grid container spacing={16}>
                                       <Grid item xs>
 

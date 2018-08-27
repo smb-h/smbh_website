@@ -1,14 +1,7 @@
 import React, { Component } from 'react'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
-// Main Components
-import AuthTabs from '../Authentication/AuthTabs'
-import Home from '../Home/Home'
-import Blog from '../Blog/Blog'
-import Contact from '../Contact/Contact'
-// Router
-import { BrowserRouter, Route, Link, Redirect, Switch } from 'react-router-dom'
 
-import NavBar from '../NavBar/NavBar'
+import NavBar from '../Header/NavBar'
 import FloatButton from '../FloatButton/FloatButton'
 import Footer from '../Footer/FooterWithButton'
 
@@ -27,16 +20,7 @@ class Base extends Component {
 
         <NavBar />
 
-        <BrowserRouter>
-          <Switch>
-            <Route exact path='Accounts/Authentication' component={AuthTabs} />
-            <Route exact path='' component={Home} />
-            <Route exact path='Blog/' component={Blog} />
-            <Route exact path='Contact/' component={Contact} />
-            {/* Make a Not Found and Error Pages */}
-            {/* <Route component={Contact} /> */}
-          </Switch>
-        </BrowserRouter>
+
 
         <Footer />
 

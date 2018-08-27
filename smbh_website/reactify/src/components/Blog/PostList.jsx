@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from "classnames"
+import { Link } from 'react-router-dom'
 
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
@@ -50,7 +51,7 @@ class PostList extends React.Component {
     // Load Posts
     loadPosts = () => {
         const thisComp = this
-        const endpoint = 'Blog/API/'
+        const endpoint = 'API/'
         let lookupOptions = {
             method: 'GET',
             headers: {
@@ -60,7 +61,7 @@ class PostList extends React.Component {
 
         fetch(endpoint, lookupOptions)
         .then(function(response){
-
+            // console.log(response)
             return response.json()
 
         }).then(function(responseData){
@@ -127,8 +128,13 @@ class PostList extends React.Component {
 
 
                         <div class="col-lg-7">
-
-                            <h2 class="font-weight-bold mb-3"><strong>{postItem.title}</strong></h2>
+                            {/* Title */}
+                            <h2 class="font-weight-bold mb-3"><strong>
+                              <Link to={{
+                                pathname: `${postItem.slug}`,
+                                state: {fromDashboard: false},
+                              }} maintainScrollPosition={false} >{postItem.title}</Link>
+                            </strong></h2>
                             <p>{postItem.summary}</p>
                             <p>by <a><strong>{postItem.author}</strong></a>, {this.dateTimeConvertor(postItem.publish)}</p>
                             <div class='row'>
@@ -181,9 +187,13 @@ class PostList extends React.Component {
 
                             </IconButton>
 
-                            <Button className={classes.Right} variant='contained' color='primary' href={postItem.url}>
-                                Read more
+                            <Button className={classes.Right} variant='contained' color='primary'>
+                              <Link to={{
+                                pathname: `${postItem.slug}`,
+                                state: {fromDashboard: false},
+                              }} maintainScrollPosition={false} >Read more</Link>
                             </Button>
+
                         </div>
 
 

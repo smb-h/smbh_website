@@ -58,7 +58,7 @@ class LoginCard extends React.Component {
     //     super(props);
 
     // }
-  
+
   state = {
       name: '',
       password: '',
@@ -115,7 +115,7 @@ class LoginCard extends React.Component {
 
 
                   {/* Password */}
-                  {/* <FormControl className={classNames(classes.margin, classes.textField)}> */}
+                  {/* <FormControl className={classNames(classes.margin + ' ' + classes.textField)}> */}
 
                   <div className={classes.margin}>
                       <Grid container spacing={8} alignItems="flex-end">
@@ -136,7 +136,7 @@ class LoginCard extends React.Component {
                                   onChange={this.handleChange('password')}
 
                               />
-                                      
+
                               <IconButton
                               aria-label="Toggle password visibility"
                               onClick={this.handleClickShowPassword}
@@ -178,7 +178,7 @@ class LoginCard extends React.Component {
                       </Grid>
                   </Grid>
 
-                      
+
               </form>
           </CardContent>
           {/* <CardActions>

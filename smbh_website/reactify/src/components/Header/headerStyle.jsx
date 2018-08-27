@@ -18,7 +18,7 @@ const headerStyle = {
     border: "0",
     borderRadius: "3px",
     padding: "0.625rem 0",
-    marginBottom: "20px",
+    // marginBottom: "20px",
     color: "#555",
     width: "100%",
     backgroundColor: "#fff",
@@ -48,7 +48,7 @@ const headerStyle = {
     flexWrap: "nowrap"
   },
   flex: {
-    flex: 1
+    // flex: 1
   },
   title: {
     ...defaultFont,
@@ -65,22 +65,19 @@ const headerStyle = {
 
   Logo: {
     transition: '0.4s',
-
+    textDecoration: "none",
     fontWeight: 900,
-
-    // paddingTop: 0,
-    // paddingButtom: 0,
     // padding: "0.9375rem",
-    padding: 0,
-  
+    // padding: '20px',
+
     "&:hover,&:focus": {
       color: "#ffd460",
       background: "inherit",
-  
+
       },
 
     },
-  
+
 
   appResponsive: {
     margin: "20px 10px"

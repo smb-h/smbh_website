@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-// import PostList from './PostList'
+import PostList from './PostList'
 import PostCreate from './PostCreate'
 import Parallax from '../Parallax/Parallax'
 import { theme } from '../Base/Base'
@@ -15,8 +15,8 @@ class Blog extends Component {
                   {/* Blog */}
                   <Parallax style={{ backgroundColor: theme.palette.bg.main }}>
 
-                  {/* <PostList /> */}
-                  <PostCreate />
+                  <PostList />
+                  {/* <PostCreate /> */}
 
                   </Parallax>
                 </div>

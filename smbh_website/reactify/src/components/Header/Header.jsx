@@ -1,4 +1,12 @@
 import React from "react";
+// import { BrowserRouter, Link } from 'react-router-dom'
+import { BrowserRouter, Route, Link, Redirect, Switch } from 'react-router-dom'
+// Main Components
+import AuthTabs from '../Authentication/AuthTabs'
+import Home from '../Home/Home'
+import Blog from '../Blog/Blog'
+import PostDetail from '../Blog/PostDetail'
+import Contact from '../Contact/Contact'
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // nodejs library to set properties for components
@@ -77,53 +85,74 @@ class Header extends React.Component {
       [classes.fixed]: fixed
     });
     const brandComponent = (
-      <Button className={ classes.title + ' ' + classes.Logo } variant='flat' type='' >
-        {brand}
-      </Button>
+        <Link to={{
+          pathname: `/en/`,
+          state: {fromDashboard: false},
+        }} maintainScrollPosition={false} className={classes.title + ' ' + classes.Logo + ' ' + classes.navLink} >
+          {brand}
+        </Link>
     );
+
+
     return (
-      <AppBar className={appBarClasses}>
-        <Toolbar className={classes.container}>
-          {leftLinks !== undefined ? brandComponent : null}
-          <div className={classes.flex}>
-            {leftLinks !== undefined ? (
+      <BrowserRouter>
+        <div>
+          <AppBar className={appBarClasses}>
+            <Toolbar className={classes.container}>
+              {leftLinks !== undefined ? brandComponent : null}
+              <div className={classes.flex}>
+                {leftLinks !== undefined ? (
+                  <Hidden smDown implementation="css">
+                    {leftLinks}
+                  </Hidden>
+                ) : (
+                  brandComponent
+                )}
+              </div>
               <Hidden smDown implementation="css">
-                {leftLinks}
+                {rightLinks}
               </Hidden>
-            ) : (
-              brandComponent
-            )}
-          </div>
-          <Hidden smDown implementation="css">
-            {rightLinks}
-          </Hidden>
-          <Hidden mdUp>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={this.handleDrawerToggle}
-            >
-              <Menu />
-            </IconButton>
-          </Hidden>
-        </Toolbar>
-        <Hidden mdUp implementation="css">
-          <Drawer
-            variant="temporary"
-            anchor={"right"}
-            open={this.state.mobileOpen}
-            classes={{
-              paper: classes.drawerPaper
-            }}
-            onClose={this.handleDrawerToggle}
-          >
-            <div className={classes.appResponsive}>
-              {leftLinks}
-              {rightLinks}
-            </div>
-          </Drawer>
-        </Hidden>
-      </AppBar>
+              <Hidden mdUp>
+                <IconButton
+                  color="inherit"
+                  aria-label="open drawer"
+                  onClick={this.handleDrawerToggle}
+                >
+                  <Menu />
+                </IconButton>
+              </Hidden>
+            </Toolbar>
+            <Hidden mdUp implementation="css">
+              <Drawer
+                variant="temporary"
+                anchor={"right"}
+                open={this.state.mobileOpen}
+                classes={{
+                  paper: classes.drawerPaper
+                }}
+                onClose={this.handleDrawerToggle}
+              >
+                <div className={classes.appResponsive}>
+                  {leftLinks}
+                  {rightLinks}
+                </div>
+              </Drawer>
+            </Hidden>
+          </AppBar>
+
+        {/* Switch */}
+          <Switch>
+            <Route exact path='/en/Accounts/Authentication' component={AuthTabs} />
+            <Route exact path='/en/' component={Home} />
+            <Route exact path='/en/#Services' component={Home} />
+            <Route exact path='/en/Blog/' component={Blog} />
+            <Route exact path='/en/Blog/:slug' component={PostDetail} />
+            <Route exact path='/en/Contact/' component={Contact} />
+            {/* Make a Not Found and Error Pages */}
+            {/* <Route component={Contact} /> */}
+          </Switch>
+        </div>
+      </BrowserRouter>
     );
   }
 }

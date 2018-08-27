@@ -39,8 +39,8 @@ const headerLinksStyle = theme => ({
   navLink: {
     color: "inherit",
     position: "relative",
-    padding: "0.9375rem",
-    // fontWeight: "400",
+    // padding: "0.9375rem",
+    padding: "0.4rem",
     fontWeight: "500",
     // fontSize: "12px",
     // textTransform: "uppercase",
@@ -58,12 +58,9 @@ const headerLinksStyle = theme => ({
 
     display: "inline-flex",
     "&:hover,&:focus": {
-      // color: "inherit",
-      // color: "#FF9A47",
       color: "#ffd460",
       // background: "rgba(200, 200, 200, 0.2)",
       background: "inherit",
-
     },
     [theme.breakpoints.down("sm")]: {
       width: "calc(100% - 30px)",
