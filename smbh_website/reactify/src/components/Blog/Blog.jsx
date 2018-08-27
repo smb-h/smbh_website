@@ -1,17 +1,8 @@
 import React, { Component } from 'react'
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
-
-
 // import PostList from './PostList'
 import PostCreate from './PostCreate'
 import Parallax from '../Parallax/Parallax'
-import NavBar from '../NavBar/NavBar'
-import FloatButton from '../FloatButton/FloatButton'
-import Footer from '../Footer/FooterWithButton'
-
-import 'whatwg-fetch'
-
-
+import { theme } from '../Base/Base'
 
 
 
@@ -20,61 +11,17 @@ class Blog extends Component {
     render() {
         // const { classes } = this.props;
         return (
-            <MuiThemeProvider theme={theme}>
+                  <div>
+                  {/* Blog */}
+                  <Parallax style={{ backgroundColor: theme.palette.bg.main }}>
 
-                <FloatButton id='ToTop' />
-            
-                <NavBar />
+                  {/* <PostList /> */}
+                  <PostCreate />
 
-
-                {/* Blog */}
-                <Parallax style={{ backgroundColor: theme.palette.bg.main }}>
-
-                {/* <PostList /> */}
-                <PostCreate />
-
-                </Parallax>
-
-            
-
-                <Footer />
-
-            </MuiThemeProvider>
+                  </Parallax>
+                </div>
         );
     }
 }
 
 export default Blog;
-
-
-
-
-// Theme
-const theme = createMuiTheme({
-  palette: {
-      bg: {
-        main: '#364f6b',
-      },
-      primary: {
-          // light: will be calculated from palette.primary.main,
-          main: '#ffd460',
-          // dark: will be calculated from palette.primary.main,
-          // contrastText: will be calculated to contast with palette.primary.main
-      },
-      secondary: {
-          // light: will be calculated from palette.primary.main,
-          main: '#f08a5d',
-          // dark: will be calculated from palette.primary.main,
-          // contrastText: will be calculated to contast with palette.primary.main
-      },
-      error: {
-          // light: will be calculated from palette.primary.main,
-          main: '#ff165d',
-          // dark: will be calculated from palette.primary.main,
-          // contrastText: will be calculated to contast with palette.primary.main
-      },
-    },
-});
-
-
-

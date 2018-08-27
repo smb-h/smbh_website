@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 
-// import AuthTabs from '../Authentication/AuthTabs'
-// import Home from '../Home/Home'
-import Blog from '../Blog/Blog'
-// import Contact from '../Contact/Contact'
+import Base from '../Base/Base'
 
+
+// Style
 import '../../assets/scss/App.css'
 
 
@@ -15,11 +14,7 @@ class App extends Component {
   render() {
     return (
 
-      // <AuthTabs />
-      // <Home />
-      <Blog />
-      // <Contact />
-
+      <Base />
 
     );
   }
@@ -27,6 +22,3 @@ class App extends Component {
 
 
 export default App
-
-
-

@@ -1,8 +1,8 @@
 react get user info from cookie and session
 
-Fix Uploading image field
+fix image canvas preview to not scale
 
-localize date & time
+load prev image in api
 
 React pagination
 

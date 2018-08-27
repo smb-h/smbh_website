@@ -341,7 +341,7 @@ class PostCreate extends Component {
                                   </FormGroup>
 
                                   {/* Draft */}
-                                  <FormGroup className={classes.formItem}>
+                                  <FormControl className={classes.formItem}>
 
                                       <FormControlLabel
                                           control={
@@ -355,7 +355,7 @@ class PostCreate extends Component {
                                           label="Draft"
                                       />
 
-                                  </FormGroup>
+                                  </FormControl>
 
                                   {/* Publish */}
                                   <FormGroup className={classes.formItem}>

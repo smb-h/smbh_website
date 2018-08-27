@@ -1,6 +1,7 @@
+import { theme } from '../Base/Base'
 
 const styles = theme => ({
-    
+
     GridRoot: {
         margin: '5%',
         // margin: '5em',
@@ -45,7 +46,7 @@ const styles = theme => ({
           },
         },
     },
-    
+
     // Animate Icon
     Anime: {
         transform: 'rotate(0deg)',
@@ -60,7 +61,6 @@ const styles = theme => ({
 
 
   });
-  
+
 
   export default styles;
-  

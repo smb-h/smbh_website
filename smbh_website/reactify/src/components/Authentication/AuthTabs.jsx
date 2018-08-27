@@ -73,7 +73,7 @@ class AuthTabs extends Component {
           <TabContainer dir={theme.direction}>
             <LoginCard />
           </TabContainer>
-          
+
           <TabContainer dir={theme.direction}></TabContainer>
 
           <TabContainer dir={theme.direction}>
@@ -91,5 +91,3 @@ AuthTabs.propTypes = {
 };
 
 export default withStyles(styles, { withTheme: true })(AuthTabs)
-
-

@@ -1,9 +1,10 @@
+import { theme } from '../Base/Base'
 
 const styles = theme => ({
-    
+
     tagMargin: {
         marginRight: 8,
-    },    
+    },
     GridRoot: {
       margin: '5%',
       // margin: '5em',
@@ -57,7 +58,6 @@ const styles = theme => ({
     },
 
   });
-  
+
 
 export default styles;
-  
