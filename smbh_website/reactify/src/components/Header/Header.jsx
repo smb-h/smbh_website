@@ -7,6 +7,8 @@ import Home from '../Home/Home'
 import Blog from '../Blog/Blog'
 import PostDetail from '../Blog/PostDetail'
 import Contact from '../Contact/Contact'
+import NotFound from '../Errors/400'
+import ServerError from '../Errors/500'
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // nodejs library to set properties for components
@@ -149,8 +151,8 @@ class Header extends React.Component {
             <Route exact path='/en/Blog/' component={Blog} />
             <Route exact path='/en/Blog/:slug' component={PostDetail} />
             <Route exact path='/en/Contact/' component={Contact} />
-            {/* Make a Not Found and Error Pages */}
-            {/* <Route component={Contact} /> */}
+            <Route component={NotFound} />
+            <Route component={ServerError} />
           </Switch>
         </div>
       </BrowserRouter>
