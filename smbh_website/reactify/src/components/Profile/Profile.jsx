@@ -1,27 +1,31 @@
 import React, { Component } from 'react'
-import PostList from './PostList'
-import PostCreate from './PostCreate'
 import Parallax from '../Parallax/Parallax'
+import 'whatwg-fetch'
+
+// Style
 import { theme } from '../Base/Base'
 
 
 
-class Blog extends Component {
+class Profile extends Component {
+
 
     render() {
         // const { classes } = this.props;
         return (
-                  <div>
-                  {/* Blog */}
-                  <Parallax image={require("../../assets/img/plant_room.jpg")} >
+                <div>
 
-                  <PostList />
-                  {/* <PostCreate /> */}
+                  {/* Blog */}
+                  <Parallax style={{ backgroundColor: theme.palette.bg.main }}>
+
+
 
                   </Parallax>
+
                 </div>
+
         );
     }
 }
 
-export default Blog;
+export default Profile

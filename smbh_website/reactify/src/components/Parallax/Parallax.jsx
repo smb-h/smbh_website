@@ -41,7 +41,8 @@ class Parallax extends React.Component {
       className,
       children,
       style,
-      image,
+      image = null,
+      video = null,
       small
     } = this.props;
     const parallaxClasses = classNames({
@@ -51,16 +52,39 @@ class Parallax extends React.Component {
       [className]: className !== undefined
     });
     return (
-      <div
-        className={parallaxClasses}
-        style={{
-          ...style,
-          backgroundImage: "url(" + image + ")",
-          ...this.state
-        }}
-        ref="parallax"
-      >
-        {children}
+      <div>
+
+        {/* Video */}
+        { video !== null ? (
+          <div className={classes.mediaContainer}>
+            {/* height={window.innerHeight} */}
+            <video autoPlay muted loop className={parallaxClasses + ' ' + classes.videoBk} style={{ ...style, ...this.state}} ref="parallax" >
+              <source src={video} type="video/mp4" />
+            </video>
+            <div className={classes.centered}>
+              {children}
+            </div>
+          </div>
+
+        ) : '' }
+
+
+        {/* Image or Bg Color or Anything but video */}
+        { video === null ? (
+          <div
+            className={parallaxClasses}
+            style={{
+              ...style,
+              backgroundImage: "url(" + image + ")",
+              ...this.state
+            }}
+            ref="parallax"
+          >
+            {children}
+          </div>
+        ) : '' }
+
+
       </div>
     );
   }

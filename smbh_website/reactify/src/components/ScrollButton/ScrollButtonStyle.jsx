@@ -17,7 +17,12 @@ const styles = theme => ({
       zIndex: 102,
       border: 'none',
       outline: 'none',
+
+      "&:hover,&:focus": {
+        outline: 'none',
+      },
+
     },
   });
 
-  export default styles;
+export default styles;

@@ -1,7 +1,6 @@
 const parallaxStyle = {
   parallax: {
     // height: "90vh",
-
     minHeight: '50vh',
 
     // maxHeight: "1000px",
@@ -36,6 +35,56 @@ const parallaxStyle = {
   },
   small: {
     height: "380px"
+  },
+
+  videoBk: {
+    width: '100%',
+    objectFit: 'cover',
+    opacity: '.7',
+  },
+  mediaContainer: {
+    position: 'relative',
+  },
+  // Child Positioning
+  innerChild: {
+    position: 'absolute',
+    fontSize: '3vw',
+  },
+  // Bottom left text
+  bottomLeft: {
+      position: 'absolute',
+      fontSize: '3vw',
+      bottom: 8,
+      left: 16,
+  },
+  // Top left text
+  topLeft: {
+      position: 'absolute',
+      fontSize: '3vw',
+      top: 8,
+      left: 16,
+  },
+  // Top right text
+  topRight: {
+      position: 'absolute',
+      fontSize: '3vw',
+      top: 8,
+      right: 16,
+  },
+  // Bottom right text
+  bottomRight: {
+      position: 'absolute',
+      fontSize: '3vw',
+      bottom: 8,
+      right: 16,
+  },
+  // Centered text
+  centered: {
+      position: 'absolute',
+      fontSize: '3vw',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)'
   },
 
 };

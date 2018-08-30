@@ -52,7 +52,7 @@ class ScrollButton extends React.Component {
       top: window.pageYOffset || doc.scrollTop,
       // left: window.pageXOffset || doc.scrollLeft,
     })
-    console.log('TOP: ', this.state.top)
+    // console.log('TOP: ', this.state.top)
   }
 
   render () {

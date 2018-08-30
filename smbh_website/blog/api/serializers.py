@@ -62,6 +62,7 @@ class PostDetailSerializer(ModelSerializer):
             'title',
             'image',
             'author',
+            'read_time',
             'language',
             'summary',
             'content',

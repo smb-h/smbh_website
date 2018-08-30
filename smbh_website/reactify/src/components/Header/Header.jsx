@@ -6,6 +6,7 @@ import AuthTabs from '../Authentication/AuthTabs'
 import Home from '../Home/Home'
 import Blog from '../Blog/Blog'
 import PostDetail from '../Blog/PostDetail'
+import Profile from '../Profile/Profile'
 import Contact from '../Contact/Contact'
 import NotFound from '../Errors/400'
 import ServerError from '../Errors/500'
@@ -19,7 +20,6 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-import Button from "@material-ui/core/Button";
 import Hidden from "@material-ui/core/Hidden";
 import Drawer from "@material-ui/core/Drawer";
 // @material-ui/icons
@@ -150,6 +150,7 @@ class Header extends React.Component {
             <Route exact path='/en/#Services' component={Home} />
             <Route exact path='/en/Blog/' component={Blog} />
             <Route exact path='/en/Blog/:slug' component={PostDetail} />
+            <Route exact path='/en/Profile/' component={Contact} />
             <Route exact path='/en/Contact/' component={Contact} />
             <Route component={NotFound} />
             <Route component={ServerError} />

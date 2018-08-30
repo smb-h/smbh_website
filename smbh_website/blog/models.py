@@ -242,7 +242,7 @@ class Comment(models.Model):
 
 
     # Replies
-    def children(self): 
+    def children(self):
         return Comment.objects.filter(parent=self)
 
     @property

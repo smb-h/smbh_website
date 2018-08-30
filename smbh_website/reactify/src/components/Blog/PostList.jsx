@@ -117,9 +117,6 @@ class PostList extends React.Component {
 
                                     <div class="view overlay rounded z-depth-2 mb-lg-0 mb-4">
                                         <img class="img-fluid" src={postItem.image} alt={postItem.title} />
-                                        <a>
-                                            <div class="mask rgba-white-slight"></div>
-                                        </a>
                                     </div>
 
                                 </div>
@@ -203,9 +200,6 @@ class PostList extends React.Component {
 
                                     <div class="view overlay rounded z-depth-2 mb-lg-0 mb-4">
                                         <img class="img-fluid" src={postItem.image} alt={postItem.title} />
-                                        <a>
-                                            <div class="mask rgba-white-slight"></div>
-                                        </a>
                                     </div>
 
                                 </div>
