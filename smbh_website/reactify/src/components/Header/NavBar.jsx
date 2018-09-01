@@ -14,12 +14,10 @@ import AccountCircle from "@material-ui/icons/AccountCircle"
 import AccountBox from "@material-ui/icons/AccountBox"
 import IconButton from '@material-ui/core/IconButton'
 import Home from '@material-ui/icons/HomeRounded'
-import Public from '@material-ui/icons/PublicRounded'
 import Cafe from '@material-ui/icons/LocalCafeRounded'
 import SpeakerNotes from '@material-ui/icons/SpeakerNotesRounded'
 import Add from '@material-ui/icons/AddRounded'
 import AccountBalance from '@material-ui/icons/AccountBalanceWallet'
-
 
 
 
@@ -63,16 +61,6 @@ class NavBar extends React.Component {
                       state: {fromDashboard: false},
                     }} maintainScrollPosition={false} className={classes.navLink} >
                       <Typography variant='subheading' className={classes.navLink}> <Home className={classes.icons} /> Home </Typography>
-                    </Link>
-                  </ListItem>
-
-                  {/* Services */}
-                  <ListItem className={classes.listItem}>
-                    <Link to={{
-                      pathname: `/en/#Services`,
-                      state: {fromDashboard: false},
-                    }} maintainScrollPosition={false} className={classes.navLink} >
-                      <Typography variant='subheading' className={classes.navLink}> <Public className={classes.icons} /> Services </Typography>
                     </Link>
                   </ListItem>
 

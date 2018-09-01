@@ -1,10 +1,8 @@
-react get user info from cookie and session
+react get user info (IN BASE) from cookie and session
 
 https://material-ui.com/layout/grid/#complex-grid
 
 fix image canvas preview to not scale
-
-load prev image in api
 
 React pagination
 
@@ -12,4 +10,4 @@ Test API`s (Rest API's Basic's cfe)
 
 https://reacttraining.com/react-router/web/example/basic
 
-fix read more link to work when click on button area
+fix read more link to work when click on button area (in home and blog)
