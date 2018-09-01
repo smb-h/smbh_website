@@ -1,6 +1,7 @@
 import React from "react"
 import { Link } from 'react-router-dom'
-// @material-ui/core components
+import Header from "./Header"
+import navBarStyle from "./NavBarStyle"
 import withStyles from "@material-ui/core/styles/withStyles"
 import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
@@ -8,7 +9,7 @@ import Button from "@material-ui/core/Button"
 import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
 import Typography from '@material-ui/core/Typography'
-// @material-ui/icons
+// Icons
 import AccountCircle from "@material-ui/icons/AccountCircle"
 import AccountBox from "@material-ui/icons/AccountBox"
 import IconButton from '@material-ui/core/IconButton'
@@ -16,11 +17,9 @@ import Home from '@material-ui/icons/HomeRounded'
 import Public from '@material-ui/icons/PublicRounded'
 import Cafe from '@material-ui/icons/LocalCafeRounded'
 import SpeakerNotes from '@material-ui/icons/SpeakerNotesRounded'
+import Add from '@material-ui/icons/AddRounded'
+import AccountBalance from '@material-ui/icons/AccountBalanceWallet'
 
-
-// core components
-import Header from "./Header";
-import navBarStyle from "./NavBarStyle";
 
 
 
@@ -132,10 +131,24 @@ class NavBar extends React.Component {
                       onClose={this.handleClose}
                     >
                       <MenuItem className={classes.menuItem} onClick={this.handleClose}>
-                        Profile
+
+                        <Link to={{
+                          pathname: `/en/Blog/Create`,
+                          state: {fromDashboard: false},
+                        }} maintainScrollPosition={false} className={classes.menuListItem} >
+                          <Typography variant='subheading' className={classes.menuListItem}> <Add className={classes.icons} /> New Post </Typography>
+                        </Link>
+
                       </MenuItem>
                       <MenuItem className={classes.menuItem} onClick={this.handleClose}>
-                        My account
+
+                        <Link to={{
+                          pathname: `/en/Dashboard`,
+                          state: {fromDashboard: false},
+                        }} maintainScrollPosition={false} className={classes.menuListItem} >
+                          <Typography variant='subheading' className={classes.menuListItem} > <AccountBalance className={classes.icons} /> Profile </Typography>
+                        </Link>
+
                       </MenuItem>
                     </Menu>
                   </ListItem>

@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import PostForm from './PostForm'
+import { Link } from 'react-router-dom'
 import moment from 'moment'
 import 'whatwg-fetch'
 import cookie from 'react-cookies'
@@ -15,7 +17,6 @@ import CardMedia from '@material-ui/core/CardMedia'
 import CardActions from '@material-ui/core/CardActions'
 import Hidden from '@material-ui/core/Hidden'
 import Divider from '@material-ui/core/Divider'
-import ButtonBase from '@material-ui/core/ButtonBase'
 // Style
 import { theme } from '../Base/Base'
 import styles from './PostDetailStyle'
@@ -28,7 +29,7 @@ class PostDetail extends Component {
       slug: null,
       post: null,
       postLoaded: false,
-      err: null
+      err: null,
     }
   }
 
@@ -39,9 +40,19 @@ class PostDetail extends Component {
       let lookupOptions = {
           method: 'GET',
           headers: {
-              'Content-type': 'application/json'
+              'Content-type': 'application/json',
           }
+        }
+
+      const csrfToken = cookie.load('csrftoken')
+      // TODO: Move token stuff to cookie
+      // const Token = ('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InNtYmgiLCJleHAiOjE1MzU3MjUzNDksImVtYWlsIjoic21iX2hAeWFob28uY29tIiwib3JpZ19pYXQiOjE1MzU3MjUwNDl9.7J8vQr_Qsd4FvRO93zNdbJDBq68qXWW_aTUIWODAUYI')
+      if (csrfToken !== undefined) {
+        lookupOptions['credentials'] = 'include'
+        lookupOptions['headers']['X-CSRFToken'] = csrfToken
+        // lookupOptions['headers']['Authorization'] = 'JWT ' +  Token
       }
+
 
       fetch(endpoint, lookupOptions)
       .then(function(response){
@@ -70,53 +81,21 @@ class PostDetail extends Component {
       }).catch(function(error){
 
           console.log("error", error)
+          alert('Something went wrong! Try again later.')
 
       })
   }
 
-  // Update Post
-  updatePost = (data) => {
-      const thisComp = this
-      const endpoint = 'API/:slug'
-      const csrfToken = cookie.load('csrftoken')
-      // TODO: Move token stuff to cookie
-      const Token = ('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InNtYmgiLCJleHAiOjE1MzUyNTI4NDAsImVtYWlsIjoic21iX2hAeWFob28uY29tIiwib3JpZ19pYXQiOjE1MzUyNTI1NDB9._H6oDPdGienzFtf4-V0KqoCOQ5vsC5LJKnONAxP6r1U')
 
-      if (csrfToken !== undefined) {
-
-          let lookupOptions = {
-              method: 'POST',
-              headers: {
-                  'Authorization': 'JWT ' +  Token,
-                  'Content-type': 'application/json',
-                  'X-CSRFToken': csrfToken
-              },
-              body: JSON.stringify(data),
-              credentials: 'include'
-          }
-
-          fetch(endpoint, lookupOptions)
-          .then(function(response){
-
-              return response.json()
-
-          }).then(function(responseData){
-
-              console.log(responseData)
-              thisComp.clearForm()
-
-          }).catch(function(error){
-
-              console.log("error", error)
-              alert('Something went wrong! Try again later.')
-
-          })
-      }
-  }
-
+  // Component Will Mount
+  // componentWillMount() {
+    // Refresh page to remove extera top margin
+    // window.location.reload()
+  // }
 
   // Component Did Mount
   componentDidMount() {
+    // See if the post slug exists
     if (this.props.match) {
       const { slug } = this.props.match.params
       this.setState({
@@ -208,13 +187,32 @@ class PostDetail extends Component {
 
                               </Typography>
                               <br />
-                              {/* Tags */}
-                              <Typography variant="title" className={classes.content}>
-                                {post.tags.map(tag => (
-                                    <Typography key={tag}>#{tag}</Typography>
-                                ))}
-                              </Typography>
+
+                              <Grid container>
+
+                                <Grid item xs>
+                                  {/* Tags */}
+                                  <Grid container>
+                                    {post.tags.map(tag => (
+                                        <Grid item xs><Typography variant="title" className={classes.content} key={tag}>#{tag}</Typography></Grid>
+                                    ))}
+                                  </Grid>
+                                </Grid>
+
+                              </Grid>
+
+                              <Grid container>
+                                <Grid item xs>
+                                  { post.isOwner === true ? (<div>
+
+                                  <PostForm post={post} />
+
+                                  </div>) : '' }
+                                </Grid>
+                              </Grid>
+
                               <Divider className={classes.dividerStyle} />
+
                               {/* Comments */}
                               <Typography variant="display1" className={classes.content}>
                                 Leave a comment

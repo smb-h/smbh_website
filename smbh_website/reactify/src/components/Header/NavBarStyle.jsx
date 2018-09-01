@@ -188,6 +188,45 @@ const navBarStyle = theme => ({
   marginRight5: {
     marginRight: "5px"
   },
+  // Menu list item
+  menuListItem: {
+    color: "inherit",
+    position: "relative",
+    // padding: "0.9375rem",
+    padding: "0.4rem",
+    fontWeight: "500",
+    // fontSize: "12px",
+    // textTransform: "uppercase",
+
+    textTransform: "none",
+
+    borderRadius: "3px",
+    lineHeight: "20px",
+    textDecoration: "none",
+
+    margin: "0px",
+    // margin: "1px",
+
+    transition: '0.4s',
+
+    display: "inline-flex",
+    // "&:hover,&:focus": {
+    "&:focus": {
+      color: "#ffd460",
+      // background: "rgba(200, 200, 200, 0.2)",
+      // background: "inherit",
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: "calc(100% - 30px)",
+      marginLeft: "15px",
+      marginBottom: "8px",
+      marginTop: "8px",
+      textAlign: "left",
+      "& > span:first-child": {
+        justifyContent: "flex-start"
+      }
+    }
+  },
 
 
 

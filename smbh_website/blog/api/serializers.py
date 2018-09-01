@@ -53,6 +53,7 @@ class PostDetailSerializer(ModelSerializer):
     tag_list = CharField(required = False)
     # author = SlugRelatedField(read_only=True, slug_field='username')
     author = SerializerMethodField()
+    isOwner = SerializerMethodField()
     comments = SerializerMethodField()
     content_type = SerializerMethodField()
 
@@ -62,6 +63,7 @@ class PostDetailSerializer(ModelSerializer):
             'title',
             'image',
             'author',
+            'isOwner',
             'read_time',
             'language',
             'summary',
@@ -75,11 +77,18 @@ class PostDetailSerializer(ModelSerializer):
             'content_type',
             'comments',
         )
-        read_only_fields = ('author', 'id', 'content_type', 'comments', 'slug')
+        read_only_fields = ('author', 'id', 'content_type', 'comments', 'slug', 'owner')
 
 
     def get_author(self, obj):
         return (obj.author.get_full_name())
+
+    def get_isOwner(self, obj):
+        request = self.context.get('request')
+        if (request.user.is_authenticated):
+            if (obj.author == request.user):
+                return True
+        return False
 
     def get_comments(self, obj):
         qs = Comment.objects.filter_by_instance(obj)

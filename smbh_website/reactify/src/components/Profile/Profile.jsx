@@ -15,8 +15,8 @@ class Profile extends Component {
         return (
                 <div>
 
-                  {/* Blog */}
-                  <Parallax style={{ backgroundColor: theme.palette.bg.main }}>
+                  {/* Profile */}
+                  <Parallax image={require("../../assets/img/workspace.jpg")} >
 
 
 

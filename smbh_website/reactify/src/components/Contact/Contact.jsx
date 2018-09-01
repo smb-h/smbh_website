@@ -16,8 +16,8 @@ class Contact extends Component {
         return (
                 <div>
 
-                  {/* Blog */}
-                  <Parallax style={{ backgroundColor: theme.palette.bg.main }}>
+                  {/* Contact */}
+                  <Parallax image={require("../../assets/img/img7.jpg")} >
 
 
 

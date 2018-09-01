@@ -1,30 +1,25 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import classnames from 'classnames';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Grid from '@material-ui/core/Grid';
-
-
-
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-
-
-
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import classnames from 'classnames'
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import CardMedia from '@material-ui/core/CardMedia'
+import CardContent from '@material-ui/core/CardContent'
+import CardActions from '@material-ui/core/CardActions'
+import Avatar from '@material-ui/core/Avatar'
+import IconButton from '@material-ui/core/IconButton'
+import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
+import Grid from '@material-ui/core/Grid'
+import { Link } from 'react-router-dom'
+import FavoriteIcon from '@material-ui/icons/Favorite'
+import ShareIcon from '@material-ui/icons/Share'
+import MoreVertIcon from '@material-ui/icons/MoreVert'
 // Style
-import styles from './RecentPostStyle';
+import styles from './RecentPostStyle'
 
 
 
@@ -156,7 +151,12 @@ class RecentPosts extends React.Component {
 
                                 </IconButton>
                                 }
-                                title={postItem.title}
+                                title={
+                                  <Link to={{
+                                    pathname: `Blog/${postItem.slug}`,
+                                    state: {fromDashboard: false},
+                                  }} maintainScrollPosition={false} >{postItem.title}</Link>
+                                }
                                 subheader={this.dateTimeConvertor(postItem.publish)}
                             />
 
@@ -189,10 +189,12 @@ class RecentPosts extends React.Component {
                                     <ShareIcon />
                                 </IconButton>
 
-                                <Button className={classes.Right} variant='contained' color='secondary' href={postItem.url}>
-                                    More
+                                <Button className={classes.Right} variant='contained' color='primary'>
+                                  <Link to={{
+                                    pathname: `Blog/${postItem.slug}`,
+                                    state: {fromDashboard: false},
+                                  }} maintainScrollPosition={false} >Read more</Link>
                                 </Button>
-
 
                             </CardActions>
 

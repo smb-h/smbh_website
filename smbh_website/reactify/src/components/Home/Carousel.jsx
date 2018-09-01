@@ -64,65 +64,12 @@ class ServiceCarousel extends Component {
     };
     return (
       <div className={classes.container}>
-        {/*
-        <div className={classes.section}>
-          <div className={classes.container}>
-            <Grid container>
-              <Grid xs={12} sm={12} md={8} className={classes.marginAuto}>
-                <Card carousel>
-                  <Carousel {...settings}>
-                    <div>
-                      <img
-                        src={image1}
-                        alt="First slide"
-                        className="slick-image"
-                      />
-                      <div className="slick-caption">
-                        <h4>
-                          <LocationOn className="slick-icons" />Yellowstone
-                          National Park, United States
-                        </h4>
-                      </div>
-                    </div>
-                    <div>
-                      <img
-                        src={image2}
-                        alt="Second slide"
-                        className="slick-image"
-                      />
-                      <div className="slick-caption">
-                        <h4>
-                          <LocationOn className="slick-icons" />Somewhere Beyond,
-                          United States
-                        </h4>
-                      </div>
-                    </div>
-                    <div>
-                      <img
-                        src={image3}
-                        alt="Third slide"
-                        className="slick-image"
-                      />
-                      <div className="slick-caption">
-                        <h4>
-                          <LocationOn className="slick-icons" />Yellowstone
-                          National Park, United States
-                        </h4>
-                      </div>
-                    </div>
-                  </Carousel>
-                </Card>
-              </Grid>
-            </Grid>
-          </div>
-        </div>
-        */}
 
         <div className={classes.centeralize}>
           <Typography variant='display1' className={classes.servicesTitle}>SERVICES</Typography>
           <Typography variant='headline' className={classes.servicesInfo}>What Can I Do For You?</Typography>
         </div>
-        <div id='Services'>
+        <div>
 
           <Slider {...settings}>
 

@@ -3,8 +3,6 @@
 const styles = theme => ({
     layout: {
       margin: '5%',
-      // width: 'auto',
-      // height: 'auto',
     },
     mainGrid: {
       marginTop: theme.spacing.unit * 3,

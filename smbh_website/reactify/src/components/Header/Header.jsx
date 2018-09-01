@@ -6,6 +6,7 @@ import AuthTabs from '../Authentication/AuthTabs'
 import Home from '../Home/Home'
 import Blog from '../Blog/Blog'
 import PostDetail from '../Blog/PostDetail'
+import PostForm from '../Blog/PostForm'
 import Profile from '../Profile/Profile'
 import Contact from '../Contact/Contact'
 import NotFound from '../Errors/400'
@@ -147,10 +148,10 @@ class Header extends React.Component {
           <Switch>
             <Route exact path='/en/Accounts/Authentication' component={AuthTabs} />
             <Route exact path='/en/' component={Home} />
-            <Route exact path='/en/#Services' component={Home} />
             <Route exact path='/en/Blog/' component={Blog} />
+            <Route exact path='/en/Blog/Create' component={PostForm} />
             <Route exact path='/en/Blog/:slug' component={PostDetail} />
-            <Route exact path='/en/Profile/' component={Contact} />
+            <Route exact path='/en/Profile/' component={Profile} />
             <Route exact path='/en/Contact/' component={Contact} />
             <Route component={NotFound} />
             <Route component={ServerError} />

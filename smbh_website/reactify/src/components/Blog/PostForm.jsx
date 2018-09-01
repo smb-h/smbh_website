@@ -34,17 +34,17 @@ import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 // import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-
 import PropTypes from 'prop-types'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import withStyles from '@material-ui/core/styles/withStyles'
-
+import Parallax from '../Parallax/Parallax'
+import { theme } from '../Base/Base'
 // Style
-import styles from './PostCreateStyle'
+import styles from './PostFormStyle'
 
 
 
-class PostCreate extends Component {
+class PostForm extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -72,7 +72,7 @@ class PostCreate extends Component {
             },
         }
         // Form Refrence
-        this.postCreateFormRef = React.createRef()
+        this.postFormFormRef = React.createRef()
         // Canvas Refrence
         this.imagePreviewCanvasRef = React.createRef()
     }
@@ -103,30 +103,48 @@ class PostCreate extends Component {
     handleSubmit = (event) => {
       event.preventDefault()
       let data = this.state
-      this.createPost(data)
+      this.CRUDPost(data)
     }
 
 
     // Create Post
-    createPost = (data) => {
+    CRUDPost = (data) => {
         const thisComp = this
-        const endpoint = 'API/Post/Create'
+        let endpoint = ''
         const csrfToken = cookie.load('csrftoken')
         // TODO: Move token stuff to cookie
-        const Token = ('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InNtYmgiLCJleHAiOjE1MzUyNTI4NDAsImVtYWlsIjoic21iX2hAeWFob28uY29tIiwib3JpZ19pYXQiOjE1MzUyNTI1NDB9._H6oDPdGienzFtf4-V0KqoCOQ5vsC5LJKnONAxP6r1U')
-
+        // const Token = ('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InNtYmgiLCJleHAiOjE1MzUyNTI4NDAsImVtYWlsIjoic21iX2hAeWFob28uY29tIiwib3JpZ19pYXQiOjE1MzUyNTI1NDB9._H6oDPdGienzFtf4-V0KqoCOQ5vsC5LJKnONAxP6r1U')
+        const { post } = this.props
+        console.log(post)
         if (csrfToken !== undefined) {
-
-            let lookupOptions = {
-                method: 'POST',
+          let lookupOptions = {}
+          // Update
+          if (post !== undefined && post !== null) {
+            endpoint = `API/${post.slug}`
+            lookupOptions = {
+                method: 'PUT',
                 headers: {
-                    'Authorization': 'JWT ' +  Token,
+                    // 'Authorization': 'JWT ' +  Token,
                     'Content-type': 'application/json',
                     'X-CSRFToken': csrfToken
                 },
                 body: JSON.stringify(data),
                 credentials: 'include'
             }
+            // Create
+          } else {
+              endpoint = 'API/Post/Create'
+              lookupOptions = {
+                method: 'POST',
+                headers: {
+                    // 'Authorization': 'JWT ' +  Token,
+                    'Content-type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
+                body: JSON.stringify(data),
+                credentials: 'include'
+            }
+          }
 
             fetch(endpoint, lookupOptions)
             .then(function(response){
@@ -151,7 +169,7 @@ class PostCreate extends Component {
     // Clear Form
     clearForm = (event) => {
       // event.preventDefault()
-      // this.postCreateFormRef.reset()
+      // this.postFormFormRef.reset()
       this.setState({
           title: "",
           image: null,
@@ -160,7 +178,7 @@ class PostCreate extends Component {
           content: "",
           draft: false,
           // publish: null,
-          publish: moment(new Date()).format('YYYY-MM-DDTh:mm:ssZ'),
+          publish: moment(new Date()).format('YYYY-MM-DDTh:mmZ'),
           tag_list: "",
       })
     }
@@ -246,7 +264,23 @@ class PostCreate extends Component {
 
     // Component Did Mount
     componentDidMount() {
-      this.clearForm()
+      const { post } = this.props
+      if (post !== undefined && post !== null) {
+        this.setState({
+          title: post.title,
+          image: post.image,
+          language: post.language,
+          summary: post.summary,
+          content: post.content,
+          draft: post.draft,
+          // publish: moment(post.publish).format('YYYY-MM-DDTh:mm:ssZ'),
+          publish: moment(post.publish).format('YYYY-MM-DDThh:mm'),
+          tag_list: post.tags,
+        })
+      }
+      else {
+        this.clearForm()
+      }
     }
 
 
@@ -257,6 +291,8 @@ class PostCreate extends Component {
 
         return (
             <div>
+              <Parallax style={{ backgroundColor: theme.palette.bg.main }} >
+
                 { (csrfToken !== undefined && csrfToken !== null) ?
                   (<Card className={classes.formContainer}>
                       <CssBaseline />
@@ -266,7 +302,7 @@ class PostCreate extends Component {
                               Create New Post
                           </Typography>
 
-                          <form onSubmit={this.handleSubmit} autoComplete='off' ref={this.postCreateFormRef} >
+                          <form onSubmit={this.handleSubmit} autoComplete='off' ref={this.postFormFormRef} >
 
                                   {/* Title */}
                                   <FormGroup className={classes.formItem}>
@@ -394,6 +430,7 @@ class PostCreate extends Component {
                   </Card>)
                 : (<p>Something went wrong!</p>)}
 
+              </Parallax>
             </div>
 
         );
@@ -403,8 +440,8 @@ class PostCreate extends Component {
 
 
 
-PostCreate.propTypes = {
+PostForm.propTypes = {
     classes: PropTypes.object.isRequired,
   };
 
-export default withStyles(styles)(PostCreate)
+export default withStyles(styles)(PostForm)
