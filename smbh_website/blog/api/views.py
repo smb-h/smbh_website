@@ -31,6 +31,7 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 # Comments
 from rest_framework.mixins import DestroyModelMixin, UpdateModelMixin
 from django.db.models import Q
+from .pagination import PostPagination
 
 
 
@@ -77,6 +78,7 @@ class PostRUDAPIView(RetrieveUpdateDestroyAPIView):
 class PostListAPIView(ListAPIView):
     serializer_class = PostListSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
+    pagination_class = PostPagination
     # Filters
     filter_backends = (SearchFilter, OrderingFilter,)
     # filter_backends = (DjangoFilterBackend,)
@@ -110,7 +112,7 @@ class CommentCreateAPIView(CreateAPIView):
     # Request Sample
     # http://127.0.0.1:8000/en/Blog/API/Comment/Create?type=post&slug=welcome-to-deployment&parent_id=21
     def get_serializer_class(self):
-        
+
         # Getting stuff not setting them
         model_type = self.request.GET.get("type")
         slug = self.request.GET.get("slug")
@@ -181,8 +183,3 @@ class CommentListAPIView(ListAPIView):
     def get_serializer_context(self, *args, **kwargs):
         context = {'request': self.request}
         return context
-
-
-
-
-

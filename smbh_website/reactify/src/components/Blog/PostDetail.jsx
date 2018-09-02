@@ -86,6 +86,13 @@ class PostDetail extends Component {
       })
   }
 
+  // Handle Updated Post
+  handlePostItemUpdated = (postItemData) => {
+    this.setState({
+      post: postItemData,
+    })
+  }
+
 
   // Component Will Mount
   // componentWillMount() {
@@ -205,7 +212,7 @@ class PostDetail extends Component {
                                 <Grid item xs>
                                   { post.isOwner === true ? (<div>
 
-                                  <PostForm post={post} />
+                                  <PostForm post={post} postItemUpdated={this.handlePostItemUpdated} />
 
                                   </div>) : '' }
                                 </Grid>
