@@ -36,6 +36,10 @@ const styles = theme => ({
       overflow: 'hidden',
     },
 
+    ResponsiveImage: {
+      width: '100%',
+    },
+
 
 });
 

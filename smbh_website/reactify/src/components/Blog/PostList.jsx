@@ -21,10 +21,14 @@ class PostList extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-        anchorEl: null,
-        Animated: false,
-        postList: []
-        };
+          anchorEl: null,
+          Animated: false,
+          postList: [],
+          // Result stuff
+          next: null,
+          previous: null,
+          count: 0,
+        }
     }
 
     handleFavClick = () => {
@@ -44,9 +48,14 @@ class PostList extends React.Component {
     };
 
     // Load Posts
-    loadPosts = () => {
+    loadPosts = (nextEndpoint) => {
+      let endpoint = 'API/'
+      // Basic pagination
+      if(nextEndpoint !== undefined) {
+        endpoint = nextEndpoint
+      }
+
         const thisComp = this
-        const endpoint = 'API/'
         let lookupOptions = {
             method: 'GET',
             headers: {
@@ -60,8 +69,15 @@ class PostList extends React.Component {
             return response.json()
 
         }).then(function(responseData){
+            // Manage Response Data
             thisComp.setState({
-                postList: responseData
+                // Load each page
+                postList: responseData.results,
+                // Load in a row
+                // postList: thisComp.state.postList.concat(responseData.results),
+                next: responseData.next,
+                previous: responseData.previous,
+                count: responseData.count,
             })
             // console.log(responseData)
 
@@ -72,14 +88,35 @@ class PostList extends React.Component {
         })
     }
 
+    // Post List Next Page
+    postPaginationNext = () => {
+      const { next } = this.state
+      if (next !== null) {
+        this.loadPosts(next)
+      }
+    }
 
+    // Post List Previous Page
+    postPaginationPrevious = () => {
+      const { previous } = this.state
+      if (previous !== null) {
+        this.loadPosts(previous)
+      }
+    }
+
+    // Component Did Mount
     componentDidMount(){
         this.setState({
-            postList: []
+            postList: [],
+            // Result stuff
+            next: null,
+            previous: null,
+            count: 0,
         })
         this.loadPosts()
     }
 
+    // Date Time Convertor
     dateTimeConvertor(dt){
         let newDate = new Date(dt)
         let output = newDate.toLocaleDateString() + newDate.toLocaleTimeString()
@@ -90,10 +127,13 @@ class PostList extends React.Component {
         return output
     }
 
+
     render() {
         const { classes } = this.props
         const { anchorEl } = this.state
         const { postList } = this.state
+        const { next } = this.state
+        const { previous } = this.state
 
 
         return (
@@ -207,6 +247,11 @@ class PostList extends React.Component {
 
                     )
                 }) : ''}
+
+
+                {/* Load more post button */}
+                { next !== null ? (<Button variant='flat' onClick={this.postPaginationNext} >Next</Button>) : '' }
+                { previous !== null ? (<Button variant='flat' onClick={this.postPaginationPrevious} >Previous</Button>) : '' }
 
 
             </section>

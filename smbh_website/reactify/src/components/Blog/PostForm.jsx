@@ -32,8 +32,8 @@ import Grid from '@material-ui/core/Grid'
 import Checkbox from '@material-ui/core/Checkbox'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
-import Input from '@material-ui/core/Input'
-import InputLabel from '@material-ui/core/InputLabel'
+// import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
 import PropTypes from 'prop-types'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import withStyles from '@material-ui/core/styles/withStyles'
@@ -73,6 +73,8 @@ class PostForm extends Component {
         }
         // Form Refrence
         this.postFormFormRef = React.createRef()
+        // Canvas Refrence
+        this.imagePreviewCanvasRef = React.createRef()
     }
 
 
@@ -94,7 +96,6 @@ class PostForm extends Component {
         // [prop]: event.target.value
         [name]: value
       })
-      // console.log(name, value)
     };
 
 
@@ -178,7 +179,7 @@ class PostForm extends Component {
         let endpoint = 'API/Post/Create'
         const csrfToken = cookie.load('csrftoken')
         // TODO: Move token stuff to cookie
-        // const Token = ('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InNtYmgiLCJleHAiOjE1MzU4OTI3MzQsImVtYWlsIjoic21iX2hAeWFob28uY29tIiwib3JpZ19pYXQiOjE1MzU4OTI0MzR9.oWGtaZKhN9G2HNmnjghqTMDgAY7R0su1eLk16iUEeKc')
+        // const Token = ('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InNtYmgiLCJleHAiOjE1MzUyNTI4NDAsImVtYWlsIjoic21iX2hAeWFob28uY29tIiwib3JpZ19pYXQiOjE1MzUyNTI1NDB9._H6oDPdGienzFtf4-V0KqoCOQ5vsC5LJKnONAxP6r1U')
 
         if (csrfToken !== undefined) {
           let lookupOptions = {
@@ -195,12 +196,11 @@ class PostForm extends Component {
             fetch(endpoint, lookupOptions)
             .then(function(response){
 
-                console.log('response: ', response)
                 return response.json()
 
             }).then(function(responseData){
 
-                console.log('response Data: ', responseData)
+                console.log(responseData)
                 thisComp.clearForm()
 
             }).catch(function(error){
@@ -267,11 +267,89 @@ class PostForm extends Component {
           content: "",
           draft: false,
           // publish: null,
-          publish: moment(new Date()).format('YYYY-MM-DDThh:mm'),
+          publish: moment(new Date()).format('YYYY-MM-DDTh:mm'),
           tag_list: "",
       })
     }
 
+
+    // Validate Image
+    validateImage = (files) => {
+        // const imageValidTypes = 'image/*'
+        const imageValidTypesArray = this.state.imageValidTypes.split(',').map((item) => {return item.trim()})
+        if (files && files.length > 0) {
+            for (let i = 0; i < files.length ; i++) {
+                // Check Size
+                if (files[i].size > this.state.imageMaxSize) {
+                  alert('This file is too big!')
+                  return false
+                }
+                // Check Type
+                if (imageValidTypesArray.includes(files[i].type) !== true) {
+                  alert('This is not a valid image!')
+                  return false
+                }
+            }
+        }
+        return true
+    }
+
+
+    // DropZone OnDrop
+    handleOnDrop = (acceptedFiles, rejectedFiles) => {
+      // Return Rejected File Errors
+      this.validateImage(rejectedFiles)
+      // Validate Accepted Files And Return Errors
+      if (this.validateImage(acceptedFiles) === true && acceptedFiles.length > 0) {
+          // In here set things to only handle 1 file and already limited input
+          // imageBase64Data
+          const currentFile = acceptedFiles[0]
+          const reader = new FileReader()
+          reader.addEventListener('load', () => {
+              this.setState({
+                image: reader.result,
+              })
+          }, false)
+          reader.readAsDataURL(currentFile)
+          // console.log('RESULT : ', '')
+      }
+    }
+
+
+    // Image Loaded
+    handleImageLoaded = (image) => {
+      // console.log(image)
+    }
+
+
+    // Crop
+    handleOnCropChange = (crop) => {
+      this.setState({
+        crop: crop,
+      })
+    }
+
+
+    // Crop Compelete
+    handleOnCropCompelete = (crop, pixelCrop) => {
+      const canvasRef = this.imagePreviewCanvasRef.current
+      image64toCanvasRef(canvasRef, this.state.image, pixelCrop)
+    }
+
+
+    // Download Cropped Image
+    handleDownloadClick = (event) => {
+      event.preventDefault()
+      const canvasRef = this.imagePreviewCanvasRef.current
+      const fileExtension = extractImageFileExtensionFromBase64(this.state.image)
+      const imageData64 = canvasRef.toDataURL('image/' + fileExtension)
+      const fileName = 'ImagePreview.' + fileExtension
+
+      // File To Upload
+      // const croppedImage = base64StringtoFile(this.state.image, fileName)
+      // Download File
+      downloadBase64File(imageData64, fileName)
+    }
 
     // Component Did Mount
     componentDidMount() {
@@ -321,26 +399,44 @@ class PostForm extends Component {
 
                                   {/* Image */}
 
-                                  <FormControl>
-                                    <Grid container spacing={16}>
-                                      <Grid item xs>
-                                        <FormControlLabel
-                                        className={classes.imagePad}
-                                            control={
-                                              <input type="file" id="image" accept="image/*" onChange={this.handleChange('image')} />
-                                            }
-                                            label="Image"
-                                        />
-                                      </Grid>
-                                      <Grid item xs>
-                                        {/* Preview */}
-                                        {/* { (this.state.image) ? (
-                                            <img src={this.state.image} alt={this.state.title} />
-                                        ) : '' } */}
-                                      </Grid>
-                                    </Grid>
-                                  </FormControl>
+                                  {/* <FormControl>
+                                      <FormControlLabel
+                                      className={classes.imagePad}
+                                          control={
+                                            <input type="file" id="image" accept="image/*" onChange={this.handleChange('title')} />
+                                          }
+                                          label="Image"
+                                      />
+                                  </FormControl> */}
 
+
+                                  <FormGroup className={classes.OF + ' ' + classes.centerPos}>
+                                  <Grid container spacing={16}>
+                                      <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
+
+                                          { this.state.image !== null ? (<div>
+                                            <ReactCrop src={this.state.image} crop={this.state.crop} onImageLoaded={this.handleImageLoaded} onChange={this.handleOnCropChange} onComplete={this.handleOnCropCompelete} />
+                                          </div>) : (<div>
+                                              <Dropzone onDrop={this.handleOnDrop} accept='image/*' maxSize={this.state.imageMaxSize} multiple={false} >
+                                              <InputLabel>Drop & Crop :D</InputLabel>
+                                              </Dropzone>
+                                              <FormHelperText> Up to 5 MB </FormHelperText>
+                                            </div>) }
+
+                                      </Grid>
+                                      <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
+                                        {/* <img src={this.state.image} alt={this.state.title} /> */}
+                                        { (this.state.image) ? (
+                                          <div>
+                                            <canvas ref={this.imagePreviewCanvasRef} className={classes.ResponsiveImage}></canvas>
+                                            {/* Download Button */}
+                                            {/* <Button variant='flat' onClick={this.handleDownloadClick}>Download</Button> */}
+                                          </div>
+                                        ) : '' }
+
+                                  </Grid>
+                                  </Grid>
+                                  </FormGroup>
 
                                   {/* Language */}
                                   <FormGroup className={classes.formItem}>
@@ -395,7 +491,7 @@ class PostForm extends Component {
 
                                   {/* Publish */}
                                   <FormGroup className={classes.formItem}>
-                                      <TextField id="publish" label="Publish" type="datetime-local" onChange={this.handleChange('publish')} InputLabelProps={{ shrink: true, }} value={this.state.publish} helperText="Default Date and time is now." />
+                                      <TextField id="publish" label="Publish" type="datetime-local" onChange={this.handleChange('publish')} InputLabelProps={{ shrink: true, }} value={this.state.publish} />
                                   </FormGroup>
 
                                   {/* Submit */}
