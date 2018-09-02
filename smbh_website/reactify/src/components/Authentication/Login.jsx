@@ -18,38 +18,16 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid';
 import Checkbox from '@material-ui/core/Checkbox';
-
-
-
+// Icons
 import Lock from '@material-ui/icons/Lock';
 import Person from '@material-ui/icons/Person';
 import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import FingerPrint from '@material-ui/icons/Fingerprint';
+// Style
+import styles from './LoginStyle'
 
-
-
-const styles = theme => ({
-  card: {
-    minWidth: 275,
-    padding: 20,
-    boxShadow: 'None',
-    textAlign: 'center',
-  },
-  title: {
-    marginBottom: 16,
-    fontSize: 14,
-  },
-  margin: {
-    margin: theme.spacing.unit,
-  },
-  btnIconPadding: {
-    paddingRight: 5,
-    paddingLeft: 5,
-}
-
-});
 
 
 // function LoginCard(props) {
@@ -107,6 +85,7 @@ class LoginCard extends React.Component {
                                   helperText=""
                                   margin="normal"
                                   required
+                                  fullwidth
                               />
                           </Grid>
                       </Grid>

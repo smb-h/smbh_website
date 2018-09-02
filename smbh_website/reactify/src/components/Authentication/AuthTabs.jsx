@@ -6,12 +6,15 @@ import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Typography from '@material-ui/core/Typography'
-
 import FingerPrint from '@material-ui/icons/Fingerprint'
 import AccountCircle from '@material-ui/icons/AccountCircle'
-
 import LoginCard from './Login'
 import Registration from './Registration'
+// Style
+import styles from './AuthTabsStyle'
+import { theme } from '../Base/Base'
+
+
 
 function TabContainer({ children, dir }) {
   return (
@@ -24,14 +27,9 @@ function TabContainer({ children, dir }) {
 TabContainer.propTypes = {
   children: PropTypes.node.isRequired,
   dir: PropTypes.string.isRequired,
-};
+}
 
-const styles = theme => ({
-  root: {
-    backgroundColor: theme.palette.background.paper,
-    width: 500,
-  },
-});
+
 
 class AuthTabs extends Component {
   state = {
@@ -47,10 +45,11 @@ class AuthTabs extends Component {
   };
 
   render() {
-    const { classes, theme } = this.props;
+    // const { classes, theme } = this.props
+    const { classes } = this.props
 
     return (
-      <div className={classes.root}>
+      <div id='AuthTabs' className={classes.root}>
         <AppBar position="static" color="default">
           <Tabs
             value={this.state.value}
@@ -85,9 +84,12 @@ class AuthTabs extends Component {
   }
 }
 
+
+
 AuthTabs.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
-};
+}
 
 export default withStyles(styles, { withTheme: true })(AuthTabs)
+// export default withStyles(styles)(AuthTabs)

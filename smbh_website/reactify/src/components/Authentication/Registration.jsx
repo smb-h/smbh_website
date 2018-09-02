@@ -1,60 +1,36 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-// import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-// import Typography from '@material-ui/core/Typography';
-
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import Card from '@material-ui/core/Card'
+// import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
+import Button from '@material-ui/core/Button'
+// import Typography from '@material-ui/core/Typography'
 // Form
-import FormControl from '@material-ui/core/FormControl';
-// import FormGroup from '@material-ui/core/FormGroup';
-// import FormHelperText from '@material-ui/core/FormHelperText';
-// import FormLabel from '@material-ui/core/FormLabel';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-// import Input from '@material-ui/core/Input';
-// import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl'
+// import FormGroup from '@material-ui/core/FormGroup'
+// import FormHelperText from '@material-ui/core/FormHelperText'
+// import FormLabel from '@material-ui/core/FormLabel'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+// import Input from '@material-ui/core/Input'
+// import InputLabel from '@material-ui/core/InputLabel'
 import TextField from '@material-ui/core/TextField'
-import Grid from '@material-ui/core/Grid';
-import Checkbox from '@material-ui/core/Checkbox';
+import Grid from '@material-ui/core/Grid'
+import Checkbox from '@material-ui/core/Checkbox'
+// Icons
+import Lock from '@material-ui/icons/Lock'
+import Person from '@material-ui/icons/Person'
+import IconButton from '@material-ui/core/IconButton'
+import Visibility from '@material-ui/icons/Visibility'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import Email from '@material-ui/icons/Email'
+import Phone from '@material-ui/icons/Phone'
+import Contacts from '@material-ui/icons/Contacts'
+// Style
+import styles from './RegistrationStyle'
 
 
-import Lock from '@material-ui/icons/Lock';
-import Person from '@material-ui/icons/Person';
-import IconButton from '@material-ui/core/IconButton';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import Email from '@material-ui/icons/Email';
-import Phone from '@material-ui/icons/Phone';
-import Contacts from '@material-ui/icons/Contacts';
 
-
-
-const styles = theme => ({
-  card: {
-    minWidth: 275,
-    padding: 20,
-    textAlign: 'center',
-  },
-  title: {
-    marginBottom: 16,
-    fontSize: 14,
-  },
-  margin: {
-    margin: theme.spacing.unit,
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200,
-  },
-  btnIconPadding: {
-      paddingRight: 5,
-      paddingLeft: 5,
-  }
-
-});
 
 
 class Registration extends React.Component {

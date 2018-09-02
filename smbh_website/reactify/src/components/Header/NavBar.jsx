@@ -118,6 +118,18 @@ class NavBar extends React.Component {
                       open={open}
                       onClose={this.handleClose}
                     >
+                      {/* Authentication */}
+                      <MenuItem className={classes.menuItem} onClick={this.handleClose}>
+
+                        <Link to={{
+                          pathname: `/en/Accounts/Authentication`,
+                          state: {fromDashboard: false},
+                        }} maintainScrollPosition={false} className={classes.menuListItem} >
+                          <Typography variant='subheading' className={classes.menuListItem} > Authentication </Typography>
+                        </Link>
+
+                      </MenuItem>
+                      {/* New Post */}
                       <MenuItem className={classes.menuItem} onClick={this.handleClose}>
 
                         <Link to={{
@@ -128,13 +140,14 @@ class NavBar extends React.Component {
                         </Link>
 
                       </MenuItem>
+                      {/* Dashboard */}
                       <MenuItem className={classes.menuItem} onClick={this.handleClose}>
 
                         <Link to={{
                           pathname: `/en/Dashboard`,
                           state: {fromDashboard: false},
                         }} maintainScrollPosition={false} className={classes.menuListItem} >
-                          <Typography variant='subheading' className={classes.menuListItem} > <AccountBalance className={classes.icons} /> Profile </Typography>
+                          <Typography variant='subheading' className={classes.menuListItem} > <AccountBalance className={classes.icons} /> Dashboard </Typography>
                         </Link>
 
                       </MenuItem>
