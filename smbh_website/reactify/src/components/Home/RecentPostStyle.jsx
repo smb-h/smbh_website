@@ -34,9 +34,6 @@ const styles = theme => ({
     //   },
     },
 
-    avatar: {
-      backgroundColor: 'red',
-    },
 
     menuItem: {
         '&:focus': {

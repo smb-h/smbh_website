@@ -7,7 +7,6 @@ import CardHeader from '@material-ui/core/CardHeader'
 import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
-import Avatar from '@material-ui/core/Avatar'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
@@ -64,13 +63,14 @@ class RecentPosts extends React.Component {
         fetch(endpoint, lookupOptions)
         .then(function(response){
 
+            // console.log(response.json())
             return response.json()
 
         }).then(function(responseData){
             thisComp.setState({
-                postList: responseData
+                postList: responseData.results
             })
-            // console.log(responseData)
+            console.log(responseData)
 
         }).catch(function(error){
 
@@ -113,92 +113,87 @@ class RecentPosts extends React.Component {
                         return (
 
                             <Grid item xl={4} lg={4} md={6} sm={12} xs={12} className={classes.GridItem}>
-                            <Card className={classes.card}>
-                            <CardHeader
-                                avatar={
-                                <Avatar aria-label="Recipe" className={classes.avatar}>
-                                    R
-                                </Avatar>
-                                }
-                                action={
+                              <Card className={classes.card}>
+                                <CardHeader
+                                    action={
 
-                                <IconButton>
-                                    <IconButton
-                                    aria-label="More"
-                                    aria-owns={anchorEl ? 'long-menu' : null}
-                                    aria-haspopup="true"
-                                    onClick={this.handleClick}
-                                    >
-                                        <MoreVertIcon />
+                                    <IconButton>
+                                        <IconButton
+                                        aria-label="More"
+                                        aria-owns={anchorEl ? 'long-menu' : null}
+                                        aria-haspopup="true"
+                                        onClick={this.handleClick}
+                                        >
+                                            <MoreVertIcon />
+                                        </IconButton>
+                                        <Menu
+                                        open={Boolean(anchorEl)}
+                                        anchorEl={anchorEl}
+                                        onClose={this.handleClose}
+                                        anchorOrigin={{
+                                            vertical: 'bottom',
+                                            horizontal: 'right',
+                                        }}
+                                        transformOrigin={{
+                                            vertical: 'top',
+                                            horizontal: 'right',
+                                        }}
+                                        >
+                                            <MenuItem className={classes.menuItem} onClick={this.handleClose}>1</MenuItem>
+                                            <MenuItem className={classes.menuItem} onClick={this.handleClose}>2</MenuItem>
+                                            <MenuItem className={classes.menuItem} onClick={this.handleClose}>3</MenuItem>
+                                        </Menu>
+
                                     </IconButton>
-                                    <Menu
-                                    open={Boolean(anchorEl)}
-                                    anchorEl={anchorEl}
-                                    onClose={this.handleClose}
-                                    anchorOrigin={{
-                                        vertical: 'bottom',
-                                        horizontal: 'right',
-                                    }}
-                                    transformOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    >
-                                        <MenuItem className={classes.menuItem} onClick={this.handleClose}>1</MenuItem>
-                                        <MenuItem className={classes.menuItem} onClick={this.handleClose}>2</MenuItem>
-                                        <MenuItem className={classes.menuItem} onClick={this.handleClose}>3</MenuItem>
-                                    </Menu>
+                                    }
+                                    title={
+                                      <Link to={{
+                                        pathname: `Blog/${postItem.slug}`,
+                                        state: {fromDashboard: false},
+                                      }} maintainScrollPosition={false} >{postItem.title}</Link>
+                                    }
+                                    subheader={this.dateTimeConvertor(postItem.publish)}
+                                />
 
-                                </IconButton>
-                                }
-                                title={
-                                  <Link to={{
-                                    pathname: `Blog/${postItem.slug}`,
-                                    state: {fromDashboard: false},
-                                  }} maintainScrollPosition={false} >{postItem.title}</Link>
-                                }
-                                subheader={this.dateTimeConvertor(postItem.publish)}
-                            />
-
-                            <CardMedia
-                                className={classes.media}
-                                image={postItem.image}
-                                title={postItem.title}
-                            />
-                            <CardContent>
-                                <Typography component="p">
-                                    {postItem.summary}
-                                    <br />
-                                    <Typography variant="caption">
-                                        {postItem.author}
+                                <CardMedia
+                                    className={classes.media}
+                                    image={postItem.image}
+                                    title={postItem.title}
+                                />
+                                <CardContent>
+                                    <Typography component="p">
+                                        {postItem.summary}
+                                        <br />
+                                        <Typography variant="caption">
+                                            {postItem.author}
+                                        </Typography>
                                     </Typography>
-                                </Typography>
-                            </CardContent>
+                                </CardContent>
 
-                            <CardActions className={classes.actions} disableActionSpacing>
-                                <IconButton aria-label="Add to favorites">
-                                    <FavoriteIcon />
-                                </IconButton>
+                                <CardActions className={classes.actions} disableActionSpacing>
+                                    <IconButton aria-label="Add to favorites">
+                                        <FavoriteIcon />
+                                    </IconButton>
 
-                                <IconButton
-                                className={classnames(classes.Anime,
-                                {[classes.AnimeOn]: this.state.Animated,}
-                                )}
-                                onClick={this.handleShareClick}
-                                aria-label="Share">
-                                    <ShareIcon />
-                                </IconButton>
+                                    <IconButton
+                                    className={classnames(classes.Anime,
+                                    {[classes.AnimeOn]: this.state.Animated,}
+                                    )}
+                                    onClick={this.handleShareClick}
+                                    aria-label="Share">
+                                        <ShareIcon />
+                                    </IconButton>
 
-                                <Button className={classes.Right} variant='contained' color='primary'>
-                                  <Link to={{
-                                    pathname: `Blog/${postItem.slug}`,
-                                    state: {fromDashboard: false},
-                                  }} maintainScrollPosition={false} >Read more</Link>
-                                </Button>
+                                    <Button className={classes.Right} variant='contained' color='primary'>
+                                      <Link to={{
+                                        pathname: `Blog/${postItem.slug}`,
+                                        state: {fromDashboard: false},
+                                      }} maintainScrollPosition={false} >Read more</Link>
+                                    </Button>
 
-                            </CardActions>
+                                </CardActions>
 
-                            </Card>
+                              </Card>
                             </Grid>
 
                         )
