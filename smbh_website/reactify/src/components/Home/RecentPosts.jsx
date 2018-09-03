@@ -199,7 +199,7 @@ class RecentPosts extends React.Component {
                             </CardActions>
 
                             </Card>
-                        </Grid>
+                            </Grid>
 
                         )
                     }) : ''}
