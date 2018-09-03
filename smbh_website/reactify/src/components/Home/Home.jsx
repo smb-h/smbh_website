@@ -33,7 +33,7 @@ class Home extends Component {
         return (
                 <div>
                   {/* Intro */}
-                  <Parallax video={require("../../assets/video/home_coding.mp4")}>
+                  <Parallax video={require("../../assets/video/home_coding.mp4")} className={classes.windowSize}>
 
                     <div>
                       <Typography variant='display1' className={classes.intro}>
