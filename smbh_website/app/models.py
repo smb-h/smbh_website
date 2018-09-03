@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from time import strftime
 from django.urls import reverse
+from app.utils.Unique_Slug_Generator import unique_slug_generator
 # Tag App
 from taggit.managers import TaggableManager
 
@@ -65,15 +66,24 @@ class Profile(models.Model):
     def get_absolute_url(self):
         return reverse('App:gallery', kwargs={"slug": self.slug})
 
+    def save(self, *args, **kwargs):
+        self.slug = unique_slug_generator(self)
+        # Call the "real" save() method.
+        super().save(*args, **kwargs)
+        # do_something_else()
+
+
 
 # ContactMe
 class Contact (models.Model):
-    name = models.CharField(max_length=100, verbose_name=_('Name'))
+    first_name = models.CharField(max_length=100, verbose_name=_('First Name'))
+    last_name = models.CharField(max_length=100, verbose_name=_('Last Name'))
     email = models.EmailField(unique=False, verbose_name=_('Email'))
     phone = models.CharField(max_length=20, blank=True, null=True, verbose_name=_('Phone'))
     subject = models.CharField(max_length=100, verbose_name=_('Subject'))
     content = models.TextField(verbose_name=_('Content'))
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, verbose_name= _('Updated'))
+    checked = models.BooleanField(default = False, verbose_name = _('Checked'))
 
     class Meta:
         verbose_name = _('Contact')
@@ -81,5 +91,3 @@ class Contact (models.Model):
 
     def __str__(self):
         return self.subject
-
-

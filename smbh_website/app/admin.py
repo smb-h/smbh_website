@@ -86,7 +86,7 @@ class ProfileAdmin(admin.ModelAdmin):
         ('Time', {'fields': ['start', 'end']}),
         ('Utility', {'fields': ['url', 'slug', 'tags']}),
     ]
-    readonly_fields = ('updated',)
+    readonly_fields = ('updated', 'slug')
     # Display
     list_display = ('title', 'updated', 'url')
 
@@ -113,15 +113,15 @@ class ContactForm(forms.ModelForm):
 class ContactAdmin(admin.ModelAdmin):
     form = ContactForm
     fieldsets = [
-        ('Information', {'fields': ['subject', 'name', 'email', 'phone', 'content']}),
+        ('Information', {'fields': ['subject', 'first_name', 'last_name', 'email', 'phone', 'content']}),
+        ('Admin', {'fields': ['checked',]})
     ]
     readonly_fields = ('updated',)
     # Display
-    list_display = ('subject', 'email', 'name', 'updated')
+    list_display = ('subject', 'email', 'updated', 'checked')
 
     # Filter
     list_filter = ['email', 'updated']
 
     # Search
-    search_fields = ['subject', 'name', 'email', 'phone', 'content', 'updated']
-
+    search_fields = ['subject', 'first_name', 'last_name', 'email', 'phone', 'content', 'updated']
