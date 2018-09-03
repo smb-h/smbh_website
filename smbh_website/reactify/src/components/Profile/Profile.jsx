@@ -16,7 +16,7 @@ class Profile extends Component {
                 <div>
 
                   {/* Profile */}
-                  <Parallax image={require("../../assets/img/workspace.jpg")} >
+                  <Parallax image={require("../../assets/img/workspace.jpg")} style={{ minHeight: window.innerHeight, }} >
 
 
 
