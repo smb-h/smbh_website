@@ -4,6 +4,7 @@ const styles = theme => ({
     margin: '5%',
   },
   windowSize: {
+    // minHeight: window.innerHeight - document.getElementById('Navigation').clientHeight,
     minHeight: window.innerHeight,
   },
 

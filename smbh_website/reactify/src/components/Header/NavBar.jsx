@@ -52,7 +52,7 @@ class NavBar extends React.Component {
               brand={SmbhLogo}
               color="dark"
               rightLinks={
-                <List className={classes.list}>
+                <List className={classes.list} >
 
                   {/* Home */}
                   <ListItem className={classes.listItem}>

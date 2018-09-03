@@ -101,7 +101,7 @@ class Header extends React.Component {
     return (
       <BrowserRouter>
         <div>
-          <AppBar className={appBarClasses}>
+          <AppBar className={appBarClasses} id='Navigation'>
             <Toolbar className={classes.container}>
               {leftLinks !== undefined ? brandComponent : null}
               <div className={classes.flex}>
