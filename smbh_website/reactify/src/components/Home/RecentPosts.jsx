@@ -1,4 +1,5 @@
 import React from 'react'
+import $ from 'jquery'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import classnames from 'classnames'
@@ -70,7 +71,7 @@ class RecentPosts extends React.Component {
             thisComp.setState({
                 postList: responseData.results
             })
-            console.log(responseData)
+            // console.log(responseData)
 
         }).catch(function(error){
 
@@ -79,7 +80,19 @@ class RecentPosts extends React.Component {
         })
     }
 
+    htmlConvertor = (jString, targetID) => {
+      if (jString !== undefined) {
+        // alert(jString + ' ID: ' + targetID)
+        let rs = $( '#' + targetID )
+        let html = $.parseHTML(jString)
+        // alert(html)
+        // rs.append(html)
+        rs.html(html)
+      }
 
+    }
+
+    // Component Did Mount
     componentDidMount(){
         this.setState({
             postList: []
@@ -108,6 +121,10 @@ class RecentPosts extends React.Component {
             <Grid className={classes.GridRoot}>
                 <Grid container spacing={16} className={classes.GridContainer}>
 
+                  <Typography component="p" id='test'>
+                      {/* postItem.summary */}
+                      {this.htmlConvertor('<h2>AREEEEE</h2>', 'test')}
+                  </Typography>
 
                     {postList.length > 0 ? postList.slice(0, 3).map((postItem, index) => {
                         return (
@@ -161,13 +178,15 @@ class RecentPosts extends React.Component {
                                     title={postItem.title}
                                 />
                                 <CardContent>
-                                    <Typography component="p">
-                                        {postItem.summary}
-                                        <br />
-                                        <Typography variant="caption">
-                                            {postItem.author}
-                                        </Typography>
+                                    <Typography component="p" id={'sum' + index}>
+                                        {/* postItem.summary */}
+                                        {this.htmlConvertor(postItem.summary, 'sum' + index)}
                                     </Typography>
+                                    <br />
+                                    <Typography variant="caption">
+                                        {postItem.author}
+                                    </Typography>
+
                                 </CardContent>
 
                                 <CardActions className={classes.actions} disableActionSpacing>
