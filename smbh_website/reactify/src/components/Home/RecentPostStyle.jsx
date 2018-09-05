@@ -34,6 +34,10 @@ const styles = theme => ({
     //   },
     },
 
+    favStyle: {
+      margin: '2%',
+    },
+
 
     menuItem: {
         '&:focus': {
@@ -44,16 +48,6 @@ const styles = theme => ({
         },
     },
 
-    // Animate Icon
-    Anime: {
-        transform: 'rotate(0deg)',
-        transition: theme.transitions.create('transform', {
-            duration: theme.transitions.duration.longest,
-        }),
-    },
-    AnimeOn: {
-        transform: 'rotate(360deg)',
-    },
 
 
 

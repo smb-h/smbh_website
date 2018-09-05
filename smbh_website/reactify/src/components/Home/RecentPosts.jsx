@@ -15,9 +15,13 @@ import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import Grid from '@material-ui/core/Grid'
 import { Link } from 'react-router-dom'
-import FavoriteIcon from '@material-ui/icons/Favorite'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
+// Icons
 import ShareIcon from '@material-ui/icons/Share'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
+import Favorite from '@material-ui/icons/Favorite'
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder'
 // Style
 import styles from './RecentPostStyle'
 
@@ -29,26 +33,22 @@ class RecentPosts extends React.Component {
         super(props);
         this.state = {
         anchorEl: null,
-        Animated: false,
-        postList: []
+        postList: [],
         };
     }
 
-    handleShareClick = () => {
-        this.setState(state => ({ Animated: !state.Animated }));
-    };
-
+    // Menu Card handler
     handleClick = event => {
         this.setState({
             anchorEl: event.currentTarget,
-        });
-    };
-
+        })
+    }
+    // Menu Card handler
     handleClose = () => {
         this.setState({
             anchorEl: null,
-        });
-    };
+        })
+    }
 
     // Load Posts
     loadPosts = () => {
@@ -80,17 +80,6 @@ class RecentPosts extends React.Component {
         })
     }
 
-    htmlConvertor = (jString, targetID) => {
-      if (jString !== undefined) {
-        // alert(jString + ' ID: ' + targetID)
-        let rs = $( '#' + targetID )
-        let html = $.parseHTML(jString)
-        // alert(html)
-        // rs.append(html)
-        rs.html(html)
-      }
-
-    }
 
     // Component Did Mount
     componentDidMount(){
@@ -120,11 +109,6 @@ class RecentPosts extends React.Component {
         return (
             <Grid className={classes.GridRoot}>
                 <Grid container spacing={16} className={classes.GridContainer}>
-
-                  <Typography component="p" id='test'>
-                      {/* postItem.summary */}
-                      {this.htmlConvertor('<h2>AREEEEE</h2>', 'test')}
-                  </Typography>
 
                     {postList.length > 0 ? postList.slice(0, 3).map((postItem, index) => {
                         return (
@@ -178,9 +162,8 @@ class RecentPosts extends React.Component {
                                     title={postItem.title}
                                 />
                                 <CardContent>
-                                    <Typography component="p" id={'sum' + index}>
-                                        {/* postItem.summary */}
-                                        {this.htmlConvertor(postItem.summary, 'sum' + index)}
+                                    <Typography component="p" id={'postSummary' + index} >
+                                        <div className="Container" dangerouslySetInnerHTML={{__html:postItem.summary}}></div>
                                     </Typography>
                                     <br />
                                     <Typography variant="caption">
@@ -191,13 +174,16 @@ class RecentPosts extends React.Component {
 
                                 <CardActions className={classes.actions} disableActionSpacing>
                                     <IconButton aria-label="Add to favorites">
-                                        <FavoriteIcon />
+                                        <FormControlLabel
+                                          control={
+                                            <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
+                                          }
+                                          label=""
+                                          className={classes.favStyle}
+                                        />
                                     </IconButton>
 
                                     <IconButton
-                                    className={classnames(classes.Anime,
-                                    {[classes.AnimeOn]: this.state.Animated,}
-                                    )}
                                     onClick={this.handleShareClick}
                                     aria-label="Share">
                                         <ShareIcon />

@@ -53,6 +53,10 @@ expandOpen: {
   transform: 'rotate(180deg)',
 },
 
+favStyle: {
+  margin: '2%',
+},
+
 
 })
 

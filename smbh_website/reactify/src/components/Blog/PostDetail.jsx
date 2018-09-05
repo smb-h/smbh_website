@@ -190,7 +190,7 @@ class PostDetail extends Component {
                               {/* Content */}
                               <Typography variant="body1" className={classes.content}>
 
-                                {post.content}
+                                <div className="Container" dangerouslySetInnerHTML={{__html:post.content}}></div>
 
                               </Typography>
                               <br />

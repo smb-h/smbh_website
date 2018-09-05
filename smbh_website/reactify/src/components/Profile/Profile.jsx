@@ -22,7 +22,6 @@ import Collapse from '@material-ui/core/Collapse'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 // Icons
-import FavoriteIcon from '@material-ui/icons/Favorite'
 import ShareIcon from '@material-ui/icons/Share'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
@@ -233,16 +232,20 @@ class Profile extends Component {
                                 </CardContent>
                                 <CardActions className={classes.actions} disableActionSpacing>
 
+                                  <IconButton aria-label="Add to favorites">
                                     <FormControlLabel
                                       control={
                                         <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
                                       }
                                       label=""
+                                      className={classes.favStyle}
                                     />
+                                  </IconButton>
 
                                   <IconButton aria-label="Share">
                                     <ShareIcon />
                                   </IconButton>
+
                                   <IconButton
                                     className={classnames(classes.expand, {
                                       [classes.expandOpen]: this.state.expanded,
