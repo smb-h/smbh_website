@@ -5,8 +5,16 @@ const styles = theme => ({
     intro: {
         color: 'white',
         fontWeight: 700,
-        fontSize: '1em',
-    },
+        fontSize: '1.03em',
+        [theme.breakpoints.down("md")]: {
+          fontSize: '1.4em',
+        },
+        [theme.breakpoints.down("sm")]: {
+          fontSize: '2em',
+        },
+      },
+
+
     dividerStyle: {
       margin: '2%',
     },
@@ -31,6 +39,9 @@ const styles = theme => ({
         // background: "rgba(200, 200, 200, 0.2)",
         background: "inherit",
       },
+      [theme.breakpoints.down("md")]: {
+        fontSize: '2em',
+      },
       [theme.breakpoints.down("sm")]: {
         width: "calc(100% - 30px)",
         marginLeft: "15px",
@@ -39,8 +50,9 @@ const styles = theme => ({
         textAlign: "left",
         "& > span:first-child": {
           justifyContent: "flex-start"
-        }
-      }
+        },
+        fontSize: '2.7em',
+      },
     },
 
     windowSize: {

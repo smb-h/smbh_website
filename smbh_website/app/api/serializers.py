@@ -24,4 +24,26 @@ class ContactFormSerializer(ModelSerializer):
             'subject',
             'content',
         )
-        # read_only_fields = ()
+
+
+# Profile Serializer
+class ProfileSerializer(ModelSerializer):
+    tags = SerializerMethodField()
+    class Meta:
+        model = Profile
+        fields = (
+            'title',
+            'subTitle',
+            'image',
+            'start',
+            'end',
+            'content',
+            'url',
+            'tags',
+            'slug',
+            'updated',
+        )
+
+    def get_tags(self, obj):
+        tags = obj.tags.names()
+        return  (tags)

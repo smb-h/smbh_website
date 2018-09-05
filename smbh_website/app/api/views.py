@@ -1,5 +1,5 @@
 from app.models import Contact, Profile
-from .serializers import ContactFormSerializer
+from .serializers import ContactFormSerializer, ProfileSerializer
 # DRF
 from rest_framework.generics import (
                                         ListAPIView,
@@ -16,11 +16,19 @@ from rest_framework.permissions import (
                                             IsAuthenticatedOrReadOnly,
                                         )
 from app.api.permissions import IsOwnerOrReadOnly
+from app.api.pagination import PostPagination
 
 
-
-# Post Create
+# Contact Form
 class ContactFormAPIView(CreateAPIView):
     queryset = Contact.objects.all()
     serializer_class = ContactFormSerializer
     permission_classes = [AllowAny]
+
+
+# Profile
+class ProfileAPIView(ListAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+    permission_classes = [AllowAny]
+    pagination_class = PostPagination

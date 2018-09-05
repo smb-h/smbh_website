@@ -57,6 +57,9 @@ favStyle: {
   margin: '2%',
 },
 
+centerAlign: {
+  textAlign: 'center',
+},
 
 })
 

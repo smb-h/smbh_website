@@ -167,7 +167,7 @@ class PostList extends React.Component {
                                 state: {fromDashboard: false},
                               }} maintainScrollPosition={false} >{postItem.title}</Link>
                             </strong></h2>
-                            <p>{postItem.summary}</p>
+                            <div className="Container" dangerouslySetInnerHTML={{__html:postItem.summary}}></div>
                             <p>by <a><strong>{postItem.author}</strong></a>, {this.dateTimeConvertor(postItem.publish)}</p>
                             <div class='row'>
                                 {postItem.tags.length > 0 ? postItem.tags.map((tag, tagIndex) => {
@@ -249,7 +249,7 @@ class PostList extends React.Component {
                 }) : ''}
 
 
-                {/* Load more post button */}
+                {/* Pagination */}
                 { next !== null ? (<Button variant='flat' onClick={this.postPaginationNext} >Next</Button>) : '' }
                 { previous !== null ? (<Button variant='flat' onClick={this.postPaginationPrevious} >Previous</Button>) : '' }
 

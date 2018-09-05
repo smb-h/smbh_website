@@ -37,6 +37,11 @@ class Profile extends Component {
         super(props);
         this.state = {
           profileList: [],
+          // Result stuff
+          next: null,
+          previous: null,
+          count: 0,
+          // Other
           anchorEl: null,
           expanded: false,
         }
@@ -63,10 +68,82 @@ class Profile extends Component {
     }
 
 
+    // Load Gallery
+    loadGallery = (nextEndpoint) => {
+        let thisComp = this
+
+        let endpoint = '/API/Profile/'
+        // Basic pagination
+        if(nextEndpoint !== undefined) {
+          endpoint = nextEndpoint
+        }
+
+        let lookupOptions = {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json'
+            }
+        }
+
+        fetch(endpoint, lookupOptions)
+        .then(function(response){
+
+            // console.log(response)
+            return response.json()
+
+        }).then(function(responseData){
+            thisComp.setState({
+                profileList: responseData.results,
+                next: responseData.next,
+                previous: responseData.previous,
+                count: responseData.count,
+            })
+            // console.log(responseData)
+
+        }).catch(function(error){
+
+            console.log("error", error)
+
+        })
+    }
+
+
+    // Gallery Next Page
+    profilePaginationNext = () => {
+      const { next } = this.state
+      if (next !== null) {
+        this.loadGallery(next)
+      }
+    }
+
+    // Gallery Previous Page
+    profilePaginationPrevious = () => {
+      const { previous } = this.state
+      if (previous !== null) {
+        this.loadGallery(previous)
+      }
+    }
+
+
+    // Component Did Mount
+    componentDidMount(){
+        this.setState({
+            profileList: [],
+            // Result stuff
+            next: null,
+            previous: null,
+            count: 0,
+        })
+        this.loadGallery()
+    }
+
+
     render() {
         const { classes } = this.props
         const { anchorEl } = this.state
         const { profileList } = this.state
+        const { next } = this.state
+        const { previous } = this.state
 
         return (
                 <div>
@@ -78,7 +155,8 @@ class Profile extends Component {
                     <Grid className={classes.GridRoot}>
                       <Grid container spacing={24} className={classes.GridContainer}>
 
-                        {/* profileList.length > 0 ? profileList.map((profileItem, index) => {
+                        { profileList.length > 0 ? profileList.map((profileItem, index) => {
+
                           <Grid item xl={4} lg={4} md={6} sm={12} xs={12} className={classes.GridItem}>
                                 <Card>
                                   <CardHeader
@@ -112,32 +190,42 @@ class Profile extends Component {
 
                                       </IconButton>
                                     }
-                                    title="Shrimp and Chorizo Paella"
-                                    subheader="September 14, 2016"
+                                    title={profileItem.title}
+                                    subheader={profileItem.updated}
                                   />
                                   <CardMedia
                                     className={classes.media}
-                                    image="/static/images/cards/paella.jpg"
-                                    title="Contemplative Reptile"
+                                    image={profileItem.image}
+                                    title={profileItem.title}
                                   />
                                   <CardContent>
-                                    <Typography component="p">
-                                      This impressive paella is a perfect party dish and a fun meal to cook together with your
-                                      guests. Add 1 cup of frozen peas along with the mussels, if you like.
-                                    </Typography>
+                                    <div>
+                                      <Typography variant='Headline'>
+                                        { profileItem.subTitle ? (<div>{profileItem.subTitle}</div>) : ''}
+                                      </Typography>
+                                      <Typography variant='body2'>
+                                        { profileItem.start ? (<div>start: {profileItem.start}</div>) : ''}
+                                        { profileItem.end ? (<div>end: {profileItem.end}</div>) : ''}
+                                        { profileItem.url ? (<div>{profileItem.url}</div>) : ''}
+                                      </Typography>
+                                    </div>
                                   </CardContent>
                                   <CardActions className={classes.actions} disableActionSpacing>
 
+                                    <IconButton aria-label="Add to favorites">
                                       <FormControlLabel
                                         control={
                                           <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
                                         }
                                         label=""
+                                        className={classes.favStyle}
                                       />
+                                    </IconButton>
 
                                     <IconButton aria-label="Share">
                                       <ShareIcon />
                                     </IconButton>
+
                                     <IconButton
                                       className={classnames(classes.expand, {
                                         [classes.expandOpen]: this.state.expanded,
@@ -151,145 +239,37 @@ class Profile extends Component {
                                   </CardActions>
                                   <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
                                     <CardContent>
-                                      <Typography paragraph variant="body2">
-                                        Method:
+                                      <Typography paragraph variant="subheading">
+                                        <div className="Container" dangerouslySetInnerHTML={{__html: profileItem.content}}></div>
                                       </Typography>
-                                      <Typography paragraph>
-                                        Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-                                        minutes.
-                                      </Typography>
-                                      <Typography paragraph>
-                                        Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high
-                                        heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly
-                                        browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving
-                                        chicken and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion,
-                                        salt and pepper, and cook, stirring often until thickened and fragrant, about 10
-                                        minutes. Add saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-                                      </Typography>
-                                      <Typography paragraph>
-                                        Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
-                                        without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat
-                                        to medium-low, add reserved shrimp and mussels, tucking them down into the rice, and
-                                        cook again without stirring, until mussels have opened and rice is just tender, 5 to 7
-                                        minutes more. (Discard any mussels that don’t open.)
-                                      </Typography>
-                                      <Typography>
-                                        Set aside off of the heat to let rest for 10 minutes, and then serve.
-                                      </Typography>
+                                      <br />
+                                      {/* Tags */}
+                                      <Grid container>
+                                        <Grid item xs>
+                                          {/* Tags */}
+                                          <Grid container>
+                                            {profileItem.tags.map(tag => (
+                                                <Grid item xs><Typography variant="title" key={tag}>#{tag}</Typography></Grid>
+                                            ))}
+                                          </Grid>
+                                        </Grid>
+                                      </Grid>
+
                                     </CardContent>
                                   </Collapse>
                                 </Card>
                           </Grid>
-                            )
-                        }) : '' */}
 
-                        <Grid item xl={4} lg={4} md={6} sm={12} xs={12} className={classes.GridItem}>
-                              <Card>
-                                <CardHeader
-                                  action={
-                                    <IconButton>
-                                        <IconButton
-                                        aria-label="More"
-                                        aria-owns={anchorEl ? 'long-menu' : null}
-                                        aria-haspopup="true"
-                                        onClick={this.handleMenuClick}
-                                        >
-                                            <MoreVertIcon />
-                                        </IconButton>
-                                        <Menu
-                                        open={Boolean(anchorEl)}
-                                        anchorEl={anchorEl}
-                                        onClose={this.handleMenuClose}
-                                        anchorOrigin={{
-                                            vertical: 'bottom',
-                                            horizontal: 'right',
-                                        }}
-                                        transformOrigin={{
-                                            vertical: 'top',
-                                            horizontal: 'right',
-                                        }}
-                                        >
-                                            <MenuItem className={classes.menuItem} onClick={this.handleMenuClose}>1</MenuItem>
-                                            <MenuItem className={classes.menuItem} onClick={this.handleMenuClose}>2</MenuItem>
-                                            <MenuItem className={classes.menuItem} onClick={this.handleMenuClose}>3</MenuItem>
-                                        </Menu>
+                        }) : '' }
 
-                                    </IconButton>
-                                  }
-                                  title="Shrimp and Chorizo Paella"
-                                  subheader="September 14, 2016"
-                                />
-                                <CardMedia
-                                  className={classes.media}
-                                  image={require("../../assets/img/workspace.jpg")}
-                                  title="Contemplative Reptile"
-                                />
-                                <CardContent>
-                                  <Typography component="p">
-                                    This impressive paella is a perfect party dish and a fun meal to cook together with your
-                                    guests. Add 1 cup of frozen peas along with the mussels, if you like.
-                                  </Typography>
-                                </CardContent>
-                                <CardActions className={classes.actions} disableActionSpacing>
-
-                                  <IconButton aria-label="Add to favorites">
-                                    <FormControlLabel
-                                      control={
-                                        <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
-                                      }
-                                      label=""
-                                      className={classes.favStyle}
-                                    />
-                                  </IconButton>
-
-                                  <IconButton aria-label="Share">
-                                    <ShareIcon />
-                                  </IconButton>
-
-                                  <IconButton
-                                    className={classnames(classes.expand, {
-                                      [classes.expandOpen]: this.state.expanded,
-                                    })}
-                                    onClick={this.handleExpandClick}
-                                    aria-expanded={this.state.expanded}
-                                    aria-label="Show more"
-                                  >
-                                    <ExpandMoreIcon />
-                                  </IconButton>
-                                </CardActions>
-                                <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-                                  <CardContent>
-                                    <Typography paragraph variant="body2">
-                                      Method:
-                                    </Typography>
-                                    <Typography paragraph>
-                                      Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-                                      minutes.
-                                    </Typography>
-                                    <Typography paragraph>
-                                      Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high
-                                      heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly
-                                      browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving
-                                      chicken and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion,
-                                      salt and pepper, and cook, stirring often until thickened and fragrant, about 10
-                                      minutes. Add saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-                                    </Typography>
-                                    <Typography paragraph>
-                                      Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
-                                      without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat
-                                      to medium-low, add reserved shrimp and mussels, tucking them down into the rice, and
-                                      cook again without stirring, until mussels have opened and rice is just tender, 5 to 7
-                                      minutes more. (Discard any mussels that don’t open.)
-                                    </Typography>
-                                    <Typography>
-                                      Set aside off of the heat to let rest for 10 minutes, and then serve.
-                                    </Typography>
-                                  </CardContent>
-                                </Collapse>
-                              </Card>
-                        </Grid>
 
                       </Grid>
+
+                      {/* Pagination */}
+                      { next !== null ? (<Button variant='flat' onClick={this.profilePaginationNext} >Next</Button>) : '' }
+                      { previous !== null ? (<Button variant='flat' onClick={this.profilePaginationPrevious} >Previous</Button>) : '' }
+
+
                     </Grid>
 
                   </Parallax>
