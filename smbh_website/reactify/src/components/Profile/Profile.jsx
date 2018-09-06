@@ -43,10 +43,9 @@ class Profile extends Component {
           count: 0,
           // Other
           anchorEl: null,
-          expanded: false,
         }
     }
-
+    // Handle CheckBox
     handleChangeCheckBox = name => event => {
       this.setState({ [name]: event.target.checked });
     }
@@ -63,8 +62,17 @@ class Profile extends Component {
         });
     }
 
-    handleExpandClick = () => {
-      this.setState(state => ({ expanded: !state.expanded }));
+    // Handle Seprated Expand Click
+    handleSepratedExpandClick = (event) => {
+      const id = event.target.id
+      const value = event.target.value
+      // console.log('Item: ', id, value, 'To', !value)
+      this.setState({
+        // [id]: !value,
+        [id]: (value === 'true' ? false : true),
+      })
+      // console.log('Event: ', event.target)
+      // console.log('Item: ', id, this.state[id])
     }
 
 
@@ -144,6 +152,7 @@ class Profile extends Component {
         const { profileList } = this.state
         const { next } = this.state
         const { previous } = this.state
+        // console.log('Profile List: ', profileList)
 
         return (
                 <div>
@@ -156,110 +165,111 @@ class Profile extends Component {
                       <Grid container spacing={24} className={classes.GridContainer}>
 
                         { profileList.length > 0 ? profileList.map((profileItem, index) => {
+                          return (
+                            <Grid item xl={4} lg={4} md={6} sm={12} xs={12} className={classes.GridItem}>
 
-                          <Grid item xl={4} lg={4} md={6} sm={12} xs={12} className={classes.GridItem}>
-                                <Card>
-                                  <CardHeader
-                                    action={
-                                      <IconButton>
-                                          <IconButton
-                                          aria-label="More"
-                                          aria-owns={anchorEl ? 'long-menu' : null}
-                                          aria-haspopup="true"
-                                          onClick={this.handleMenuClick}
-                                          >
-                                              <MoreVertIcon />
-                                          </IconButton>
-                                          <Menu
-                                          open={Boolean(anchorEl)}
-                                          anchorEl={anchorEl}
-                                          onClose={this.handleMenuClose}
-                                          anchorOrigin={{
-                                              vertical: 'bottom',
-                                              horizontal: 'right',
-                                          }}
-                                          transformOrigin={{
-                                              vertical: 'top',
-                                              horizontal: 'right',
-                                          }}
-                                          >
-                                              <MenuItem className={classes.menuItem} onClick={this.handleMenuClose}>1</MenuItem>
-                                              <MenuItem className={classes.menuItem} onClick={this.handleMenuClose}>2</MenuItem>
-                                              <MenuItem className={classes.menuItem} onClick={this.handleMenuClose}>3</MenuItem>
-                                          </Menu>
+                                  <Card>
+                                    <CardHeader
+                                      action={
+                                        <div>
+                                            <IconButton
+                                              aria-label="More"
+                                              aria-owns={anchorEl ? 'long-menu' : null}
+                                              aria-haspopup="true"
+                                              onClick={this.handleMenuClick}
+                                            >
+                                                <MoreVertIcon />
+                                            </IconButton>
+                                            <Menu
+                                              open={Boolean(anchorEl)}
+                                              anchorEl={anchorEl}
+                                              onClose={this.handleMenuClose}
+                                              anchorOrigin={{
+                                                  vertical: 'bottom',
+                                                  horizontal: 'right',
+                                              }}
+                                              transformOrigin={{
+                                                  vertical: 'top',
+                                                  horizontal: 'right',
+                                              }}
+                                            >
+                                                <MenuItem className={classes.menuItem} onClick={this.handleMenuClose}>1</MenuItem>
+                                                <MenuItem className={classes.menuItem} onClick={this.handleMenuClose}>2</MenuItem>
+                                                <MenuItem className={classes.menuItem} onClick={this.handleMenuClose}>3</MenuItem>
+                                            </Menu>
 
-                                      </IconButton>
-                                    }
-                                    title={profileItem.title}
-                                    subheader={profileItem.updated}
-                                  />
-                                  <CardMedia
-                                    className={classes.media}
-                                    image={profileItem.image}
-                                    title={profileItem.title}
-                                  />
-                                  <CardContent>
-                                    <div>
-                                      <Typography variant='Headline'>
-                                        { profileItem.subTitle ? (<div>{profileItem.subTitle}</div>) : ''}
-                                      </Typography>
-                                      <Typography variant='body2'>
-                                        { profileItem.start ? (<div>start: {profileItem.start}</div>) : ''}
-                                        { profileItem.end ? (<div>end: {profileItem.end}</div>) : ''}
-                                        { profileItem.url ? (<div>{profileItem.url}</div>) : ''}
-                                      </Typography>
-                                    </div>
-                                  </CardContent>
-                                  <CardActions className={classes.actions} disableActionSpacing>
-
-                                    <IconButton aria-label="Add to favorites">
+                                        </div>
+                                      }
+                                      title={profileItem.title}
+                                      subheader={profileItem.updated}
+                                    />
+                                    <CardMedia
+                                      className={classes.media}
+                                      image={profileItem.image}
+                                      title={profileItem.title}
+                                    />
+                                    <CardContent>
+                                      <div>
+                                        <Typography variant='Headline'>
+                                          { profileItem.subTitle ? (<div>{profileItem.subTitle}</div>) : ''}
+                                        </Typography>
+                                        <Typography variant='body2'>
+                                          { profileItem.start ? (<div>start: {profileItem.start}</div>) : ''}
+                                          { profileItem.end ? (<div>end: {profileItem.end}</div>) : ''}
+                                          { profileItem.url ? (<div>{profileItem.url}</div>) : ''}
+                                        </Typography>
+                                      </div>
+                                    </CardContent>
+                                    <CardActions className={classes.actions} disableActionSpacing>
+                                      {/* Like */}
                                       <FormControlLabel
                                         control={
-                                          <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
+                                          <Checkbox onClick={this.handleChangeCheckBox} icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
                                         }
                                         label=""
                                         className={classes.favStyle}
                                       />
-                                    </IconButton>
-
-                                    <IconButton aria-label="Share">
-                                      <ShareIcon />
-                                    </IconButton>
-
-                                    <IconButton
-                                      className={classnames(classes.expand, {
-                                        [classes.expandOpen]: this.state.expanded,
-                                      })}
-                                      onClick={this.handleExpandClick}
-                                      aria-expanded={this.state.expanded}
-                                      aria-label="Show more"
-                                    >
-                                      <ExpandMoreIcon />
-                                    </IconButton>
-                                  </CardActions>
-                                  <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-                                    <CardContent>
-                                      <Typography paragraph variant="subheading">
-                                        <div className="Container" dangerouslySetInnerHTML={{__html: profileItem.content}}></div>
-                                      </Typography>
-                                      <br />
-                                      {/* Tags */}
-                                      <Grid container>
-                                        <Grid item xs>
-                                          {/* Tags */}
-                                          <Grid container>
-                                            {profileItem.tags.map(tag => (
-                                                <Grid item xs><Typography variant="title" key={tag}>#{tag}</Typography></Grid>
-                                            ))}
+                                      {/* Share */}
+                                      <IconButton aria-label="Share">
+                                        <ShareIcon />
+                                      </IconButton>
+                                      {/* Expand */}
+                                      <IconButton
+                                        id={'Expand' + index}
+                                        aria-label="Show more"
+                                        className={classnames(classes.expand, {
+                                          [classes.expandOpen]: this.state['Expand' + index],
+                                        })}
+                                        onClick={this.handleSepratedExpandClick}
+                                        aria-expanded={this.state['Expand' + index]}
+                                        value={this.state['Expand' + index]}
+                                      >
+                                        <ExpandMoreIcon />
+                                      </IconButton>
+                                    </CardActions>
+                                    <Collapse in={this.state['Expand' + index]} timeout="auto" unmountOnExit>
+                                      <CardContent>
+                                        <Typography paragraph variant="subheading">
+                                          <div className="Container" dangerouslySetInnerHTML={{__html: profileItem.content}}></div>
+                                        </Typography>
+                                        <br />
+                                        {/* Tags */}
+                                        <Grid container>
+                                          <Grid item xs>
+                                            {/* Tags */}
+                                            <Grid container>
+                                              {profileItem.tags.map(tag => (
+                                                  <Grid item xs><Typography variant="subheading" key={tag}>#{tag}</Typography></Grid>
+                                              ))}
+                                            </Grid>
                                           </Grid>
                                         </Grid>
-                                      </Grid>
 
-                                    </CardContent>
-                                  </Collapse>
-                                </Card>
-                          </Grid>
-
+                                      </CardContent>
+                                    </Collapse>
+                                  </Card>
+                            </Grid>
+                          )
                         }) : '' }
 
 

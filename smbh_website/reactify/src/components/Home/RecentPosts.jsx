@@ -118,7 +118,7 @@ class RecentPosts extends React.Component {
                                 <CardHeader
                                     action={
 
-                                    <IconButton>
+                                    <div>
                                         <IconButton
                                         aria-label="More"
                                         aria-owns={anchorEl ? 'long-menu' : null}
@@ -145,7 +145,7 @@ class RecentPosts extends React.Component {
                                             <MenuItem className={classes.menuItem} onClick={this.handleClose}>3</MenuItem>
                                         </Menu>
 
-                                    </IconButton>
+                                    </div>
                                     }
                                     title={
                                       <Link to={{
@@ -173,7 +173,7 @@ class RecentPosts extends React.Component {
                                 </CardContent>
 
                                 <CardActions className={classes.actions} disableActionSpacing>
-                                    <IconButton aria-label="Add to favorites">
+
                                         <FormControlLabel
                                           control={
                                             <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
@@ -181,7 +181,7 @@ class RecentPosts extends React.Component {
                                           label=""
                                           className={classes.favStyle}
                                         />
-                                    </IconButton>
+
 
                                     <IconButton
                                     onClick={this.handleShareClick}
