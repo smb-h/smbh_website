@@ -1,5 +1,7 @@
 import React from 'react'
+import BlogSearch from './Search'
 import PropTypes from 'prop-types'
+import 'whatwg-fetch'
 import { withStyles } from '@material-ui/core/styles'
 import classNames from "classnames"
 import { Link } from 'react-router-dom'
@@ -8,7 +10,13 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-import FavoriteIcon from '@material-ui/icons/Favorite'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
+import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
+// Icons
+import Favorite from '@material-ui/icons/Favorite'
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder'
 import ShareIcon from '@material-ui/icons/Share'
 // Style
 import styles from './PostListStyle'
@@ -22,7 +30,6 @@ class PostList extends React.Component {
         super(props);
         this.state = {
           anchorEl: null,
-          Animated: false,
           postList: [],
           // Result stuff
           next: null,
@@ -31,16 +38,13 @@ class PostList extends React.Component {
         }
     }
 
-    handleFavClick = () => {
-        this.setState(state => ({ Animated: !state.Animated }));
-    };
-
+    // Menu Click
     handleClick = event => {
         this.setState({
             anchorEl: event.currentTarget,
         });
     };
-
+    // Menu Close
     handleClose = () => {
         this.setState({
             anchorEl: null,
@@ -104,16 +108,9 @@ class PostList extends React.Component {
       }
     }
 
-    // Component Did Mount
-    componentDidMount(){
-        this.setState({
-            postList: [],
-            // Result stuff
-            next: null,
-            previous: null,
-            count: 0,
-        })
-        this.loadPosts()
+    // handle search result
+    handleSearchResult = (searchArray) => {
+      console.log(searchArray)
     }
 
     // Date Time Convertor
@@ -127,6 +124,18 @@ class PostList extends React.Component {
         return output
     }
 
+    // Component Did Mount
+    componentDidMount(){
+        this.setState({
+            postList: [],
+            // Result stuff
+            next: null,
+            previous: null,
+            count: 0,
+        })
+        this.loadPosts()
+    }
+
 
     render() {
         const { classes } = this.props
@@ -138,123 +147,137 @@ class PostList extends React.Component {
 
         return (
 
-            <section class="my-5 container">
+            <Grid className={classes.GridContainer}>
+
+              <Grid item xs={12}>
+                <BlogSearch result={this.handleSearchResult} />
+              </Grid>
+
 
                 {postList.length > 0 ? postList.map((postItem, index) => {
                     return (
 
-                    <div class="row jumbotron">
+                      <Grid item xs={12}>
+                        <Paper className={classes.paperRoot}>
 
+                          {/* Head */}
+                          <Grid className={classes.rightAlign}>
+                          </Grid>
+                          {/* main */}
+                          <Grid container spacing={16}>
 
-                        {index % 2 === 0 ? (
+                            {/* Image */}
+                            { index % 2 === 0 && postItem.image ? (
+                              <Grid item xl={5} lg={5} md={5} sm={12} xs={12}>
+                                <img alt={postItem.title} src={postItem.image} className={classes.paperImage} />
+                              </Grid>
+                            ) : ''}
+                            {/* Content */}
+                            <Grid item container direction="column" xl={7} lg={7} md={7} sm={12} xs={12}>
+                                {/* Title */}
+                                <Typography gutterBottom variant="display1" className={classes.title}>
+                                  <Link to={{
+                                    pathname: `${postItem.slug}`,
+                                    state: {fromDashboard: false},
+                                  }} maintainscrollposition={false} className={classes.linkStyle} >{postItem.title}</Link>
+                                </Typography>
+                                {/* Content */}
+                                <Typography gutterBottom variant='body1' className={classes.infoStyle}>
+                                  <div dangerouslySetInnerHTML={{__html:postItem.summary}}></div>
+                                </Typography>
+                                {/* Info */}
+                                <Typography gutterBottom variant='body1' className={classes.infoStyle}>
+                                  by <a><strong>{postItem.author}</strong></a>, {this.dateTimeConvertor(postItem.publish)}
+                                </Typography>
 
-                                <div class="col-lg-5">
+                                <Grid container spacing={24} className={classes.infoStyle}>
+                                    {postItem.tags.length > 0 ? postItem.tags.map((tag, tagIndex) => {
+                                        return (
+                                          <Grid item xs>
+                                            <a className={classes.tagMargin}>
+                                                <Typography gutterBottom variant='body2'>
+                                                    #{tag}
+                                                </Typography>
+                                            </a>
+                                          </Grid>
+                                        )
+                                    }) : ''}
+                                </Grid>
 
-                                    <div class="view overlay rounded z-depth-2 mb-lg-0 mb-4">
-                                        <img class="img-fluid" src={postItem.image} alt={postItem.title} />
-                                    </div>
+                            </Grid>
 
-                                </div>
+                            {/* Image */}
+                            { index % 2 !== 0 && postItem.image ? (
+                              <Grid item xl={5} lg={5} md={5} sm={12} xs={12}>
+                                <img alt={postItem.title} src={postItem.image} className={classes.paperImage} />
+                              </Grid>
+                            ) : ''}
 
-                        ) : ''}
+                          </Grid>
 
+                          {/* Footer */}
+                          <Grid className={classes.rightAlign}>
+                            {/* Like */}
+                            <FormControlLabel
+                              control={
+                                <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
+                              }
+                              label=""
+                              className={classes.favStyle}
+                            />
 
-                        <div class="col-lg-7">
-                            {/* Title */}
-                            <h2 class="font-weight-bold mb-3"><strong>
-                              <Link to={{
-                                pathname: `${postItem.slug}`,
-                                state: {fromDashboard: false},
-                              }} maintainScrollPosition={false} >{postItem.title}</Link>
-                            </strong></h2>
-                            <div className="Container" dangerouslySetInnerHTML={{__html:postItem.summary}}></div>
-                            <p>by <a><strong>{postItem.author}</strong></a>, {this.dateTimeConvertor(postItem.publish)}</p>
-                            <div class='row'>
-                                {postItem.tags.length > 0 ? postItem.tags.map((tag, tagIndex) => {
-                                    return (
-                                    <a href="#" className={classes.tagMargin}>
-                                        <h6 class="font-weight-bold mb-3">
-                                            #{tag}
-                                        </h6>
-                                    </a>
-                                    )
-                                }) : ''}
-                            </div>
-
-                            <IconButton
-                                className={classNames(classes.Anime,
-                                {[classes.AnimeOn]: this.state.Animated,}
-                                )}
-                                onClick={this.handleFavClick}
-                                aria-label="Favorite">
-                                <FavoriteIcon />
-                            </IconButton>
-
-                            <IconButton>
+                            {/* Share */}
+                            <span>
                                 <IconButton
-                                aria-label="Share"
-                                aria-owns={anchorEl ? 'long-menu' : null}
-                                aria-haspopup="true"
-                                onClick={this.handleClick}
+                                  aria-label="Share"
+                                  aria-owns={anchorEl ? 'long-menu' : null}
+                                  aria-haspopup="true"
+                                  onClick={this.handleClick}
+                                  className={classes.linkStyle}
                                 >
                                     <ShareIcon />
                                 </IconButton>
                                 <Menu
-                                open={Boolean(anchorEl)}
-                                anchorEl={anchorEl}
-                                onClose={this.handleClose}
-                                anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'right',
-                                }}
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
+                                  open={Boolean(anchorEl)}
+                                  anchorEl={anchorEl}
+                                  onClose={this.handleClose}
+                                  anchorOrigin={{
+                                      vertical: 'bottom',
+                                      horizontal: 'right',
+                                  }}
+                                  transformOrigin={{
+                                      vertical: 'top',
+                                      horizontal: 'right',
+                                  }}
                                 >
                                     <MenuItem className={classes.menuItem} onClick={this.handleClose}>1</MenuItem>
                                     <MenuItem className={classes.menuItem} onClick={this.handleClose}>2</MenuItem>
                                     <MenuItem className={classes.menuItem} onClick={this.handleClose}>3</MenuItem>
                                 </Menu>
 
-                            </IconButton>
-
-                            <Button className={classes.Right} variant='contained' color='primary'>
-                              <Link to={{
-                                pathname: `${postItem.slug}`,
-                                state: {fromDashboard: false},
-                              }} maintainScrollPosition={false} >Read more</Link>
-                            </Button>
-
-                        </div>
+                            </span>
 
 
-                        {index % 2 !== 0 ? (
+                            <Link to={{
+                              pathname: `${postItem.slug}`,
+                              state: {fromDashboard: false},
+                            }} maintainscrollposition={false} className={classes.Right} >
+                              <Button className={classNames(classes.linkStyle, classes.favStyle)} variant='contained' color='primary'>Read more</Button>
+                            </Link>
+                          </Grid>
 
-                                <div class="col-lg-5">
-
-                                    <div class="view overlay rounded z-depth-2 mb-lg-0 mb-4">
-                                        <img class="img-fluid" src={postItem.image} alt={postItem.title} />
-                                    </div>
-
-                                </div>
-
-                        ) : ''}
-
-
-                    </div>
-
+                        </Paper>
+                      </Grid>
 
                     )
                 }) : ''}
 
 
                 {/* Pagination */}
-                { next !== null ? (<Button variant='flat' onClick={this.postPaginationNext} >Next</Button>) : '' }
-                { previous !== null ? (<Button variant='flat' onClick={this.postPaginationPrevious} >Previous</Button>) : '' }
+                { next !== null ? (<Button className={classes.linkStyle} variant='flat' onClick={this.postPaginationNext} >Next</Button>) : '' }
+                { previous !== null ? (<Button className={classes.linkStyle} variant='flat' onClick={this.postPaginationPrevious} >Previous</Button>) : '' }
 
-
-            </section>
+            </Grid>
         );
     }
 }

@@ -32,12 +32,14 @@ const styles = theme => ({
       textTransform: "none",
       lineHeight: "20px",
       textDecoration: "none",
+      outline: 'none',
       transition: '0.4s',
       display: "inline-flex",
       "&:hover,&:focus": {
         color: "#ffd460",
         // background: "rgba(200, 200, 200, 0.2)",
         background: "inherit",
+        outline: 'none',
       },
       [theme.breakpoints.down("md")]: {
         fontSize: '2em',

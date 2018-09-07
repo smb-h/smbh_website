@@ -65,7 +65,7 @@ const headerStyle = theme => ({
     borderRadius: "3px",
     lineHeight: "20px",
     textDecoration: "none",
-
+    outline: 'none',
     margin: "0px",
     // margin: "1px",
 
@@ -76,6 +76,7 @@ const headerStyle = theme => ({
       color: "#ffd460",
       // background: "rgba(200, 200, 200, 0.2)",
       background: "inherit",
+      outline: 'none',
     },
     [theme.breakpoints.down("sm")]: {
       width: "calc(100% - 30px)",

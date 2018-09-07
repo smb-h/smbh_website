@@ -133,6 +133,18 @@ class Profile extends Component {
     }
 
 
+    // Date Time Convertor
+    dateTimeConvertor(dt){
+        let newDate = new Date(dt)
+        let output = newDate.toLocaleDateString() + newDate.toLocaleTimeString()
+        const options = {day: 'numeric', month: 'short', year: 'numeric',  hour: 'numeric', minute: 'numeric'}
+        // const language_code = navigator.language
+        const language_code = window.location.pathname.slice(1, 3);
+        output = newDate.toLocaleString(language_code, options)
+        return output
+    }
+
+
     // Component Did Mount
     componentDidMount(){
         this.setState({
@@ -177,6 +189,7 @@ class Profile extends Component {
                                               aria-owns={anchorEl ? 'long-menu' : null}
                                               aria-haspopup="true"
                                               onClick={this.handleMenuClick}
+                                              className={classes.linkStyle}
                                             >
                                                 <MoreVertIcon />
                                             </IconButton>
@@ -201,7 +214,7 @@ class Profile extends Component {
                                         </div>
                                       }
                                       title={profileItem.title}
-                                      subheader={profileItem.updated}
+                                      subheader={this.dateTimeConvertor(profileItem.updated)}
                                     />
                                     <CardMedia
                                       className={classes.media}
@@ -230,7 +243,7 @@ class Profile extends Component {
                                         className={classes.favStyle}
                                       />
                                       {/* Share */}
-                                      <IconButton aria-label="Share">
+                                      <IconButton aria-label="Share" className={classes.linkStyle}>
                                         <ShareIcon />
                                       </IconButton>
                                       {/* Expand */}
@@ -239,7 +252,7 @@ class Profile extends Component {
                                         aria-label="Show more"
                                         className={classnames(classes.expand, {
                                           [classes.expandOpen]: this.state['Expand' + index],
-                                        })}
+                                        }, classes.linkStyle)}
                                         onClick={this.handleSepratedExpandClick}
                                         aria-expanded={this.state['Expand' + index]}
                                         value={this.state['Expand' + index]}
@@ -259,7 +272,9 @@ class Profile extends Component {
                                             {/* Tags */}
                                             <Grid container>
                                               {profileItem.tags.map(tag => (
-                                                  <Grid item xs><Typography variant="subheading" key={tag}>#{tag}</Typography></Grid>
+                                                  <Grid item xs>
+                                                    <a><Typography variant="subheading" key={tag}>#{tag}</Typography></a>
+                                                  </Grid>
                                               ))}
                                             </Grid>
                                           </Grid>

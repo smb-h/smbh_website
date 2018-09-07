@@ -61,6 +61,16 @@ centerAlign: {
   textAlign: 'center',
 },
 
+linkStyle: {
+  textTransform: "none",
+  textDecoration: "none",
+  outline: 'none',
+  "&:hover,&:focus": {
+    outline: 'none',
+  }
+},
+
+
 })
 
 

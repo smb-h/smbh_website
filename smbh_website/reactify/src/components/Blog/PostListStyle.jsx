@@ -5,12 +5,8 @@ const styles = theme => ({
     tagMargin: {
         marginRight: 8,
     },
-    GridRoot: {
-      margin: '5%',
-      // margin: '5em',
-      padding: 'auto',
-    },
     GridContainer: {
+        margin: '5%',
         justify: 'center',
         alignItems: 'center',
         alignContent: 'center',
@@ -19,13 +15,6 @@ const styles = theme => ({
 
     },
 
-
-    card: {
-    //   maxWidth: 400,
-    },
-    actions: {
-      display: 'flex',
-    },
     Right: {
       marginLeft: 'auto',
     //   [theme.breakpoints.up('sm')]: {
@@ -42,20 +31,41 @@ const styles = theme => ({
         },
     },
 
-    cardPic: {
-      maxHeight: '300px !important'
+    favStyle: {
+      margin: '2%',
     },
 
-      // Animate Icon
-    Anime: {
-      transform: 'rotate(0deg)',
-      transition: theme.transitions.create('transform', {
-          duration: theme.transitions.duration.longest,
-      }),
+    linkStyle: {
+      textTransform: "none",
+      textDecoration: "none",
+      outline: 'none',
+      "&:hover,&:focus": {
+        outline: 'none',
+      }
     },
-    AnimeOn: {
-        transform: 'rotate(360deg)',
+
+    rightAlign: {
+      textAlign: 'right',
     },
+
+    paperRoot: {
+      padding: theme.spacing.unit * 3,
+      marginTop: theme.spacing.unit * 3,
+      marginBottom: theme.spacing.unit * 3,
+    },
+    paperImage: {
+      width: '100%',
+      // height: '100%',
+      borderRadius: '5%',
+    },
+    title: {
+      color: 'black',
+    },
+    infoStyle: {
+      padding: '3%',
+    },
+
+
 
   });
 

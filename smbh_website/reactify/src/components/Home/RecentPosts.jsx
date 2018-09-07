@@ -80,15 +80,7 @@ class RecentPosts extends React.Component {
         })
     }
 
-
-    // Component Did Mount
-    componentDidMount(){
-        this.setState({
-            postList: []
-        })
-        this.loadPosts()
-    }
-
+    // Date Time Convertor
     dateTimeConvertor(dt){
         let newDate = new Date(dt)
         let output = newDate.toLocaleDateString() + newDate.toLocaleTimeString()
@@ -98,6 +90,15 @@ class RecentPosts extends React.Component {
         output = newDate.toLocaleString(language_code, options)
         return output
     }
+
+    // Component Did Mount
+    componentDidMount(){
+        this.setState({
+            postList: []
+        })
+        this.loadPosts()
+    }
+
 
     render() {
         const { classes } = this.props
@@ -120,25 +121,26 @@ class RecentPosts extends React.Component {
 
                                     <div>
                                         <IconButton
-                                        aria-label="More"
-                                        aria-owns={anchorEl ? 'long-menu' : null}
-                                        aria-haspopup="true"
-                                        onClick={this.handleClick}
+                                          aria-label="More"
+                                          aria-owns={anchorEl ? 'long-menu' : null}
+                                          aria-haspopup="true"
+                                          onClick={this.handleClick}
+                                          className={classes.linkStyle}
                                         >
                                             <MoreVertIcon />
                                         </IconButton>
                                         <Menu
-                                        open={Boolean(anchorEl)}
-                                        anchorEl={anchorEl}
-                                        onClose={this.handleClose}
-                                        anchorOrigin={{
-                                            vertical: 'bottom',
-                                            horizontal: 'right',
-                                        }}
-                                        transformOrigin={{
-                                            vertical: 'top',
-                                            horizontal: 'right',
-                                        }}
+                                          open={Boolean(anchorEl)}
+                                          anchorEl={anchorEl}
+                                          onClose={this.handleClose}
+                                          anchorOrigin={{
+                                              vertical: 'bottom',
+                                              horizontal: 'right',
+                                          }}
+                                          transformOrigin={{
+                                              vertical: 'top',
+                                              horizontal: 'right',
+                                          }}
                                         >
                                             <MenuItem className={classes.menuItem} onClick={this.handleClose}>1</MenuItem>
                                             <MenuItem className={classes.menuItem} onClick={this.handleClose}>2</MenuItem>
@@ -151,7 +153,7 @@ class RecentPosts extends React.Component {
                                       <Link to={{
                                         pathname: `Blog/${postItem.slug}`,
                                         state: {fromDashboard: false},
-                                      }} maintainScrollPosition={false} >{postItem.title}</Link>
+                                      }} maintainScrollPosition={false} className={classes.linkStyle} >{postItem.title}</Link>
                                     }
                                     subheader={this.dateTimeConvertor(postItem.publish)}
                                 />
@@ -174,27 +176,30 @@ class RecentPosts extends React.Component {
 
                                 <CardActions className={classes.actions} disableActionSpacing>
 
-                                        <FormControlLabel
-                                          control={
-                                            <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
-                                          }
-                                          label=""
-                                          className={classes.favStyle}
-                                        />
+                                      <FormControlLabel
+                                        control={
+                                          <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
+                                        }
+                                        label=""
+                                        className={classes.favStyle}
+                                      />
 
 
                                     <IconButton
-                                    onClick={this.handleShareClick}
-                                    aria-label="Share">
+                                      onClick={this.handleShareClick}
+                                      aria-label="Share"
+                                      className={classes.linkStyle}
+                                    >
                                         <ShareIcon />
                                     </IconButton>
 
-                                    <Button className={classes.Right} variant='contained' color='primary'>
-                                      <Link to={{
-                                        pathname: `Blog/${postItem.slug}`,
-                                        state: {fromDashboard: false},
-                                      }} maintainScrollPosition={false} >Read more</Link>
-                                    </Button>
+                                    {/* Read More */}
+                                    <Link to={{
+                                      pathname: `Blog/${postItem.slug}`,
+                                      state: {fromDashboard: false},
+                                    }} maintainScrollPosition={false} className={classes.Right} >
+                                      <Button className={classes.linkStyle} variant='contained' color='primary'>Read more</Button>
+                                    </Link>
 
                                 </CardActions>
 

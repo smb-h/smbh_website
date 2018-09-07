@@ -93,6 +93,16 @@ class PostDetail extends Component {
     })
   }
 
+  // Date Time Convertor
+  dateTimeConvertor(dt){
+      let newDate = new Date(dt)
+      let output = newDate.toLocaleDateString() + newDate.toLocaleTimeString()
+      const options = {day: 'numeric', month: 'short', year: 'numeric',  hour: 'numeric', minute: 'numeric'}
+      // const language_code = navigator.language
+      const language_code = window.location.pathname.slice(1, 3);
+      output = newDate.toLocaleString(language_code, options)
+      return output
+  }
 
   // Component Will Mount
   // componentWillMount() {
@@ -167,13 +177,14 @@ class PostDetail extends Component {
 
                     <main>
                       {/* Image */}
-                      <CardMedia
-                        component="img"
-                        className={classes.media}
-                        image={post.image}
-                        title={post.title}
-                      />
-
+                      { post.image ? (
+                        <CardMedia
+                          component="img"
+                          className={classes.media}
+                          image={post.image}
+                          title={post.title}
+                        />
+                      ) : ''}
 
                       <Grid container spacing={40} className={classes.mainGrid}>
                           {/* Main content */}
@@ -184,7 +195,7 @@ class PostDetail extends Component {
                               </Typography>
                               <br />
                               <Typography variant='caption'>
-                                <span style={{ marginRight: '3%' }}> {post.publish} </span> <span style={{ marginRight: '3%' }}> {post.author} </span> {post.read_time} Read
+                                <span style={{ marginRight: '3%' }}> {this.dateTimeConvertor(post.publish)} </span> <span style={{ marginRight: '3%' }}> {post.author} </span> {post.read_time} Read
                               </Typography>
                               <Divider className={classes.dividerStyle} />
                               {/* Content */}
@@ -201,7 +212,9 @@ class PostDetail extends Component {
                                   {/* Tags */}
                                   <Grid container>
                                     {post.tags.map(tag => (
-                                        <Grid item xs><Typography variant="title" className={classes.content} key={tag}>#{tag}</Typography></Grid>
+                                        <Grid item xs>
+                                          <a><Typography variant="title" className={classes.content} key={tag}>#{tag}</Typography></a>
+                                        </Grid>
                                     ))}
                                   </Grid>
                                 </Grid>
@@ -210,11 +223,12 @@ class PostDetail extends Component {
 
                               <Grid container>
                                 <Grid item xs>
-                                  { post.isOwner === true ? (<div>
+                                  {/* update post */}
+                                  {/* post.isOwner === true ? (<div>
 
                                   <PostForm post={post} postItemUpdated={this.handlePostItemUpdated} />
 
-                                  </div>) : '' }
+                                  </div>) : '' */}
                                 </Grid>
                               </Grid>
 
