@@ -110,7 +110,15 @@ class PostList extends React.Component {
 
     // handle search result
     handleSearchResult = (searchArray) => {
-      console.log(searchArray)
+      if (searchArray){
+        this.setState({
+          postList: searchArray[0],
+          // Result stuff
+          next: searchArray[1],
+          previous: searchArray[2],
+          count: searchArray[3],
+        })
+      }
     }
 
     // Date Time Convertor
@@ -123,6 +131,7 @@ class PostList extends React.Component {
         output = newDate.toLocaleString(language_code, options)
         return output
     }
+
 
     // Component Did Mount
     componentDidMount(){

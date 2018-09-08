@@ -73,7 +73,7 @@ class BlogSearch extends Component {
             // Manage Response Data
             const searchArray = [responseData.results, responseData.next, responseData.previous, responseData.count]
             // console.log(responseData)
-            thisComp.props.result = searchArray
+            thisComp.props.result(searchArray)
 
         }).catch(function(error){
 
