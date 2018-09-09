@@ -70,6 +70,12 @@ linkStyle: {
   }
 },
 
+expandIconStyle: {
+  padding: 0,
+  margin: 0,
+  fontSize: '.7em'
+}
+
 
 })
 

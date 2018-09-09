@@ -229,7 +229,7 @@ class Profile extends Component {
                                         <Typography variant='body2'>
                                           { profileItem.start ? (<div>start: {profileItem.start}</div>) : ''}
                                           { profileItem.end ? (<div>end: {profileItem.end}</div>) : ''}
-                                          { profileItem.url ? (<div>{profileItem.url}</div>) : ''}
+                                          { profileItem.url ? (<div><a href={profileItem.url} target='_blank'>{profileItem.url}</a></div>) : ''}
                                         </Typography>
                                       </div>
                                     </CardContent>
@@ -257,8 +257,10 @@ class Profile extends Component {
                                         aria-expanded={this.state['Expand' + index]}
                                         value={this.state['Expand' + index]}
                                       >
-                                        <ExpandMoreIcon />
+                                        {/* <ExpandMoreIcon onClick={(e) => {alert('HI')}} /> */}
+                                        <ExpandMoreIcon className={classes.expandIconStyle} />
                                       </IconButton>
+
                                     </CardActions>
                                     <Collapse in={this.state['Expand' + index]} timeout="auto" unmountOnExit>
                                       <CardContent>
