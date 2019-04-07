@@ -1,7 +1,6 @@
 import React from "react"
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import Header from "./Header"
-import navBarStyle from "./NavBarStyle"
 import withStyles from "@material-ui/core/styles/withStyles"
 import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
@@ -18,8 +17,8 @@ import Cafe from '@material-ui/icons/LocalCafeRounded'
 import SpeakerNotes from '@material-ui/icons/SpeakerNotesRounded'
 import Add from '@material-ui/icons/AddRounded'
 import AccountBalance from '@material-ui/icons/AccountBalanceWallet'
-
-
+// Style
+import navBarStyle from "./NavBarStyle"
 
 
 
@@ -56,44 +55,45 @@ class NavBar extends React.Component {
 
                   {/* Home */}
                   <ListItem className={classes.listItem}>
-                    <Link to={{
+                    <NavLink to={{
                       pathname: `/en/`,
                       state: {fromDashboard: false},
-                    }} maintainScrollPosition={false} className={classes.navLink} >
+                    }} maintainScrollPosition={false} activeClassName='navActive' className={classes.navLink} >
                       <Typography variant='subheading' className={classes.navLink}> <Home className={classes.icons} /> Home </Typography>
-                    </Link>
+                    </NavLink>
                   </ListItem>
 
                   {/* Blog */}
                   <ListItem className={classes.listItem}>
-                      <Link to={{
+                      <NavLink to={{
                         pathname: `/en/Blog/`,
                         state: {fromDashboard: false},
-                      }} maintainScrollPosition={false} className={classes.navLink} >
+                      }} maintainScrollPosition={false} activeClassName='navActive' className={classes.navLink} >
                         <Typography variant='subheading' className={classes.navLink}> <Cafe className={classes.icons} /> Blog </Typography>
-                      </Link>
+                      </NavLink>
                   </ListItem>
 
                   {/* Profile */}
                   <ListItem className={classes.listItem}>
-                  <Link to={{
+                  <NavLink to={{
                     pathname: `/en/Profile/`,
                     state: {fromDashboard: false},
-                  }} maintainScrollPosition={false} className={classes.navLink} >
+                  }} maintainScrollPosition={false} activeClassName='navActive' className={classes.navLink} >
                     <Typography variant='subheading' className={classes.navLink}> <AccountBox className={classes.icons} /> Profile </Typography>
-                  </Link>
+                  </NavLink>
                   </ListItem>
 
                   {/* Contact */}
                   <ListItem className={classes.listItem}>
-                  <Link to={{
+                  <NavLink to={{
                     pathname: `/en/Contact`,
                     state: {fromDashboard: false},
-                  }} maintainScrollPosition={false} className={classes.navLink} >
+                  }} maintainScrollPosition={false} activeClassName='navActive' className={classes.navLink} >
                     <Typography variant='subheading' className={classes.navLink}> <SpeakerNotes className={classes.icons} /> Contact </Typography>
-                  </Link>
+                  </NavLink>
                   </ListItem>
 
+                  {/*
                   <ListItem className={classes.listItem}>
                       <IconButton
                       className={classes.navLink}
@@ -118,41 +118,42 @@ class NavBar extends React.Component {
                       open={open}
                       onClose={this.handleClose}
                     >
-                      {/* Authentication */}
+
                       <MenuItem className={classes.menuItem} onClick={this.handleClose}>
 
-                        <Link to={{
+                        <NavLink to={{
                           pathname: `/en/Accounts/Authentication`,
                           state: {fromDashboard: false},
-                        }} maintainScrollPosition={false} className={classes.menuListItem} >
+                        }} maintainScrollPosition={false} activeClassName='navActive' className={classes.menuListItem} >
                           <Typography variant='subheading' className={classes.menuListItem} > Authentication </Typography>
-                        </Link>
+                        </NavLink>
 
                       </MenuItem>
-                      {/* New Post */}
+
                       <MenuItem className={classes.menuItem} onClick={this.handleClose}>
 
-                        <Link to={{
+                        <NavLink to={{
                           pathname: `/en/Blog/Create`,
                           state: {fromDashboard: false},
-                        }} maintainScrollPosition={false} className={classes.menuListItem} >
+                        }} maintainScrollPosition={false} activeClassName='navActive' className={classes.menuListItem} >
                           <Typography variant='subheading' className={classes.menuListItem}> <Add className={classes.icons} /> New Post </Typography>
-                        </Link>
+                        </NavLink>
 
                       </MenuItem>
-                      {/* Dashboard */}
+
                       <MenuItem className={classes.menuItem} onClick={this.handleClose}>
 
-                        <Link to={{
-                          pathname: `/en/Dashboard`,
+                        <NavLink to={{
+                          pathname: `/en/Dashboard/`,
                           state: {fromDashboard: false},
-                        }} maintainScrollPosition={false} className={classes.menuListItem} >
+                        }} maintainScrollPosition={false} activeClassName='navActive' className={classes.menuListItem} >
                           <Typography variant='subheading' className={classes.menuListItem} > <AccountBalance className={classes.icons} /> Dashboard </Typography>
-                        </Link>
+                        </NavLink>
 
                       </MenuItem>
                     </Menu>
                   </ListItem>
+                  */}
 
                 </List>
               }

@@ -11,8 +11,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle'
 import LoginCard from './Login'
 import Registration from './Registration'
 // Style
+import { theme } from '../Base/BaseStyle'
 import styles from './AuthTabsStyle'
-import { theme } from '../Base/Base'
 
 
 

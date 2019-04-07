@@ -12,6 +12,7 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='react.html')),
     path('Profile/', TemplateView.as_view(template_name='react.html')),
     path('Contact', TemplateView.as_view(template_name='react.html')),
+    path('Dashboard/', TemplateView.as_view(template_name='react.html')),
 
     # DRF API
     path('API/', include('app.api.urls')),

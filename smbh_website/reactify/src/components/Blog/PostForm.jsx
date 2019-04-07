@@ -38,8 +38,8 @@ import PropTypes from 'prop-types'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import withStyles from '@material-ui/core/styles/withStyles'
 import Parallax from '../Parallax/Parallax'
-import { theme } from '../Base/Base'
 // Style
+import { theme } from '../Base/BaseStyle'
 import styles from './PostFormStyle'
 
 

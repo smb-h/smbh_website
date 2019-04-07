@@ -3,6 +3,7 @@ import React from "react";
 import { BrowserRouter, Route, Link, Redirect, Switch } from 'react-router-dom'
 // Main Components
 import AuthTabs from '../Authentication/AuthTabs'
+import Dashboard from '../Dashboard/Dashboard'
 import Home from '../Home/Home'
 import Blog from '../Blog/Blog'
 import PostDetail from '../Blog/PostDetail'
@@ -147,6 +148,7 @@ class Header extends React.Component {
         {/* Switch */}
           <Switch>
             <Route exact path='/en/Accounts/Authentication' component={AuthTabs} />
+            <Route exact path='/en/Dashboard/' component={Dashboard} />
             <Route exact path='/en/' component={Home} />
             <Route exact path='/en/Blog/' component={Blog} />
             <Route exact path='/en/Blog/Create' component={PostForm} />

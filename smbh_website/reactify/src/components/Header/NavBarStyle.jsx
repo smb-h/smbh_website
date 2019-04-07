@@ -1,5 +1,6 @@
 import { container, title } from "../../assets/jss/material-kit-react"
 import tooltip from "../../assets/jss/tooltipsStyle"
+import { theme } from '../Base/BaseStyle'
 
 
 const navBarStyle = theme => ({
@@ -230,7 +231,10 @@ const navBarStyle = theme => ({
     }
   },
 
-
+  // Active Class
+  navActive: {
+    color: theme.palette.secondary,
+  },
 
 });
 

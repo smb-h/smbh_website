@@ -173,8 +173,8 @@ class Profile extends Component {
                   <Parallax image={require("../../assets/img/workspace.jpg")} className={classes.windowSize} >
 
 
-                    <Grid className={classes.GridRoot}>
-                      <Grid container spacing={24} className={classes.GridContainer}>
+                    <Grid className={classes.gridRoot}>
+                      <Grid container spacing={24} className={classes.gridContainer}>
 
                         { profileList.length > 0 ? profileList.map((profileItem, index) => {
                           return (

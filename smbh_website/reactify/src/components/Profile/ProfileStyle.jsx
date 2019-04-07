@@ -1,19 +1,16 @@
 
 const styles = theme => ({
-  gridContainer: {
-    margin: '5%',
-  },
   windowSize: {
     // minHeight: window.innerHeight - document.getElementById('Navigation').clientHeight,
     minHeight: window.innerHeight,
   },
 
-  GridRoot: {
+  gridRoot: {
       margin: '5%',
       // margin: '5em',
       padding: 'auto',
   },
-  GridContainer: {
+  gridContainer: {
       justify: 'center',
       alignItems: 'center',
       alignContent: 'center',

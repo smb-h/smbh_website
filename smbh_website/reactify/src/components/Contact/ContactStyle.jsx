@@ -1,7 +1,14 @@
 
 const styles = theme => ({
+  gridRoot: {
+      margin: '5%',
+      // margin: '5em',
+      padding: 'auto',
+  },
   gridContainer: {
-    margin: '5%',
+      justify: 'center',
+      alignItems: 'center',
+      alignContent: 'center',
   },
   GridItem: {
     // marginRight: '5%',

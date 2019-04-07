@@ -157,7 +157,8 @@ class Contact extends Component {
                   </Snackbar>
 
                   {/* main section */}
-                  <Grid container spacing={24} className={classes.gridContainer}>
+                  <Grid className={classes.gridRoot}>
+                    <Grid container spacing={24} className={classes.gridContainer}>
 
                   {/* Form */}
                     <Grid item xl={6} lg={6} md={6} sm={12} xs={12} className={classes.GridItem}>
@@ -261,6 +262,7 @@ class Contact extends Component {
                       </Card>
                     </Grid>
 
+                    </Grid>
                   </Grid>
 
 

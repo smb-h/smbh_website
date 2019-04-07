@@ -34,6 +34,7 @@ class Parallax extends React.Component {
   //     transform: "translate3d(0," + windowScrollTop + "px,0)"
   //   });
   // }
+
   render() {
     const {
       classes,

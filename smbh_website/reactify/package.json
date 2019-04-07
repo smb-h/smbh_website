@@ -15,6 +15,7 @@
     "react-router-dom": "^4.3.1",
     "react-slick": "^0.23.1",
     "react-swipeable-views": "^0.12.16",
+    "recharts": "^1.2.0",
     "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {

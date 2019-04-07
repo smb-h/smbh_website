@@ -82,7 +82,7 @@ class ProfileForm(forms.ModelForm):
 class ProfileAdmin(admin.ModelAdmin):
     form = ProfileForm
     fieldsets = [
-        ('Information', {'fields': ['title', 'subTitle', 'Image', 'content']}),
+        ('Information', {'fields': ['title', 'subTitle', 'image', 'content']}),
         ('Time', {'fields': ['start', 'end']}),
         ('Utility', {'fields': ['url', 'slug', 'tags']}),
     ]
