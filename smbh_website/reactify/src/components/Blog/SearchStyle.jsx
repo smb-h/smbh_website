@@ -9,7 +9,8 @@ const styles = theme => ({
       justify: 'center',
       alignItems: 'center',
       alignContent: 'center',
-      verticalAlign: 'middle'
+      verticalAlign: 'middle',
+      textAlign: 'center'
     },
 
     linkStyle: {

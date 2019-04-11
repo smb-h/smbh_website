@@ -14,10 +14,20 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
+import Card from '@material-ui/core/Card'
+import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
+import CardMedia from '@material-ui/core/CardMedia'
+import CardHeader from '@material-ui/core/CardHeader'
+import Avatar from '@material-ui/core/Avatar'
+import classnames from 'classnames'
 // Icons
 import Favorite from '@material-ui/icons/Favorite'
+import MoreVertIcon from '@material-ui/icons/MoreVert'
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder'
 import ShareIcon from '@material-ui/icons/Share'
+import FavoriteIcon from '@material-ui/icons/Favorite'
+import HistoryIcon from '@material-ui/icons/History'
 // Style
 import styles from './PostListStyle'
 
@@ -38,18 +48,22 @@ class PostList extends React.Component {
         }
     }
 
-    // Menu Click
-    handleClick = event => {
+    // Handle CheckBox
+    handleChangeCheckBox = name => event => {
+      this.setState({ [name]: event.target.checked });
+    }
+    // Menu Icon Click
+    handleMenuClick = event => {
         this.setState({
             anchorEl: event.currentTarget,
         });
-    };
-    // Menu Close
-    handleClose = () => {
+    }
+    // Menu Icon Close
+    handleMenuClose = () => {
         this.setState({
             anchorEl: null,
         });
-    };
+    }
 
     // Load Posts
     loadPosts = (nextEndpoint) => {
@@ -166,116 +180,180 @@ class PostList extends React.Component {
                 {postList.length > 0 ? postList.map((postItem, index) => {
                     return (
 
-                      <Grid item xs={12}>
-                        <Paper className={classes.paperRoot}>
+                      // <Grid item xs={12}>
+                      //   <Paper className={classes.paperRoot}>
 
-                          {/* Head */}
-                          <Grid className={classes.rightAlign}>
-                          </Grid>
-                          {/* main */}
-                          <Grid container spacing={16}>
+                      //     {/* Head */}
+                      //     <Grid className={classes.rightAlign}>
+                      //     </Grid>
+                      //     {/* main */}
+                      //     <Grid container spacing={16}>
 
-                            {/* Image */}
-                            { index % 2 === 0 && postItem.image ? (
-                              <Grid item xl={5} lg={5} md={5} sm={12} xs={12}>
-                                <img alt={postItem.title} src={postItem.image} className={classes.paperImage} />
-                              </Grid>
-                            ) : ''}
-                            {/* Content */}
-                            <Grid item container direction="column" xl={7} lg={7} md={7} sm={12} xs={12}>
-                                {/* Title */}
-                                <Typography gutterBottom variant="display1" className={classes.title}>
-                                  <Link to={{
-                                    pathname: `${postItem.slug}`,
-                                    state: {fromDashboard: false},
-                                  }} maintainscrollposition={false} className={classes.linkStyle} >{postItem.title}</Link>
-                                </Typography>
-                                {/* Content */}
-                                <Typography gutterBottom variant='body1' className={classes.infoStyle}>
-                                  <div dangerouslySetInnerHTML={{__html:postItem.summary}}></div>
-                                </Typography>
-                                {/* Info */}
-                                <Typography gutterBottom variant='body1' className={classes.infoStyle}>
-                                  by <a><strong>{postItem.author}</strong></a>, {this.dateTimeConvertor(postItem.publish)}
-                                </Typography>
+                      //       {/* Image */}
+                      //       { index % 2 === 0 && postItem.image ? (
+                      //         <Grid item xl={5} lg={5} md={5} sm={12} xs={12}>
+                      //           <img alt={postItem.title} src={postItem.image} className={classes.paperImage} />
+                      //         </Grid>
+                      //       ) : ''}
+                      //       {/* Content */}
+                      //       <Grid item container direction="column" xl={7} lg={7} md={7} sm={12} xs={12}>
+                      //           {/* Title */}
+                      //           <Typography gutterBottom variant="display1" className={classes.title + ' ' + classes.midAlign}>
+                      //             <Link to={{
+                      //               pathname: `${postItem.slug}`,
+                      //               state: {fromDashboard: false},
+                      //             }} maintainscrollposition={false} className={classes.linkStyle} >{postItem.title}</Link>
+                      //           </Typography>
+                      //           {/* Content */}
+                      //           <Typography gutterBottom variant='body1' className={classes.infoStyle}>
+                      //             <div dangerouslySetInnerHTML={{__html:postItem.summary}}></div>
+                      //           </Typography>
+                      //           {/* Info */}
+                      //           <Typography gutterBottom variant='body1' className={classes.infoStyle}>
+                      //             by <a><strong>{postItem.author}</strong></a>, {this.dateTimeConvertor(postItem.publish)}
+                      //           </Typography>
 
-                                <Grid container spacing={24} className={classes.infoStyle}>
-                                    {postItem.tags.length > 0 ? postItem.tags.map((tag, tagIndex) => {
-                                        return (
-                                          <Grid item xs>
-                                            <a className={classes.tagMargin}>
-                                                <Typography gutterBottom variant='body2'>
-                                                    #{tag}
-                                                </Typography>
-                                            </a>
-                                          </Grid>
-                                        )
-                                    }) : ''}
-                                </Grid>
+                      //           <Grid container spacing={24} className={classes.infoStyle}>
+                      //               {postItem.tags.length > 0 ? postItem.tags.map((tag, tagIndex) => {
+                      //                   return (
+                      //                     <Grid item xs>
+                      //                       <a className={classes.tagMargin}>
+                      //                           <Typography gutterBottom variant='body2'>
+                      //                               #{tag}
+                      //                           </Typography>
+                      //                       </a>
+                      //                     </Grid>
+                      //                   )
+                      //               }) : ''}
+                      //           </Grid>
 
-                            </Grid>
+                      //       </Grid>
 
-                            {/* Image */}
-                            { index % 2 !== 0 && postItem.image ? (
-                              <Grid item xl={5} lg={5} md={5} sm={12} xs={12}>
-                                <img alt={postItem.title} src={postItem.image} className={classes.paperImage} />
-                              </Grid>
-                            ) : ''}
+                      //       {/* Image */}
+                      //       { index % 2 !== 0 && postItem.image ? (
+                      //         <Grid item xl={5} lg={5} md={5} sm={12} xs={12}>
+                      //           <img alt={postItem.title} src={postItem.image} className={classes.paperImage} />
+                      //         </Grid>
+                      //       ) : ''}
 
-                          </Grid>
+                      //     </Grid>
 
-                          {/* Footer */}
-                          <Grid className={classes.rightAlign}>
-                            {/* Like */}
-                            <FormControlLabel
-                              control={
-                                <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
-                              }
-                              label=""
-                              className={classes.favStyle}
-                            />
+                      //     {/* Footer */}
+                      //     <Grid className={classes.rightAlign}>
+                      //       {/* Like */}
+                      //       <FormControlLabel
+                      //         control={
+                      //           <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
+                      //         }
+                      //         label=""
+                      //         className={classes.favStyle}
+                      //       />
 
-                            {/* Share */}
-                            <span>
-                                <IconButton
-                                  aria-label="Share"
-                                  aria-owns={anchorEl ? 'long-menu' : null}
-                                  aria-haspopup="true"
-                                  onClick={this.handleClick}
-                                  className={classes.linkStyle}
-                                >
-                                    <ShareIcon />
-                                </IconButton>
-                                <Menu
-                                  open={Boolean(anchorEl)}
-                                  anchorEl={anchorEl}
-                                  onClose={this.handleClose}
-                                  anchorOrigin={{
-                                      vertical: 'bottom',
-                                      horizontal: 'right',
-                                  }}
-                                  transformOrigin={{
-                                      vertical: 'top',
-                                      horizontal: 'right',
-                                  }}
-                                >
-                                    <MenuItem className={classes.menuItem} onClick={this.handleClose}>1</MenuItem>
-                                    <MenuItem className={classes.menuItem} onClick={this.handleClose}>2</MenuItem>
-                                    <MenuItem className={classes.menuItem} onClick={this.handleClose}>3</MenuItem>
-                                </Menu>
+                      //       {/* Share */}
+                      //       <span>
+                      //           <IconButton
+                      //             aria-label="Share"
+                      //             aria-owns={anchorEl ? 'long-menu' : null}
+                      //             aria-haspopup="true"
+                      //             onClick={this.handleClick}
+                      //             className={classes.linkStyle}
+                      //           >
+                      //               <ShareIcon />
+                      //           </IconButton>
+                      //           <Menu
+                      //             open={Boolean(anchorEl)}
+                      //             anchorEl={anchorEl}
+                      //             onClose={this.handleClose}
+                      //             anchorOrigin={{
+                      //                 vertical: 'bottom',
+                      //                 horizontal: 'right',
+                      //             }}
+                      //             transformOrigin={{
+                      //                 vertical: 'top',
+                      //                 horizontal: 'right',
+                      //             }}
+                      //           >
+                      //               <MenuItem className={classes.menuItem} onClick={this.handleClose}>1</MenuItem>
+                      //               <MenuItem className={classes.menuItem} onClick={this.handleClose}>2</MenuItem>
+                      //               <MenuItem className={classes.menuItem} onClick={this.handleClose}>3</MenuItem>
+                      //           </Menu>
 
-                            </span>
+                      //       </span>
 
 
+                      //       <Link to={{
+                      //         pathname: `${postItem.slug}`,
+                      //         state: {fromDashboard: false},
+                      //       }} maintainscrollposition={false} className={classes.Right} >
+                      //         <Button className={classNames(classes.linkStyle, classes.favStyle)} variant='contained' color='primary'>Read more</Button>
+                      //       </Link>
+                      //     </Grid>
+
+                      //   </Paper>
+                      // </Grid>
+
+                      <Grid item xl={4} lg={4} md={6} sm={12} xs={12} className={classes.GridItem}>
+                        <Card>
+                        <CardMedia
+                          className={classes.media}
+                          image={postItem.image}
+                          title={postItem.title}
+                        />
+                        <CardContent>
+                          <div>
+                            {/* Title */}
+                            <Typography gutterBottom variant="display1" className={classes.title + ' ' + classes.midAlign}>
                             <Link to={{
-                              pathname: `${postItem.slug}`,
-                              state: {fromDashboard: false},
+                                pathname: `${postItem.slug}`,
+                                state: {fromDashboard: false},
+                              }} maintainscrollposition={false} className={classes.linkStyle} >{postItem.title}</Link>
+                              </Typography>
+                              {/* Publish */}
+                              <Typography variant="caption" gutterBottom align="left">
+                                <HistoryIcon /> <span className={classes.superAlign}>{postItem.publish}</span>
+                              </Typography>
+                              {/* Content */}
+                              <Typography gutterBottom variant='body1' className={classes.infoStyle}>
+                                <div dangerouslySetInnerHTML={{__html:postItem.summary}}></div>
+                              </Typography>
+                              {/* Tags */}
+                              <Grid container spacing={24} className={classes.infoStyle}>
+                                  {postItem.tags.length > 0 ? postItem.tags.map((tag, tagIndex) => {
+                                      return (
+                                        <Grid item xs>
+                                          <a className={classes.tagMargin}>
+                                              <Typography gutterBottom variant='body2'>
+                                                  #{tag}
+                                              </Typography>
+                                          </a>
+                                        </Grid>
+                                      )
+                                  }) : ''}
+                              </Grid>
+                          </div>
+                        </CardContent>
+                        <CardActions className={classes.actions} disableActionSpacing>
+                          {/* Like */}
+                          <FormControlLabel
+                            control={
+                              <Checkbox onClick={this.handleChangeCheckBox} icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
+                            }
+                            label=""
+                            className={classes.favStyle}
+                          />
+                          {/* Share */}
+                          {/* <IconButton aria-label="Share" className={classes.linkStyle}>
+                            <ShareIcon />
+                          </IconButton> */}
+                          <Link to={{
+                            pathname: `${postItem.slug}`,
+                            state: {fromDashboard: false},
                             }} maintainscrollposition={false} className={classes.Right} >
-                              <Button className={classNames(classes.linkStyle, classes.favStyle)} variant='contained' color='primary'>Read more</Button>
-                            </Link>
-                          </Grid>
+                            <Button className={classNames(classes.linkStyle, classes.favStyle)} variant='contained' color='primary'>Read<span>&nbsp;</span>more</Button>
+                          </Link>
 
-                        </Paper>
+                        </CardActions>
+                      </Card>
                       </Grid>
 
                     )

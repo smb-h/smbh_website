@@ -243,9 +243,9 @@ class Profile extends Component {
                                         className={classes.favStyle}
                                       />
                                       {/* Share */}
-                                      <IconButton aria-label="Share" className={classes.linkStyle}>
+                                      {/* <IconButton aria-label="Share" className={classes.linkStyle}>
                                         <ShareIcon />
-                                      </IconButton>
+                                      </IconButton> */}
                                       {/* Expand */}
                                       <IconButton
                                         id={'Expand' + index}

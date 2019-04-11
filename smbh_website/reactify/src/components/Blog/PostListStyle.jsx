@@ -12,7 +12,7 @@ const styles = theme => ({
         alignContent: 'center',
     },
     GridItem: {
-
+      marginTop: '2%',
     },
 
     Right: {
@@ -47,22 +47,55 @@ const styles = theme => ({
     rightAlign: {
       textAlign: 'right',
     },
+    midAlign: {
+      textAlign: 'center',
+    },
 
     paperRoot: {
       padding: theme.spacing.unit * 3,
+      paddingBot: theme.spacing.unit,
       marginTop: theme.spacing.unit * 3,
       marginBottom: theme.spacing.unit * 3,
     },
     paperImage: {
+      maxHeight: 300,
       width: '100%',
-      // height: '100%',
-      borderRadius: '5%',
+      // height: '3rem',
+      borderRadius: '1%',
     },
     title: {
       color: 'black',
     },
     infoStyle: {
       padding: '3%',
+    },
+
+    // Cards
+    card: {
+      maxWidth: 400,
+    },
+    media: {
+      height: 0,
+      paddingTop: '56.25%', // 16:9
+    },
+    actions: {
+      display: 'flex',
+    },
+    expand: {
+      transform: 'rotate(0deg)',
+      marginLeft: 'auto',
+      transition: theme.transitions.create('transform', {
+        duration: theme.transitions.duration.shortest,
+      }),
+    },
+    expandOpen: {
+      transform: 'rotate(180deg)',
+    },
+    avatar: {
+      backgroundColor: 'red',
+    },
+    superAlign: {
+      verticalAlign: 'super',
     },
 
 

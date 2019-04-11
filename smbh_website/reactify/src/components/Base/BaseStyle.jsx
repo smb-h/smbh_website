@@ -7,6 +7,7 @@ export const theme = createMuiTheme({
       bg: {
         main: '#364f6b',
       },
+      // Gold
       primary: {
           // light: will be calculated from palette.primary.main,
           main: '#ffd460',

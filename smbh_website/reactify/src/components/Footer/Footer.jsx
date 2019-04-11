@@ -54,7 +54,9 @@ function Footer({ ...props }) {
                 &copy; {1900 + new Date().getYear()}{" "}
 
                 <a href='/en/' className={classes.typoStyle}>
-                  SMB<span>&nbsp;</span><span className={classes.SmbhLogo}>H</span><span>&nbsp;</span>
+                  <span className={classes.logo} style={{fontWeight: 'bold',}}>
+                    SMB<span>&nbsp;</span><span className={classes.SmbhLogo}>H</span><span>&nbsp;</span>
+                  </span>
                 </a>
 
               </Typography>

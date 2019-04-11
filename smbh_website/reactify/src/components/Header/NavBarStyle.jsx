@@ -69,6 +69,9 @@ const navBarStyle = theme => ({
   HColor: {
     color: 'royalblue!important',
   },
+  logo: {
+    fontWeight: 'bold',
+  },
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   list: {
     fontSize: "14px",
