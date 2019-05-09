@@ -1,0 +1,146 @@
+{% extends "base_smbh.html" %} {% block title %} Blog | smbh {% endblock title %}
+<!---->
+{% load static %} {% load i18n %} {% block style %}
+
+<!-- Customize -->
+<link rel="stylesheet" href="{% static 'css/blog.css' %}" /> {% endblock style %} {% block script %}
+
+<!-- Customize -->
+<script src="{% static 'js/blog.js' %}"></script>
+
+{% endblock script %} {% block content %}
+
+
+<div class="gallery-parallax Image-Container" id="Blog-image">
+
+  <!-- NAVBAR -->
+  <div class="container" id="NavContainer">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+      {% comment %} Brand {% endcomment %}
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link waves-light" href="{% url 'App:home' %}">{% trans 'Home' %}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-light" href="#Services">{% trans 'Services' %}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-light active" href="{% url 'Blog:blog' %}">{% trans 'Blog' %}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-light" href="{% url 'App:profile' %}">{% trans 'Profile' %}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-light" href="{% url 'App:contact' %}">{% trans 'Contact' %}</a>
+          </li>
+        </ul>
+
+        {% comment %}
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form> {% endcomment %}
+
+
+      </div>
+
+      <strong>
+        <a class="navbar-brand mr-auto" href="{% url 'App:home' %}">SMB
+          <span style="color:royalblue;">H</span>
+        </a>
+      </strong>
+
+    </nav>
+  </div>
+
+
+  {% block PostList %}
+
+  <!-- Blog -->
+  <section class="my-5 container" id="blog">
+
+    <!-- heading -->
+
+    {% comment %}
+    <div id="blog-head">
+      <h2 class="h1-responsive font-weight-bold text-center my-5"></h2>
+      <!-- description -->
+      <p class="text-center w-responsive mx-auto mb-5"></p>
+    </div> {% endcomment %}
+
+
+    <!-- Posts -->
+    {% for post in Posts %} {% include "blog_post.html" %} {% endfor %}
+
+  </section>
+
+
+  <!-- Pagination -->
+  {% if is_paginated %}
+  <!--Pagination -->
+  <nav aria-label="pagination" id="Paginator">
+    <ul class="pagination pg-teal mb-0 justify-content-center">
+
+      {% if page_obj.has_previous %}
+      <!--First-->
+      <li class="page-item">
+        <a class="page-link" href="?page=1">First</a>
+      </li>
+      <!--Arrow left-->
+      <li class="page-item">
+        <a class="page-link" aria-label="Previous" href="?page={{ page_obj.previous_page_number }}">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      {% endif %} {% for count in paginator.page_range %} {% if page_obj.number == count %}
+      <li class="page-item active">
+        <a class="page-link">{{ count }}
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      {% else %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ count }}">{{ count }}</a>
+      </li>
+      {% endif %} {% endfor %} {% if page_obj.has_next %}
+      <!--Arrow left-->
+      <li class="page-item">
+        <a class="page-link" aria-label="Previous" href="?page={{ page_obj.next_page_number }}">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+      <!--Last-->
+      <li class="page-item">
+        <a class="page-link" href="?page=1">Last</a>
+      </li>
+      {% endif %}
+
+    </ul>
+  </nav>
+  {% endif %} {% endblock PostList %}
+
+
+
+</div>
+
+<!-- Footer -->
+{% block footer %}
+
+<div class="page-footer font-small unique-color-dark pt-0" id="footer">
+  <div class="footer-copyright py-3 text-center" style="color : #969696;">
+    <span>© <span class="footer_logo">SMB </span>
+      <span style="color:royalblue;">H</span>
+      All rights reserved.
+    </span>
+  </div>
+</div>
+
+{% endblock footer %} {% endblock content %}

@@ -1,0 +1,52 @@
+<div class="col col-lg-4 col-md-4 col-sm-12">
+  <div class="card mb-4 Transition wow fadeInUp" data-wow-delay="0.1s">
+    <!-- Featured image -->
+    {% if post.image %}
+    <div class="Image-Container view overlay">
+      <img class="card-img-top Transition" src="{{ post.image.url }}" alt="{{ post.title }}" />
+      <!-- Wave Mask -->
+      <a>
+        <div class="mask rgba-white-slight"></div>
+      </a>
+
+    </div>
+    {% endif %}
+
+    <div class="card-body">
+      <center>
+      <h3 class="card-title">
+        <strong>{{ post.title }}</strong>
+      </h3>
+    </center>
+      <p class="card-text">{{ post.content | safe | truncatechars:512 }}</p>
+      <div style="float: right;">
+        <!-- Read more button -->
+        <a class="btn btn-indigo btn-md" href="{% url 'Blog:post' slug=post.slug %}">Read more</a>
+      </div>
+
+      <!-- Tags -->
+      <div class="row">
+        {% for tag in post.tags.names %}
+        <a style="color: royalblue;">
+          <h6 class="font-weight-bold mb-3">
+
+            <i class="pr-3">
+              #{{ tag }}
+            </i>
+
+          </h6>
+        </a>
+        {% endfor %}
+      </div>
+
+    </div>
+    <div class="card-footer">
+      <small class="text-muted">
+        <p>By
+          <a>
+            <strong> {{ post.author }} </strong>
+          </a>, {{ post.publish }}</p>
+      </small>
+    </div>
+  </div>
+</div>

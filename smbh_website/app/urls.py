@@ -1,7 +1,10 @@
 from django.urls import path, include, re_path
 
-from django.views.generic import TemplateView
-
+from .views import (HomeView,
+    ContactView,
+    ProfileView,
+    ProfileDetailView
+	)
 
 # NameSpace
 app_name = 'App'
@@ -9,10 +12,14 @@ app_name = 'App'
 
 urlpatterns = [
 
-    path('', TemplateView.as_view(template_name='react.html')),
-    path('Profile/', TemplateView.as_view(template_name='react.html')),
-    path('Contact', TemplateView.as_view(template_name='react.html')),
-    path('Dashboard/', TemplateView.as_view(template_name='react.html')),
+    path('', HomeView.as_view(), name='home'),
+    path('Contact', ContactView.as_view(), name='contact'),
+    path('Profile', ProfileView.as_view(), name='profile'),
+    path('Profile/<slug:slug>', ProfileDetailView.as_view(), name='gallery'),
+    # path('Login', auth_views.login, {'template_name': 'registration/Login.html'}, name='login'),
+    # path('Login', auth_views.LoginView, name='login'),
+    # path('Logout', auth_views.LogoutView, name='logout'),
+
 
     # DRF API
     path('API/', include('app.api.urls')),

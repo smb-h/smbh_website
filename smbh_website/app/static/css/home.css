@@ -1,0 +1,174 @@
+/* ======================== Images =============================== */
+
+/* Image Centeral Button */
+
+.Image-Container:hover .Image-Center {
+    opacity: 1;
+}
+
+/* Card Top Image */
+
+.card-img-top:hover {
+    opacity: 0.5;
+}
+
+/* =================================== Navbar =============================== */
+
+#NavContainer {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    z-index: 8;
+}
+
+
+/* =========================== Intro ============================== */
+
+/* Intro Image */
+
+#intro-image, #intro-video {
+    /* background-image: url("../../media/Site/Images/Artifical\ Galaxy.jpg"); */
+    position: relative;
+    vertical-align: middle;
+    border-radius: 10px;
+    background-color: rgb(0, 0, 0);
+    opacity: .5;
+}
+
+/* Intro Content */
+
+#intro-content {
+    text-align: center;
+    color: white;
+    font-size: 2.5em;
+    position: absolute;
+    /* margin: 15% 20%; */
+    width: 70%;
+    vertical-align: middle;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.85;
+    z-index: 2;
+}
+
+/* Intro Content Hover event */
+
+#intro-content:hover {
+    opacity: 1;
+}
+
+#intro-content #def {
+    font-size: 0.75em;
+}
+/* #name , #def {
+    color: royalblue;
+    color: rgb(255, 154, 71) !important;
+} */
+
+/* Social */
+
+.social {
+    /* text-align: center; */
+    /* font-size: 0.75em; */
+}
+
+.social a {
+    /* margin: 20px; */
+    font-size: 3em;
+    /* Remove Underline from logo */
+    text-decoration: none;
+    z-index: 7;
+    margin: 10px;
+}
+/* @media (max-width:1000px) {
+    #mpshBck002 {
+        font-size: 20px;
+    }
+} */
+
+.social a:hover {
+    color: rgb(255, 154, 71);
+}
+/* Navbar Direction */
+/* nav {
+    direction: ltr !important;
+} */
+
+/* =================================== body ===================================== */
+
+/* html {
+    overflow: auto;
+} */
+
+/* About Me */
+
+/* #AboutMe {
+    position: relative;
+    padding: 50px;
+    vertical-align: middle;
+    margin: 50px;
+}
+
+#AboutMe-Head {
+    text-align: center;
+}
+
+#AboutMe-Head h1,
+.AboutMe-Item h1 {
+    color: royalblue;
+}
+
+.AboutMe-Item {
+    margin: auto;
+    text-align: center;
+}
+
+#AboutMe-Items-Container {
+    align-items: center;
+} */
+
+/* Blog */
+
+#Blog {
+    margin: 50px;
+    /* opacity: 0; */
+}
+
+/* Card Handler */
+
+.card:hover {
+    box-shadow: 4px 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Services Carousel */
+
+#Services {
+    background-image: url("../media/Background-66.jpg");
+    /* background-image: url('{% static "../media/Site/Images/Background-66.jpg" %}'); */
+    position: relative;
+    vertical-align: middle;
+    border-radius: 10px;
+    color: beige;
+}
+
+#Services-Head {
+    padding: 50px;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: bold;
+}
+
+.Services-Item {
+    text-align: center;
+    margin-top: 70px;
+}
+
+#Services-Head p,
+.Services-Item h1 {
+    color: royalblue;
+}
+
+/* ========================== Footer ============================== */
+
+/* ========================== utilities ============================== */

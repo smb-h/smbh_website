@@ -28,7 +28,7 @@ class ContactForm(forms.ModelForm):
 
     class Meta:
         model = Contact
-        fields = ('name', 'email', 'phone', 'subject', 'content')
+        fields = ('first_name', 'last_name', 'email', 'phone', 'subject', 'content')
         widgets = {
             # 'content': forms.Textarea(attrs={'cols': 140, 'rows': 60}),
         }

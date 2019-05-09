@@ -33,7 +33,7 @@ class HomeView(View):
 
 # Contact Mixin
 class ContactMixin:
-    fields = ['name', 'email', 'phone', 'subject', 'content']
+    fields = ['first_name', 'last_name', 'email', 'phone', 'subject', 'content']
 
     @property
     def success_msg(self):

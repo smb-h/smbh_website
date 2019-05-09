@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+{% load static %} {% load analytical %} {% comment %} Translition {% endcomment %} {% load i18n %} {% load compress %}
+
+
+<head>
+  {% analytical_head_top %}
+  <!-- Meta Block -->
+  {% block meta %}
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"> {% endblock meta %}
+
+  <!-- Title Block -->
+  <title>
+    {% block title %} {% endblock title %}
+  </title>
+
+  <!-- Style Block -->
+  <link rel="shortcut icon" type="image/png" href="{% static 'media/6_logo.png' %}" />
+
+  <!-- Google Material Design Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9"
+    crossorigin="anonymous"> {% compress css file base %}
+  <!-- BootStrap -->
+  <link rel="stylesheet" href="{% static 'Packages/MDB/css/bootstrap.min.css' %}" />
+  <!-- MDB -->
+  <link rel="stylesheet" href="{% static 'Packages/MDB/css//mdb.min.css' %}" />
+
+  <!-- Customize -->
+  <link rel="stylesheet" href="{% static 'css/base.css' %}" /> {% endcompress %} {% block style %} {% endblock style %}
+
+  <!-- Script Block -->
+  {% compress js file base %}
+  <!-- JQuery -->
+  <script src="{% static 'Packages/jquery-3.3.1.min.js' %}"></script>
+
+  <!-- BootStrap -->
+  <script src="{% static 'Packages/MDB/js/bootstrap.min.js' %}" defer></script>
+  <!-- Bootstrap tooltips -->
+  <script src="{% static 'Packages/MDB/js/popper.min.js' %}" defer></script>
+  <!-- MDB  -->
+  <script type="text/javascript" src="{% static 'Packages/MDB/js/mdb.min.js' %}" defer></script>
+  <!-- Customize -->
+  <script src="{% static 'js/base.js' %}"></script>
+  {% endcompress %} {% block script %} {% endblock script %} {% analytical_head_bottom %}
+</head>
+
+{% if LANGUAGE_CODE == 'en' %}
+<script>
+  $("body").css({
+    "direction": "ltr",
+    "text-align": "left",
+  });
+  $("html").css({
+    "direction": "ltr",
+    "text-align": "left",
+  });
+
+</script>
+{% else %}
+<script>
+  $("body").css({
+    "direction": "rtl",
+    "text-align": "right",
+  });
+  $("html").css({
+    "direction": "rtl",
+    "text-align": "right",
+  });
+
+</script>
+{% endif %}
+
+<body>
+  {% analytical_body_top %}
+
+  <!-- BTP -->
+  <button class="btn-info btn-floating rounded-circle btn-sm" onclick="BackToTop()" id="btp-btn" title="Go To Top">
+    <i class="material-icons">keyboard_arrow_up</i>
+  </button>
+
+  <!-- Language Btn -->
+  {% comment %} {% if request.LANGUAGE_CODE == 'fa' %}
+  <a class="btn-info btn-floating btn-sm LB btn-grad rounded-circle" id="EN" href="/en/" title="English">
+    <i>En</i>
+  </a>
+  {% else %}
+  <a class="btn-info btn-floating btn-sm LB btn-grad rounded-circle" id="FA" href="/fa/" title="Persian">
+    <i>Fa</i>
+  </a>
+  {% endif %} {% endcomment %}
+
+
+  <!-- Header -->
+  <header>
+    {% block header %} {% endblock header %}
+  </header>
+
+
+  <!-- Content -->
+  <section id="content">
+    {% block content %}
+
+
+
+    <!-- Footer -->
+    <footer>
+      {% block footer %}
+      <div class="page-footer font-small unique-color-dark pt-0" id="footer">
+        <div class="footer-copyright py-3 text-center" style="color : #969696;">
+          <span>© SMB
+            <span style="color:royalblue;">H</span>
+            All rights reserved.
+          </span>
+        </div>
+      </div>
+      {% endblock footer %}
+    </footer>
+    {% endblock content %}
+  </section>
+
+
+  {% analytical_body_bottom %}
+</body>
+
+</html>
