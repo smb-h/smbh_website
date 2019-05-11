@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import About, Service, Profile, Contact
+from .models import About, Service, Portfolio, Contact
 from django import forms
 # Ckeditor
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
@@ -66,9 +66,9 @@ class ServiceAdmin(admin.ModelAdmin):
 
 
 
-class ProfileForm(forms.ModelForm):
+class PortfolioForm(forms.ModelForm):
     class Meta:
-        model = Profile
+        model = Portfolio
         localized_fields = ('updated',)
         fields = "__all__"
 
@@ -78,9 +78,9 @@ class ProfileForm(forms.ModelForm):
         }
 
 
-@admin.register(Profile)
-class ProfileAdmin(admin.ModelAdmin):
-    form = ProfileForm
+@admin.register(Portfolio)
+class PortfolioAdmin(admin.ModelAdmin):
+    form = PortfolioForm
     fieldsets = [
         ('Information', {'fields': ['title', 'subTitle', 'image', 'content']}),
         ('Time', {'fields': ['start', 'end']}),

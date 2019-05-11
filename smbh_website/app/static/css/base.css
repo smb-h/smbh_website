@@ -208,6 +208,7 @@ body {
 
 .footer_logo {
   transition: .3s;
+  cursor: pointer;
 }
 .footer_logo:hover {
   color: gold !important;

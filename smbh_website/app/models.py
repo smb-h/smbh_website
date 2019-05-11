@@ -43,10 +43,10 @@ class Service(models.Model):
 
 
 # Gallery
-class Profile(models.Model):
+class Portfolio(models.Model):
     title = models.CharField(max_length=100, verbose_name=_('Title'))
     subTitle = models.CharField(max_length=80, null=True, blank=True, verbose_name=_('SubTitle'))
-    image = models.ImageField(upload_to='Profile/', verbose_name=_('Image'))
+    image = models.ImageField(upload_to='Portfolio/', verbose_name=_('Image'))
     start = models.DateField(blank=True, null=True, verbose_name=_('Start'))
     end = models.DateField(null=True, blank=True, verbose_name=_('End'))
     content = models.TextField(verbose_name=_('Content'))
@@ -56,8 +56,8 @@ class Profile(models.Model):
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, verbose_name= _('Updated'))
 
     class Meta:
-        verbose_name = _('Profile')
-        verbose_name_plural = _('Profile')
+        verbose_name = _('Portfolio')
+        verbose_name_plural = _('Portfolio')
         ordering = ['-updated', 'title']
 
     def __str__(self):

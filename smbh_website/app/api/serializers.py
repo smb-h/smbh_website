@@ -1,4 +1,4 @@
-from app.models import Contact, Profile
+from app.models import Contact, Portfolio
 from rest_framework.serializers import (
                                             ModelSerializer,
                                             SlugRelatedField,
@@ -26,11 +26,11 @@ class ContactFormSerializer(ModelSerializer):
         )
 
 
-# Profile Serializer
-class ProfileSerializer(ModelSerializer):
+# Portfolio Serializer
+class PortfolioSerializer(ModelSerializer):
     tags = SerializerMethodField()
     class Meta:
-        model = Profile
+        model = Portfolio
         fields = (
             'title',
             'subTitle',

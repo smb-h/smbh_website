@@ -3,7 +3,7 @@ from django.views import View, generic
 
 
 from blog.models import Post
-from .models import Profile, Contact
+from .models import Portfolio, Contact
 from django.utils import timezone
 
 # Translition
@@ -76,18 +76,18 @@ class ContactView(ContactMixin, generic.FormView):
 
 
 
-# Profile
-class ProfileView(generic.ListView):
-    queryset = Profile.objects.all()
-    template_name = 'profile.html'  # Default: <app_label>/<model_name>_list.html
-    context_object_name = 'Profile'   # Default: object_list
+# Portfolio
+class PortfolioView(generic.ListView):
+    queryset = Portfolio.objects.all()
+    template_name = 'portfolio.html'  # Default: <app_label>/<model_name>_list.html
+    context_object_name = 'Portfolio'   # Default: object_list
     paginate_by = 12
 
 
 
 
-# Profile Detail
-class ProfileDetailView(generic.DetailView):
-    model = Profile
-    template_name = 'ProfileDetailView.html'
-    context_object_name = 'Profile'
+# Portfolio Detail
+class PortfolioDetailView(generic.DetailView):
+    model = Portfolio
+    template_name = 'portfolio_detail_view.html'
+    context_object_name = 'Portfolio'

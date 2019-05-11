@@ -1,5 +1,5 @@
-from app.models import Contact, Profile
-from .serializers import ContactFormSerializer, ProfileSerializer
+from app.models import Contact, Portfolio
+from .serializers import ContactFormSerializer, PortfolioSerializer
 # DRF
 from rest_framework.generics import (
                                         ListAPIView,
@@ -26,9 +26,9 @@ class ContactFormAPIView(CreateAPIView):
     permission_classes = [AllowAny]
 
 
-# Profile
-class ProfileAPIView(ListAPIView):
-    queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
+# Portfolio
+class PortfolioAPIView(ListAPIView):
+    queryset = Portfolio.objects.all()
+    serializer_class = PortfolioSerializer
     permission_classes = [AllowAny]
     pagination_class = PostPagination

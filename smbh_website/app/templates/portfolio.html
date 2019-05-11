@@ -1,13 +1,13 @@
-{% extends "base_smbh.html" %} {% block title %} Profile | smbh {% endblock title %}
+{% extends "base_smbh.html" %} {% block title %} Portfolio | smbh {% endblock title %}
 <!---->
 {% load static %} {% load i18n %} {% block style %}
 
 <!-- Customize -->
 <link rel="stylesheet" href="{% static 'css/blog.css' %}" />
-<link rel="stylesheet" href="{% static 'css/profile.css' %}" /> {% endblock style %} {% block script %}
+<link rel="stylesheet" href="{% static 'css/portfolio.css' %}" /> {% endblock style %} {% block script %}
 
 <!-- Customize -->
-<!-- <script src="{% static 'js/profile.js' %}"></script> -->
+<!-- <script src="{% static 'js/portfolio.js' %}"></script> -->
 
 {% endblock script %} {% block content %}
 
@@ -37,7 +37,7 @@
             <a class="nav-link waves-light" href="{% url 'Blog:blog' %}">{% trans 'Blog' %}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link waves-light active" href="{% url 'App:profile' %}">{% trans 'Profile' %}</a>
+            <a class="nav-link waves-light active" href="{% url 'App:portfolio' %}">{% trans 'Portfolio' %}</a>
           </li>
           <li class="nav-item">
             <a class="nav-link waves-light" href="{% url 'App:contact' %}">{% trans 'Contact' %}</a>
@@ -71,7 +71,7 @@
     <!-- Posts -->
     <div class="card-deck">
       <div class="row col col-lg-12 col-md-12 col-sm-12">
-        {% for post in Profile %} {% include "profile_post.html" %} {% endfor %}
+        {% for post in Portfolio %} {% include "portfolio_post.html" %} {% endfor %}
       </div>
     </div>
 
