@@ -133,7 +133,9 @@
 #Blog {
     margin: 50px;
     /* opacity: 0; */
+    display: : block;
 }
+
 
 /* Card Handler */
 

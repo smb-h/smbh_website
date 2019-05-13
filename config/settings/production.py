@@ -6,7 +6,7 @@ from .base import env
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['.smbhosseini.ir', '51.254.93.43'])
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['.smbhosseini.ir', '.smbhosseini.com', '94.23.105.1'])
 
 # DATABASES
 # ------------------------------------------------------------------------------

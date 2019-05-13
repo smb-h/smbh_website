@@ -63,6 +63,9 @@ $(document).ready(function () {
         });
     });
 
+    // Fix flex style on mobile size
+    $("#Blog").css('display', 'block');
+
 
     // Animation on page scroll
     new WOW().init()
@@ -80,4 +83,3 @@ function FullScreen() {
 
     // $('#divId').outerHeight($(Window).outerHeight() - $('#divId').offset().top);
 }
-
