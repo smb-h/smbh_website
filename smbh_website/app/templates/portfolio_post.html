@@ -1,9 +1,9 @@
 <div class="col col-lg-4 col-md-4 col-sm-12">
   <div class="card mb-4 Transition wow fadeInUp" data-wow-delay="0.1s">
     <!-- Featured image -->
-    {% if post.Image %}
+    {% if post.image %}
     <div class="Image-Container view overlay">
-      <img class="card-img-top Transition" src="{{ post.Image.url }}" alt="{{ post.title }}" />
+      <img class="card-img-top Transition" src="{{ post.image.url }}" alt="{{ post.title }}" />
       <!-- Wave Mask -->
       <a>
         <div class="mask rgba-white-slight"></div>

@@ -1,4 +1,4 @@
- {% extends "blog.html" %} {% load static %} {% load i18n %} {% block title %} {{ Post.title }} | smbh {% endblock title %}
+ {% extends "blog.html" %} {% load static %} {% load i18n %} {% block title %} {{ post.title }} | smbh {% endblock title %}
 {% block PostList %}
 
 
@@ -8,7 +8,7 @@
 
   <!-- image -->
   <div class="overlay rounded z-depth-2 mb-lg-0 mb-4">
-    <img class="img-fluid" src="{{ Post.image.url }}" alt="{{ Post.title }}" />
+    <img class="img-fluid" src="{{ post.image.url }}" alt="{{ post.title }}" />
     <a>
       <div class="mask rgba-white-slight"></div>
     </a>
@@ -19,38 +19,38 @@
   <br/>
   <!-- Post title -->
   <h3 class="font-weight-bold mb-3">
-    <strong>{{ Post.title }}</strong>
+    <strong>{{ post.title }}</strong>
   </h3>
   <!-- Excerpt -->
   {% if LANGUAGE_CODE == 'en' %}
   <div style="text-align: left;">
     <p>
-      {{ Post.content | safe }}
+      {{ post.content | safe }}
     </p>
   </div>
   <!-- Post footer -->
   <hr/>
   <p style="text-align: center;">By
     <a>
-      <strong> {{ Post.author }} </strong>
-    </a>, {{ Post.publish }}</p>
+      <strong> {{ post.author }} </strong>
+    </a>, {{ post.publish }}</p>
   {% else %}
   <div style="text-align: right;">
     <p>
-      {{ Post.content | safe }}
+      {{ post.content | safe }}
     </p>
   </div>
   <!-- Post data -->
   <hr/>
   <p style="text-align: center;">By
     <a>
-      <strong> {{ Post.author }} </strong>
-    </a> <br />{{ Post.publish }}</p>
+      <strong> {{ post.author }} </strong>
+    </a> <br />{{ post.publish }}</p>
   {% endif %}
 
   <!-- Tags -->
   <div class="row">
-    {% for tag in Post.tags.names %}
+    {% for tag in post.tags.names %}
     <a style="color: royalblue;">
       <h6 class="font-weight-bold mb-3">
 
