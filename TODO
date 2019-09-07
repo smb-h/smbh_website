@@ -1,3 +1,12 @@
+
+Production
+=========================================================
+debug true
+secret key
+https stuff
+
+=========================================================
+
 react get user info (IN BASE) from cookie and session
 
 refresh after post was loaded
