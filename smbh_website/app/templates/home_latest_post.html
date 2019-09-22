@@ -18,7 +18,7 @@
         <strong>{{ post.title }}</strong>
       </h3>
     </center>
-      <p class="card-text">{{ post.content | safe | truncatechars:512 }}</p>
+      <p class="card-text">{{ post.summary | safe | truncatechars:256 }}</p>
       <div style="float: right;">
         <!-- Read more button -->
         <a class="btn btn-indigo btn-md" href="{% url 'Blog:post' slug=post.slug %}">Read more</a>
