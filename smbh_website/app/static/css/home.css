@@ -171,6 +171,16 @@
     color: royalblue;
 }
 
+@media only screen and (max-width: 600px) {
+  #intro-content {
+    top: 65%;
+  }
+  .social {
+    margin-top: 20%;
+    position: relative;
+  }
+}
+
 /* ========================== Footer ============================== */
 
 /* ========================== utilities ============================== */
