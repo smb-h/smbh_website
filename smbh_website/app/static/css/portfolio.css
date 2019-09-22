@@ -181,6 +181,14 @@ body {
     }
 }
 
+.portfolio_content {
+  text-align: left;
+  color: black !important;
+}
+.portfolio_subtitle {
+  text-align: left;
+}
+
 
 /* ========================== Footer ============================== */
 

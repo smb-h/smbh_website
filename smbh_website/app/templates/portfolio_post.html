@@ -17,9 +17,13 @@
         <strong>{{ post.title }}</strong>
       </h3>
       {% if post.subTitle %}
-      <h6>{{ post.subTitle }}</h6>
+      <div class="portfolio_subtitle">
+        <h6>{{ post.subTitle }}</h6>
+      </div>
       {% endif %}
-      <p class="card-text" style="text-align: left;">{{ post.content | safe | truncatechars:320 }}</p>
+      <div class="card-text portfolio_content">
+        {{ post.content | safe }}
+      </div>
       {% comment %}
       <div style="float: right;">
         <!-- Read more button -->
