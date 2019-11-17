@@ -34,6 +34,7 @@ class PostAdmin(admin.ModelAdmin):
     readonly_fields = ('updated', 'slug', 'author', 'read_time', 'created')
     list_display = ('title', 'publish', 'was_published_recently', 'author', 'updated', 'language')
     list_filter = ('publish', 'author', 'language')
+    date_hierarchy = 'publish'
     search_fields = ('title', 'author__first_name', 'author__last_name', 'content', 'tags')
 
     def save_model(self, request, obj, form, change):
