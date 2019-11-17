@@ -31,10 +31,11 @@ class PostAdmin(admin.ModelAdmin):
         ('Date Information', {'fields': ['draft', 'publish', 'created', 'updated']}),
     ]
 
-    readonly_fields = ('updated', 'slug', 'author', 'read_time', 'created')
+    readonly_fields = ('updated', 'author', 'read_time', 'created')
     list_display = ('title', 'publish', 'was_published_recently', 'author', 'updated', 'language')
     list_filter = ('publish', 'author', 'language')
     date_hierarchy = 'publish'
+    prepopulated_fields = {"slug": ("title",)}
     search_fields = ('title', 'author__first_name', 'author__last_name', 'content', 'tags')
 
     def save_model(self, request, obj, form, change):
