@@ -17,10 +17,8 @@
     /* background-image: url('{% static "../media/Site/Images/Georgia-Workspaces-2.jpeg" %}'); */
     position: relative;
     vertical-align: middle;
-    border-radius: 10px;
-
+    border-radius: 5px;
     height: 100%;
-
 }
 
 
@@ -37,7 +35,7 @@ body {
     height: 100%;
     height: 400px;
     /* background-color: rgb(149, 162, 197); */
-    opacity: .8;
+    opacity: .9;
 }
 
 #Map-btn p{
@@ -53,8 +51,14 @@ body {
 }
 
 #contact-form {
-    /* position: relative; */
-    opacity: .7;
+    position: relative;
+    opacity: .9;
+}
+
+#id_content {
+    resize: none;
+    width: 100%;
+    height: 100px;
 }
 
 

@@ -69,6 +69,7 @@ class ContactMixin:
 class ContactView(ContactMixin, generic.FormView):
 
     template_name = 'contact_individual.html'
+    # template_name = 'contact_django_Tool.html'
     form_class = ContactForm
     success_url = '/Contact'
     success_msg = "Message Sent Successfully"
@@ -91,3 +92,4 @@ class PortfolioDetailView(generic.DetailView):
     model = Portfolio
     template_name = 'portfolio_detail_view.html'
     context_object_name = 'Portfolio'
+

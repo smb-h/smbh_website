@@ -93,9 +93,6 @@ THIRD_PARTY_APPS = [
     'rest_framework',
     # OAuth 2
     'oauth2_provider',
-
-
-    # Utilities
     # Django Taggit
     'taggit',
     # Django Ckeditor
@@ -203,7 +200,6 @@ STATICFILES_DIRS = [
     # My Apps
     str(APPS_DIR.path('app/static')),
     str(APPS_DIR.path('blog/static')),
-
 ]
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
 STATICFILES_FINDERS = [

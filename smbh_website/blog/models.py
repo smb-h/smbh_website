@@ -123,6 +123,7 @@ class Post(models.Model):
         verbose_name = _('Post')
         verbose_name_plural = _('Post')
         ordering = ['-publish', 'title']
+        # unique_together = ("title", "slug")
 
     # formatting post objects to show
     def __str__(self):

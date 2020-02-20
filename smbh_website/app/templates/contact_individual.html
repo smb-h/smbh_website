@@ -72,7 +72,8 @@
       <div class="col-lg-6 col-md-12 col-sm-12 mb-4">
 
         <!-- Form  -->
-        <form class="card" id="contact-form" method="POST">{% csrf_token %}
+        <form class="card" id="contact-form" method="post">
+          {% csrf_token %}
           <div class="card-body">
             <!-- Header -->
             <div class="form-header accent-1">
@@ -100,56 +101,54 @@
               {% for err in form.errors %} {{ err }} {% endfor %}
             </div>
             {% endif %}
+            {% comment %}
             <!-- Name -->
-            {% comment %} {{ form.first_name.errors }} {% endcomment %}
             <div class="md-form">
               <input type="text" id="id_first_name" class="form-control" name="first_name" maxlength='100' autocomplete="off" required />
-              <label for="{{ form.first_name.label }}">
+              <label for="id_first_name">
                 <span>
                   <i class="fa fa-user grey-text"></i>
                 </span> Name *
               </label>
             </div>
             <!-- Email -->
-            {% comment %} {{ form.email.errors }} {% endcomment %}
             <div class="md-form">
               <input type="email" id="id_email" class="form-control" name="email" maxlength='254' autocomplete="off" required />
-              <label for="{{ form.email.label }}">
+              <label for="id_email">
                 <span>
                   <i class="fa fa-envelope grey-text"></i>
-                </span>{{ form.email.label }} *
+                </span>Email *
               </label>
             </div>
             <!-- Phone -->
-            {% comment %} {{ form.phone.errors }} {% endcomment %}
             <div class="md-form">
               <input type="text" id="id_phone" class="form-control" name="phone" maxlength='20' autocomplete="off" />
-              <label for="{{ form.phone.label }}">
+              <label for="id_phone">
                 <span>
                   <i class="fa fa-mobile grey-text"></i>
-                </span>{{ form.phone.label }}
+                </span>Phone
               </label>
             </div>
             <!-- Subject -->
-            {% comment %} {{ form.subject.errors }} {% endcomment %}
             <div class="md-form">
               <input type="text" id="id_ubject" class="form-control" name="subject" maxlength='100' autocomplete="off" required />
-              <label for="{{ form.subject.label }}">
+              <label for="id_ubject">
                 <span>
                   <i class="fa fa-tag grey-text"></i>
-                </span>{{ form.subject.label }} *
+                </span>Subject *
               </label>
             </div>
             <!-- Content -->
-            {% comment %} {{ form.content.errors }} {% endcomment %}
             <div class="md-form">
               <textarea type="text" id="id_content" class="form-control md-textarea" cols="30" rows="6" name="content" required></textarea>
-              <label for="{{ form.content.label }}">
+              <label for="id_content">
                 <span>
                   <i class="fa fa-comment" aria-hidden="true"></i>
-                </span> {{ form.content.label }} *
+                </span> Content *
               </label>
-            </div>
+            </div> 
+            {% endcomment %}
+            {{ form.as_table }}
 
             <div class="text-center">
               <button class="btn btn-blue" type="submit">Send</button>
@@ -196,7 +195,7 @@
                 mail_outline
               </i>
             </a>
-            <p class="mb-0">thesmbh@yahoo.com</p>
+            <p class="mb-0">SmbHop@gmail.com</p>
           </div>
         </div>
 

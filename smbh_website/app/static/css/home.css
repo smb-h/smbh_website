@@ -33,6 +33,7 @@
     border-radius: 10px;
     background-color: rgb(0, 0, 0);
     opacity: .5;
+    height: 100% !important;
 }
 
 /* Intro Content */
@@ -101,16 +102,17 @@
     overflow: auto;
 } */
 
-/* About Me */
-
-/* #AboutMe {
+#content {
     position: relative;
-    padding: 50px;
-    vertical-align: middle;
-    margin: 50px;
 }
 
-#AboutMe-Head {
+/* About Me */
+
+#AboutMe {
+    top: -100px;
+}
+
+/* #AboutMe-Head {
     text-align: center;
 }
 
@@ -174,6 +176,12 @@
 @media only screen and (max-width: 600px) {
   #intro-content {
     top: 65%;
+  }
+  #intro-section {
+      height: 700px !important;
+  }
+  #intro-video {
+      height: 100% !important;
   }
   .social {
     margin-top: 20%;
